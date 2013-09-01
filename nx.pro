@@ -10,6 +10,7 @@ CONFIG += warn_off
 TARGET = nx
 
 CONFIG -= static
+CONFIG -= upxed
 
 MINGW_STATIC_FLAGS += -static -static-libgcc -static-libstdc++
 
@@ -32,7 +33,9 @@ INCLUDEPATH += .
 } else {
     QMAKE_LFLAGS += $${MINGW_STATIC_FLAGS}
     LIBS += $${OTHER_STATIC_LIBS} $${STATIC_SDL_LIBS}
-    QMAKE_POST_LINK = upx ${DESTDIR_TARGET}
+    upxed {
+        QMAKE_POST_LINK = upx ${DESTDIR_TARGET}
+    }
 }
 
 RC_FILE = nx.rc
