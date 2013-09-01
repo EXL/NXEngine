@@ -10,13 +10,13 @@ bool pause_init(int param)
 
 void pause_tick()
 {
-    ClearScreen(BLACK);
-
 #ifndef _RZX50
+    ClearScreen(BLACK);
     int cx = (SCREEN_WIDTH / 2) - (sprites[SPR_RESETPROMPT].w / 2);
     int cy = (SCREEN_HEIGHT / 2) - (sprites[SPR_RESETPROMPT].h / 2);
     draw_sprite(cx, cy, SPR_RESETPROMPT);
 #else
+    ClearScreen(DK_BLUE);
     const char *strMenu = "Select:Quit / A:Resume / B:Reset";
     int cx = (SCREEN_WIDTH / 2) - (GetFontWidth(strMenu, 0) / 2) - 4;
     int cy = (SCREEN_HEIGHT / 2) - GetFontHeight();

@@ -25,7 +25,11 @@ bool settings_load(Settings *setfile)
 		stat("No saved settings; using defaults.");
 		
 		memset(setfile, 0, sizeof(Settings));
+#ifndef _RZX50
 		setfile->resolution = 2;		// 640x480 Windowed, should be safe value
+#else
+        setfile->resolution = 0;
+#endif
 		setfile->last_save_slot = 0;
 		setfile->multisave = true;
 		

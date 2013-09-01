@@ -27,6 +27,10 @@ static int current_res = -1;
 
 bool Graphics::init(int resolution)
 {
+#ifdef _RZX50
+    resolution = 1;
+#endif
+
 	if (use_palette)
 	{
 		screen_bpp = 8;
@@ -197,7 +201,6 @@ static const char *res_str[]   =
 #else
     static const char *res_str[]   =
     {
-        "Fullscreen",
         "480x272",
         NULL
     };

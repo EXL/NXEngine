@@ -175,8 +175,8 @@ void _res_get(ODItem *item)
 		item->suffix[0] = 0;
 	}
 	else
-	{
-		strcpy(item->suffix, reslist[settings->resolution]);
+    {
+        strcpy(item->suffix, reslist[settings->resolution]);
 	}
 }
 
@@ -202,7 +202,7 @@ int newres;
 		sound(SND_GUN_CLICK);
 		return;
 	}
-	
+#ifndef _RZX50
 	if (!Graphics::SetResolution(newres, true))
 	{
 		settings->resolution = newres;
@@ -212,6 +212,7 @@ int newres;
 		new Message("Resolution change failed");
 		sound(SND_GUN_CLICK);
 	}
+#endif
 }
 
 
