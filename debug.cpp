@@ -301,7 +301,7 @@ void DrawDebugMarks(void)
     for(i=0;i<ndebugmarks;i++)
     {
 #ifdef _RZX50
-        if(map.maxxscroll < 0) {
+        if(map.maxxscroll < 0 && map.maxyscroll < 0) {
             x = (debugmarks[i].x >> CSF) - (map.displayed_xscroll >> CSG);
             y = (debugmarks[i].y >> CSF) - (map.displayed_yscroll >> CSG);
             x2 = (debugmarks[i].x2 >> CSF) - (map.displayed_xscroll >> CSG);

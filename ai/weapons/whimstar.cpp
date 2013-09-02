@@ -91,7 +91,7 @@ int scr_x, scr_y;
 	for(i=0;i<wh->nstars;i++)
 	{
 #ifdef _RZX50
-    if(map.maxxscroll < 0) {
+    if(map.maxxscroll < 0 && map.maxyscroll < 0) {
         scr_x = (stars[i].x >> CSF) - (map.displayed_xscroll >> CSG);
         scr_y = (stars[i].y >> CSF) - (map.displayed_yscroll >> CSG);
     } else {

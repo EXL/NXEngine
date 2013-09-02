@@ -20,9 +20,9 @@ STATIC_SDL_LIBS += -lmingw32 -lSDLmain -lSDL -liconv -lm -luser32 -lgdi32 -lwinm
 OTHER_LIBS += -lSDL_ttf
 OTHER_STATIC_LIBS += -lSDL_ttf -lfreetype -lpng -lz
 
-QMAKE_CXXFLAGS += -D_RZX50
 QMAKE_CXXFLAGS += -Wreturn-type -Wformat -Wno-multichar
-QMAKE_CXXFLAGS_DEBUG += -D DEBUG
+QMAKE_CXXFLAGS_RELEASE += -D_RZX50
+QMAKE_CXXFLAGS_DEBUG += -D DEBUG -D_RZX50
 
 INCLUDEPATH += C:/MinGW/include
 INCLUDEPATH += C:/MinGW/include/SDL

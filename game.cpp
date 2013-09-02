@@ -368,7 +368,7 @@ extern int flipacceltime;
 		// get object's onscreen position
 
 #ifdef _RZX50
-        if(map.maxxscroll < 0) {
+        if(map.maxxscroll < 0 && map.maxyscroll < 0) {
             scr_x = (o->x >> CSF) - (map.displayed_xscroll >> CSG);
             scr_y = (o->y >> CSF) - (map.displayed_yscroll >> CSG);
         } else {

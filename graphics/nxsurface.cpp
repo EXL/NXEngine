@@ -145,18 +145,18 @@ SDL_Rect srcrect, dstrect;
 
 	srcrect.x = 0;
 	srcrect.w = src->fSurface->w;
-	srcrect.y = (y_src * SCALE);
-	srcrect.h = (height * SCALE);
+    srcrect.y = (y_src * SCALE);
+    srcrect.h = (height * SCALE);
 	
 	int x = (x_dst * SCALE);
-	int y = (y_dst * SCALE);
+    int y = (y_dst * SCALE);
 	int destwd = fSurface->w;
 	
 	do
 	{
-		dstrect.x = x;
-		dstrect.y = y;
-		
+        dstrect.x = x;
+        dstrect.y = y;
+
 		SDL_BlitSurface(src->fSurface, &srcrect, fSurface, &dstrect);
 		x += src->fSurface->w;
 	}

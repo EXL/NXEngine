@@ -270,11 +270,11 @@ void c------------------------------() {}
 
 void ScreenEffects::Draw(void)
 {
-	if (starflash.enabled)
+    if (starflash.enabled)
 		starflash.Draw();
 	
 	if (flashscreen.enabled)
-		flashscreen.Draw();
+        flashscreen.Draw();
 }
 
 void ScreenEffects::Stop()

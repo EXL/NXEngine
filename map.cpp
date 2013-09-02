@@ -411,7 +411,12 @@ int x, y;
 // blit OSide's BK_FASTLEFT_LAYERS
 static void DrawFastLeftLayered(void)
 {
-static const int layer_ys[] = { 80, 122, 145, 176, 240 };
+#ifndef _RZX50
+    static const int layer_ys[] = { 80, 122, 145, 176, 240 };
+#else
+    static const int layer_ys[] = { 80, 122, 145, 176, 272 };
+#endif
+
 static const int move_spd[] = { 0,    1,   2,   4,   8 };
 int nlayers = 6;
 int y1, y2;
@@ -425,8 +430,8 @@ int i, x;
 	{
 		y2 = layer_ys[i];
 		
-		if (i)	// not the static moon layer?
-		{
+        if (i)	// not the static moon layer?
+        {
 			x = (map.parscroll_x * move_spd[i]) >> 1;
 			x %= SCREEN_WIDTH;
 		}
@@ -443,7 +448,7 @@ static bool LoadBackdropIfNeeded(int backdrop_no)
 char fname[MAXPATHLEN];
 
 	// load backdrop now if it hasn't already been loaded
-	if (!backdrop[backdrop_no])
+    if (!backdrop[backdrop_no])
 	{
 		// use chromakey (transparency) on bkwater, all others don't
 		bool use_chromakey = (backdrop_no == 8);
@@ -456,7 +461,7 @@ char fname[MAXPATHLEN];
 			staterr("Failed to load backdrop '%s'", fname);
 			return 1;
 		}
-	}
+    }
 	
 	return 0;
 }
@@ -529,7 +534,7 @@ int blit_x, blit_y, blit_x_start;
 int scroll_x, scroll_y;
 
 #ifdef _RZX50
-    if(map.maxxscroll < 0) {
+    if(map.maxxscroll < 0 && map.maxyscroll < 0) {
         scroll_x = (map.displayed_xscroll >> CSG);
         scroll_y = (map.displayed_yscroll >> CSG);
     } else {

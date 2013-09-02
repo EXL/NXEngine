@@ -32,7 +32,7 @@ void pause_tick()
     const char *str = "F3:Options";
     cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;
     cy = (SCREEN_HEIGHT - 8) - GetFontHeight();
-    f3wd = font_draw(cx, cy, "F3", 0);
+    int f3wd = font_draw(cx, cy, "F3", 0);
 #else
     const char *str = "X:Options";
     cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;

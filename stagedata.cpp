@@ -13,9 +13,14 @@ const char *backdrop_names[] = {
 	"bkGray",
 	"bkRed",
 	"bkWater",
-	"bkMoon",
-	"bkFog",
-	"bkFall",
+#ifndef _RZX50
+    "bkMoon",
+    "bkFog",
+#else
+    "bkMoon480fix",
+    "bkFog480fix",
+#endif
+    "bkFall",
 	NULL
 };
 

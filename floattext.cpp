@@ -161,7 +161,7 @@ int x, y, i;
 	// adjust to object's onscreen position
 
 #ifdef _RZX50
-        if(map.maxxscroll < 0) {
+        if(map.maxxscroll < 0 && map.maxyscroll < 0) {
             x -= (map.displayed_xscroll >> CSG);
             y -= (map.displayed_yscroll >> CSG);
         } else {

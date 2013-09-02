@@ -105,7 +105,7 @@ void Carets::DrawAll(void)
             if (!c->invisible && !c->deleted)	// must check deleted again in case handler_function set it
             {
 #ifdef _RZX50
-                if(map.maxxscroll < 0) {
+                if(map.maxxscroll < 0 && map.maxyscroll < 0) {
                     scr_x = (c->x >> CSF) - (map.displayed_xscroll >> CSG);
                     scr_y = (c->y >> CSF) - (map.displayed_yscroll >> CSG);
                 } else {
