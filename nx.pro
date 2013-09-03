@@ -11,6 +11,7 @@ CONFIG += warn_off
 win32-g++: TARGET = nx
 linux-g++: TARGET = nx
 linux-mips-g++: TARGET = nx.dge
+linux-arm-gnueabi-g++: TARGET = nx.magxE
 
 CONFIG -= static
 CONFIG -= upxed
@@ -19,19 +20,27 @@ GCC_STATIC_FLAGS += -static -static-libgcc -static-libstdc++
 
 SDL_LIBS += -lSDLmain -lSDL
 win32-g++: STATIC_SDL_LIBS += -lSDLmain -lSDL -liconv -lm -luser32 -lgdi32 -lwinmm
+linux-arm-gnueabi-g++: MOTOMAGX_LIBS += -lpthread -lm -lqte-mt -lezxpm -ljpeg -lezxappbase -lezxtapi-xscale-r -llog_util -llighting -lezxsound -lfreetype
 
 OTHER_LIBS += -lSDL_ttf
 OTHER_STATIC_LIBS += -lSDL_ttf -lfreetype -lpng -lz
 
-QMAKE_CFLAGS += -D_RZX50
+QMAKE_CFLAGS +=
 QMAKE_CXXFLAGS += -Wreturn-type -Wformat -Wno-multichar
-QMAKE_CXXFLAGS_RELEASE += -D_RZX50
-QMAKE_CXXFLAGS_DEBUG += -D DEBUG -D_RZX50
+QMAKE_CXXFLAGS_RELEASE +=
+QMAKE_CXXFLAGS_DEBUG += -D DEBUG
 
+# Generic MIPS device
 linux-mips-g++: QMAKE_CFLAGS_DEBUG += -D_RZX50
-linux-mips-g++: QMAKE_CXXFLAGS_DEBUG += $${QMAKE_CFLAGS_DEBUG}
+linux-mips-g++: QMAKE_CXXFLAGS_DEBUG += -D_RZX50
 linux-mips-g++: QMAKE_CFLAGS_RELEASE += -D_RZX50 -mabi=32 -msoft-float -ffast-math -G0
-linux-mips-g++: QMAKE_CXXFLAGS_RELEASE += $${QMAKE_CFLAGS_RELEASE}
+linux-mips-g++: QMAKE_CXXFLAGS_RELEASE += -D_RZX50 -mabi=32 -msoft-float -ffast-math -G0
+
+# Generic MotoMagX Device
+linux-arm-gnueabi-g++: QMAKE_CFLAGS_DEBUG += -D_MOTOMAGX
+linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_DEBUG += -D_MOTOMAGX
+linux-arm-gnueabi-g++: QMAKE_CFLAGS_RELEASE += -D_MOTOMAGX -march=armv6j -mtune=arm1136jf-s -mfpu=vfp -ffast-math
+linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_RELEASE += -D_MOTOMAGX -march=armv6j -mtune=arm1136jf-s -mfpu=vfp -ffast-math
 
 # Headers
 INCLUDEPATH += .
@@ -45,6 +54,9 @@ win32-g++: {
 } linux-mips-g++ {
     INCLUDEPATH += /opt/mipsel-linux-uclibc/usr/include
     INCLUDEPATH += /opt/mipsel-linux-uclibc/usr/include/SDL
+} linux-arm-gnueabi-g++: {
+    INCLUDEPATH += /opt/toolchains/motomagx/arm-eabi2/include
+    INCLUDEPATH += /opt/toolchains/motomagx/arm-eabi2/include/SDL
 }
 
 # Libs
@@ -52,6 +64,8 @@ win32-g++: {
     win32-g++: LIBS += -lmingw32 $${SDL_LIBS} $${OTHER_LIBS}
     linux-g++: LIBS += $${SDL_LIBS} $${OTHER_LIBS}
     linux-mips-g++: LIBS += $${SDL_LIBS} $${OTHER_LIBS}
+    linux-arm-gnueabi-g++: QMAKE_LIBDIR += /opt/toolchains/motomagx/arm-eabi2/lib
+    linux-arm-gnueabi-g++: LIBS += $${SDL_LIBS} $${OTHER_LIBS} $${MOTOMAGX_LIBS}
 } else {
     QMAKE_LFLAGS += $${GCC_STATIC_FLAGS}
     win32-g++: LIBS += -lmingw32 $${OTHER_STATIC_LIBS} $${STATIC_SDL_LIBS}

@@ -5,7 +5,7 @@
 #include <string.h>
 #include <math.h>
 
-#if defined(__MINGW32__) || defined(_RZX50)
+#if defined(__MINGW32__) || defined(_RZX50) || defined (_MOTOMAGX)
 #define htole16(x) (x)
 #else
 #include <endian.h>
