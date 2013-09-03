@@ -25,17 +25,17 @@ bool settings_load(Settings *setfile)
 		stat("No saved settings; using defaults.");
 		
 		memset(setfile, 0, sizeof(Settings));
-#ifndef _RZX50
-		setfile->resolution = 2;		// 640x480 Windowed, should be safe value
+#if defined (_RZX50) || defined (_MOTOMAGX)
+        setfile->resolution = 0;		// 640x480 Windowed, should be safe value
 #else
-        setfile->resolution = 0;
+        setfile->resolution = 2;
 #endif
 		setfile->last_save_slot = 0;
 		setfile->multisave = true;
 		
 		setfile->enable_debug_keys = false;
 		setfile->sound_enabled = true;
-		setfile->music_enabled = 1;	// both Boss and Regular music
+        setfile->music_enabled = 0;	// both Boss and Regular music
 		
 		setfile->instant_quit = false;
 		setfile->emulate_bugs = false;

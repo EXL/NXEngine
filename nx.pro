@@ -7,32 +7,55 @@ CONFIG -= console
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += warn_off
-TARGET = nx
+
+win32-g++: TARGET = nx
+linux-g++: TARGET = nx
+linux-mips-g++: TARGET = nx.dge
 
 CONFIG -= static
 CONFIG -= upxed
 
-MINGW_STATIC_FLAGS += -static -static-libgcc -static-libstdc++
+GCC_STATIC_FLAGS += -static -static-libgcc -static-libstdc++
 
-SDL_LIBS += -lmingw32 -lSDLmain -lSDL
-STATIC_SDL_LIBS += -lmingw32 -lSDLmain -lSDL -liconv -lm -luser32 -lgdi32 -lwinmm
+SDL_LIBS += -lSDLmain -lSDL
+win32-g++: STATIC_SDL_LIBS += -lSDLmain -lSDL -liconv -lm -luser32 -lgdi32 -lwinmm
 
 OTHER_LIBS += -lSDL_ttf
 OTHER_STATIC_LIBS += -lSDL_ttf -lfreetype -lpng -lz
 
+QMAKE_CFLAGS += -D_RZX50
 QMAKE_CXXFLAGS += -Wreturn-type -Wformat -Wno-multichar
 QMAKE_CXXFLAGS_RELEASE += -D_RZX50
 QMAKE_CXXFLAGS_DEBUG += -D DEBUG -D_RZX50
 
-INCLUDEPATH += C:/MinGW/include
-INCLUDEPATH += C:/MinGW/include/SDL
+linux-mips-g++: QMAKE_CFLAGS_DEBUG += -D_RZX50
+linux-mips-g++: QMAKE_CXXFLAGS_DEBUG += $${QMAKE_CFLAGS_DEBUG}
+linux-mips-g++: QMAKE_CFLAGS_RELEASE += -D_RZX50 -mabi=32 -msoft-float -ffast-math -G0
+linux-mips-g++: QMAKE_CXXFLAGS_RELEASE += $${QMAKE_CFLAGS_RELEASE}
+
+# Headers
 INCLUDEPATH += .
 
+win32-g++: {
+    INCLUDEPATH += C:/MinGW/include
+    INCLUDEPATH += C:/MinGW/include/SDL
+} linux-g++ {
+    INCLUDEPATH += /usr/include
+    INCLUDEPATH += /usr/include/SDL
+} linux-mips-g++ {
+    INCLUDEPATH += /opt/mipsel-linux-uclibc/usr/include
+    INCLUDEPATH += /opt/mipsel-linux-uclibc/usr/include/SDL
+}
+
+# Libs
 !static {
-    LIBS += $${SDL_LIBS} $${OTHER_LIBS}
+    win32-g++: LIBS += -lmingw32 $${SDL_LIBS} $${OTHER_LIBS}
+    linux-g++: LIBS += $${SDL_LIBS} $${OTHER_LIBS}
+    linux-mips-g++: LIBS += $${SDL_LIBS} $${OTHER_LIBS}
 } else {
-    QMAKE_LFLAGS += $${MINGW_STATIC_FLAGS}
-    LIBS += $${OTHER_STATIC_LIBS} $${STATIC_SDL_LIBS}
+    QMAKE_LFLAGS += $${GCC_STATIC_FLAGS}
+    win32-g++: LIBS += -lmingw32 $${OTHER_STATIC_LIBS} $${STATIC_SDL_LIBS}
+    linux-g++: LIBS += $${OTHER_STATIC_LIBS} $${STATIC_SDL_LIBS}
     upxed {
         QMAKE_POST_LINK = upx ${DESTDIR_TARGET}
     }

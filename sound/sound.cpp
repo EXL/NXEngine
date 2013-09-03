@@ -139,9 +139,10 @@ void music(int songno)
 
 bool should_music_play(int songno, int musicmode)
 {
-	if (game.mode == GM_TITLE || game.mode == GM_CREDITS)
+    /*
+     *if (game.mode == GM_TITLE || game.mode == GM_CREDITS)
 		return true;
-	
+    */
 	switch(musicmode)
 	{
 		case MUSIC_OFF: return false;

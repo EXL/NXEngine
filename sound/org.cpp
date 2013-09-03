@@ -5,10 +5,10 @@
 #include <string.h>
 #include <math.h>
 
-#ifndef __MINGW32__
-#include <endian.h>
-#else 
+#if defined(__MINGW32__) || defined(_RZX50)
 #define htole16(x) (x)
+#else
+#include <endian.h>
 #endif
 
 #include "../common/basics.h"

@@ -26,9 +26,9 @@ SDL_AudioSpec fmt, obtained;
 
 	// Set 16-bit stereo audio at 22Khz
 	fmt.freq = SAMPLE_RATE;
-	fmt.format = AUDIO_S16;
-	fmt.channels = 2;
-	fmt.samples = 512;
+    fmt.format = AUDIO_S16;
+    fmt.channels = 2;
+    fmt.samples = 512;
 	fmt.callback = mixaudio;
 	fmt.userdata = NULL;
 	

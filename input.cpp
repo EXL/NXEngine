@@ -37,18 +37,34 @@ bool input_init(void)
 		mappings[SDLK_RIGHT] = RIGHTKEY;
 		mappings[SDLK_UP] = UPKEY;
 		mappings[SDLK_DOWN] = DOWNKEY;
-		mappings[SDLK_z] = JUMPKEY;
-		mappings[SDLK_x] = FIREKEY;
-		mappings[SDLK_a] = PREVWPNKEY;
-		mappings[SDLK_s] = NEXTWPNKEY;
-		mappings[SDLK_q] = INVENTORYKEY;
-        mappings[SDLK_w] = MAPSYSTEMKEY;
-		
-		mappings[SDLK_ESCAPE] = ESCKEY;
 
-		mappings[SDLK_F1] = F1KEY;
-		mappings[SDLK_F2] = F2KEY;
-		mappings[SDLK_F3] = F3KEY;
+#ifdef _RZX50
+        mappings[SDLK_LCTRL] = JUMPKEY;
+        mappings[SDLK_LALT] = FIREKEY;
+        mappings[SDLK_s] = PREVWPNKEY;
+        mappings[SDLK_LSHIFT] = NEXTWPNKEY;
+        mappings[SDLK_BACKSPACE] = INVENTORYKEY;
+        mappings[SDLK_RETURN] = MAPSYSTEMKEY;
+#elif _MOTOMAGX
+        mappings[SDLK_PLUS] = JUMPKEY;
+        mappings[SDLK_RETURN] = FIREKEY;
+        mappings[SDLK_0] = PREVWPNKEY;
+        mappings[SDLK_8] = NEXTWPNKEY;
+        mappings[SDLK_2] = INVENTORYKEY;
+        mappings[SDLK_5] = MAPSYSTEMKEY;
+#else
+        mappings[SDLK_z] = JUMPKEY;
+        mappings[SDLK_x] = FIREKEY;
+        mappings[SDLK_a] = PREVWPNKEY;
+        mappings[SDLK_s] = NEXTWPNKEY;
+        mappings[SDLK_q] = INVENTORYKEY;
+        mappings[SDLK_w] = MAPSYSTEMKEY;
+#endif
+        mappings[SDLK_ESCAPE] = ESCKEY;
+
+        mappings[SDLK_F1] = F1KEY;
+        mappings[SDLK_F2] = F2KEY;
+        mappings[SDLK_F3] = F3KEY;
 		mappings[SDLK_F4] = F4KEY;
 		mappings[SDLK_F5] = F5KEY;
 		mappings[SDLK_F6] = F6KEY;
@@ -103,7 +119,7 @@ static const char *input_names[] =
 	"jump", "fire", "pervious wpn", "next wpn",
 	"inventory", "map",
 	"escape",
-	"f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11", "f12",
+    "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11", "f12",
     "options key", "freeze frame", "frame advance", "debug fly"
 };
 

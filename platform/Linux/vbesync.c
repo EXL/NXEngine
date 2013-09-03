@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-#ifndef __MINGW32__
+#if 0
 #include <libdrm/drm.h>
 #endif
 

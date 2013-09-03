@@ -452,9 +452,22 @@ char fname[MAXPATHLEN];
 	{
 		// use chromakey (transparency) on bkwater, all others don't
 		bool use_chromakey = (backdrop_no == 8);
-		
-		sprintf(fname, "%s/%s.pbm", data_dir, backdrop_names[backdrop_no]);
-		
+
+#ifdef _RZX50
+        if (backdrop_no == 9) {
+            if (sprintf(fname, "%s/%s.pbm", data_dir, "bkMoon480fix") < 0) {
+                staterr("Error opening bkMoon480fix file");
+            }
+        } else if (backdrop_no == 10) {
+            if (sprintf(fname, "%s/%s.pbm", data_dir, "bkFog480fix")) {
+                staterr("Error opening bkFog480fix file");
+            }
+        }   else {
+            sprintf(fname, "%s/%s.pbm", data_dir, backdrop_names[backdrop_no]);
+        }
+#else
+        sprintf(fname, "%s/%s.pbm", data_dir, backdrop_names[backdrop_no]);
+#endif
 		backdrop[backdrop_no] = NXSurface::FromFile(fname, use_chromakey);
 		if (!backdrop[backdrop_no])
 		{

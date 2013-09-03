@@ -59,7 +59,8 @@ bool title_init(int param)
 	}
 	
 	title.sprite = titlescreens[t].sprite;
-	music(titlescreens[t].songtrack);
+
+    music(titlescreens[t].songtrack);
 	
 	if (AnyProfileExists())
 		title.cursel = 1;	// Load Game
@@ -119,7 +120,7 @@ static void selectoption(int index)
 	{
 		case 0:		// New
 		{
-			music(0);
+            music(0);
 			
 			game.switchstage.mapno = NEW_GAME_FROM_MENU;
 			game.setmode(GM_NORMAL);

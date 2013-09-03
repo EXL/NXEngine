@@ -37,7 +37,7 @@ bool options_init(int retmode)
 	opt.dlg->ondismiss = DialogDismissed;
 	opt.dlg->ShowFull();
 
-#ifdef _RZX50
+#if defined (_RZX50) || defined (_MOTOMAGX)
     inputs[OPTIONS_KEY] = 0;
 #else
     inputs[F3KEY] = 0;
@@ -65,7 +65,7 @@ void options_tick()
 int i;
 FocusHolder *fh;
 
-#ifdef _RZX50
+#if defined (_RZX50) || defined (_MOTOMAGX)
     if (justpushed(OPTIONS_KEY))
 #else
     if (justpushed(F3KEY))
@@ -176,7 +176,11 @@ void _res_get(ODItem *item)
 	}
 	else
     {
+#if defined (_RZX50) || defined (_MOTOMAGX)
+        strcpy(item->suffix, reslist[0]);
+#else
         strcpy(item->suffix, reslist[settings->resolution]);
+#endif
 	}
 }
 
@@ -202,17 +206,19 @@ int newres;
 		sound(SND_GUN_CLICK);
 		return;
 	}
-#ifndef _RZX50
 	if (!Graphics::SetResolution(newres, true))
 	{
-		settings->resolution = newres;
+#if defined (_RZX50) || defined (_MOTOMAGX)
+        settings->resolution = 0;
+#else
+        settings->resolution = newres;
+#endif
 	}
 	else
 	{
 		new Message("Resolution change failed");
 		sound(SND_GUN_CLICK);
-	}
-#endif
+    }
 }
 
 
@@ -253,8 +259,6 @@ void _sound_get(ODItem *item)
 	static const char *strs[] = { "Off", "On" };
 	strcpy(item->suffix, strs[settings->sound_enabled]);
 }
-
-
 
 void _music_change(ODItem *item, int dir)
 {

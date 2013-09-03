@@ -5,10 +5,17 @@
 using namespace Options;
 extern FocusStack optionstack;
 
+#ifdef _RZX50
+#define DLG_X		((SCREEN_WIDTH / 2) - 110)
+#define DLG_Y		((SCREEN_HEIGHT / 2) - 90)
+#define DLG_W		240
+#define DLG_H		180
+#else
 #define DLG_X		((SCREEN_WIDTH / 2) - 88)
 #define DLG_Y		((SCREEN_HEIGHT / 2) - 90)
 #define DLG_W		190
 #define DLG_H		180
+#endif
 
 #define REPEAT_WAIT	30
 #define REPEAT_RATE	4

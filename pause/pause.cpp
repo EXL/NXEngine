@@ -10,38 +10,54 @@ bool pause_init(int param)
 
 void pause_tick()
 {
-#ifndef _RZX50
-    ClearScreen(BLACK);
-    int cx = (SCREEN_WIDTH / 2) - (sprites[SPR_RESETPROMPT].w / 2);
-    int cy = (SCREEN_HEIGHT / 2) - (sprites[SPR_RESETPROMPT].h / 2);
-    draw_sprite(cx, cy, SPR_RESETPROMPT);
-#else
+#ifdef _RZX50
     ClearScreen(DK_BLUE);
-    const char *strMenu = "Select:Quit / A:Resume / B:Reset";
+    const char *strMenu = "Select:Quit / B:Resume / A:Reset";
     int cx = (SCREEN_WIDTH / 2) - (GetFontWidth(strMenu, 0) / 2) - 4;
     int cy = (SCREEN_HEIGHT / 2) - GetFontHeight();
     int f3wd = font_draw(cx, cy, "Select", 0);
     int f3wd1 = font_draw(f3wd + cx, cy, ":Quit", 0, &bluefont);
-    int f3wd2 = font_draw(f3wd1 + f3wd + cx,  cy, " / A", 0);
+    int f3wd2 = font_draw(f3wd1 + f3wd + cx,  cy, " / B", 0);
     int f3wd3 = font_draw(f3wd2 + f3wd1 + f3wd + cx, cy, ":Resume", 0, &bluefont);
-    int f3wd4 = font_draw(f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, " / B", 0);
+    int f3wd4 = font_draw(f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, " / A", 0);
     font_draw(f3wd4 + f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, ":Reset", 0, &bluefont);
+#elif _MOTOMAGX
+    ClearScreen(DK_BLUE);
+    const char *strMenu = "RedKey:Quit / Center:Resume / Vol+:Reset";
+    int cx = (SCREEN_WIDTH / 2) - (GetFontWidth(strMenu, 0) / 2) - 4;
+    int cy = (SCREEN_HEIGHT / 2) - GetFontHeight();
+    int f3wd = font_draw(cx, cy, "RedKey", 0);
+    int f3wd1 = font_draw(f3wd + cx, cy, ":Quit", 0, &bluefont);
+    int f3wd2 = font_draw(f3wd1 + f3wd + cx,  cy, " / Center", 0);
+    int f3wd3 = font_draw(f3wd2 + f3wd1 + f3wd + cx, cy, ":Resume", 0, &bluefont);
+    int f3wd4 = font_draw(f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, " / Vol+", 0);
+    font_draw(f3wd4 + f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, ":Reset", 0, &bluefont);
+#else
+    ClearScreen(BLACK);
+    int cx = (SCREEN_WIDTH / 2) - (sprites[SPR_RESETPROMPT].w / 2);
+    int cy = (SCREEN_HEIGHT / 2) - (sprites[SPR_RESETPROMPT].h / 2);
+    draw_sprite(cx, cy, SPR_RESETPROMPT);
 #endif
 
-#ifndef _RZX50
+#ifdef _RZX50
+    const char *str = "L:Options";
+    cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;
+    cy = (SCREEN_HEIGHT - 8) - GetFontHeight();
+    f3wd = font_draw(cx, cy, "L", 0);
+#elif _MOTOMAGX
+    const char *str = "GrnKey:Options";
+    cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;
+    cy = (SCREEN_HEIGHT - 8) - GetFontHeight();
+    f3wd = font_draw(cx, cy, "GrnKey", 0);
+#else
     const char *str = "F3:Options";
     cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;
     cy = (SCREEN_HEIGHT - 8) - GetFontHeight();
     int f3wd = font_draw(cx, cy, "F3", 0);
-#else
-    const char *str = "X:Options";
-    cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;
-    cy = (SCREEN_HEIGHT - 8) - GetFontHeight();
-    f3wd = font_draw(cx, cy, "X", 0);
 #endif
     font_draw(cx + f3wd, cy, ":Options", 0, &bluefont);
 	
-#ifdef _RZX50
+#if defined (_RZX50) || defined (_MOTOMAGX)
 #define F1KEY FIREKEY
 #define F2KEY JUMPKEY
 #endif

@@ -74,7 +74,7 @@ int i;
 		mapdata[i].tileset = find_index(exemapdata[i].tileset, tileset_names);
 		if (mapdata[i].tileset == 0xff) { error = "tileset"; break; }
 		
-		mapdata[i].bg_no   = find_index(exemapdata[i].background, backdrop_names);
+        mapdata[i].bg_no   = find_index(exemapdata[i].background, backdrop_names);
 		if (mapdata[i].bg_no == 0xff) { error = "backdrop"; break; }
 		
 		mapdata[i].NPCset1 = find_index(exemapdata[i].NPCset1, npcsetnames);
