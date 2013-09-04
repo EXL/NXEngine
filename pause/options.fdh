@@ -45,6 +45,8 @@ static void EnterMainMenu();
 void LeavingMainMenu();
 void _res_get(ODItem *item);
 void _res_change(ODItem *item, int dir);
+void _fps_change(ODItem *item, int dir);
+void _fps_get(ODItem *item);
 void _debug_change(ODItem *item, int dir);
 void _debug_get(ODItem *item);
 void _save_change(ODItem *item, int dir);

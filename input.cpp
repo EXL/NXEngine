@@ -60,7 +60,12 @@ bool input_init(void)
         mappings[SDLK_q] = INVENTORYKEY;
         mappings[SDLK_w] = MAPSYSTEMKEY;
 #endif
+
+#ifdef _MOTOMAGX
+        mappings[SDLK_PAUSE] = ESCKEY;
+#else
         mappings[SDLK_ESCAPE] = ESCKEY;
+#endif
 
         mappings[SDLK_F1] = F1KEY;
         mappings[SDLK_F2] = F2KEY;
@@ -74,8 +79,11 @@ bool input_init(void)
 		mappings[SDLK_F10] = F10KEY;
 		mappings[SDLK_F11] = F11KEY;
 		mappings[SDLK_F12] = F12KEY;
-		
+#ifdef _MOTOMAGX
+        mappings[SDLK_HASH] = OPTIONS_KEY; // SDLK_HASH
+#else
         mappings[SDLK_TAB] = OPTIONS_KEY;
+#endif
         mappings[SDLK_SPACE] = FREEZE_FRAME_KEY;
 		mappings[SDLK_c] = FRAME_ADVANCE_KEY;
 		mappings[SDLK_v] = DEBUG_FLY_KEY;

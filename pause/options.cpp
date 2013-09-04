@@ -6,6 +6,7 @@
 #include "message.h"
 using namespace Options;
 #include "options.fdh"
+
 FocusStack optionstack;
 
 #define SLIDE_SPEED				32
@@ -141,8 +142,11 @@ Dialog *dlg = opt.dlg;
 	dlg->AddItem("Replay", EnterReplayMenu);
 	
 	dlg->AddSeparator();
-	
+#if defined (_MOTOMAGX) || defined (_RZX50)
+    dlg->AddItem("Show FPS", _fps_change, _fps_get);
+#else
 	dlg->AddItem("Enable Debug Keys", _debug_change, _debug_get);
+#endif
 	dlg->AddItem("Save Slots: ", _save_change, _save_get);
 	
 	dlg->AddSeparator();
@@ -221,6 +225,17 @@ int newres;
     }
 }
 
+void _fps_change(ODItem *item, int dir)
+{
+    settings->show_fps ^= 1;
+    sound(SND_MENU_SELECT);
+}
+
+void _fps_get(ODItem *item)
+{
+    static const char *strs[] = { "", " =" };
+    strcpy(item->suffix, strs[settings->show_fps]);
+}
 
 void _debug_change(ODItem *item, int dir)
 {

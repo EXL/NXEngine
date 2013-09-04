@@ -11,24 +11,26 @@ CONFIG += warn_off
 win32-g++: TARGET = nx
 linux-g++: TARGET = nx
 linux-mips-g++: TARGET = nx.dge
-linux-arm-gnueabi-g++: TARGET = nx.magxE
+linux-arm-gnueabi-g++: TARGET = nx.magx
 
 CONFIG -= static
-CONFIG -= upxed
+CONFIG += upxed
+CONFIG += stripped
 
 GCC_STATIC_FLAGS += -static -static-libgcc -static-libstdc++
 
 SDL_LIBS += -lSDLmain -lSDL
 win32-g++: STATIC_SDL_LIBS += -lSDLmain -lSDL -liconv -lm -luser32 -lgdi32 -lwinmm
-linux-arm-gnueabi-g++: MOTOMAGX_LIBS += -lpthread -lm -lqte-mt -lezxpm -ljpeg -lezxappbase -lezxtapi-xscale-r -llog_util -llighting -lezxsound -lfreetype
+linux-arm-gnueabi-g++: MOTOMAGX_LIBS += $$system(sdl-config  --libs)
 
 OTHER_LIBS += -lSDL_ttf
+linux-arm-gnueabi-g++: OTHER_MOTOMAGX_LIBS = -lSDL_ttf -lstdc++ -lm -lfreetype
 OTHER_STATIC_LIBS += -lSDL_ttf -lfreetype -lpng -lz
 
-QMAKE_CFLAGS +=
+QMAKE_CFLAGS += -D_MOTOMAGX
 QMAKE_CXXFLAGS += -Wreturn-type -Wformat -Wno-multichar
-QMAKE_CXXFLAGS_RELEASE +=
-QMAKE_CXXFLAGS_DEBUG += -D DEBUG
+QMAKE_CXXFLAGS_RELEASE += -D_MOTOMAGX
+QMAKE_CXXFLAGS_DEBUG += -D DEBUG -D_MOTOMAGX
 
 # Generic MIPS device
 linux-mips-g++: QMAKE_CFLAGS_DEBUG += -D_RZX50
@@ -37,10 +39,10 @@ linux-mips-g++: QMAKE_CFLAGS_RELEASE += -D_RZX50 -mabi=32 -msoft-float -ffast-ma
 linux-mips-g++: QMAKE_CXXFLAGS_RELEASE += -D_RZX50 -mabi=32 -msoft-float -ffast-math -G0
 
 # Generic MotoMagX Device
-linux-arm-gnueabi-g++: QMAKE_CFLAGS_DEBUG += -D_MOTOMAGX
-linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_DEBUG += -D_MOTOMAGX
-linux-arm-gnueabi-g++: QMAKE_CFLAGS_RELEASE += -D_MOTOMAGX -march=armv6j -mtune=arm1136jf-s -mfpu=vfp -ffast-math
-linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_RELEASE += -D_MOTOMAGX -march=armv6j -mtune=arm1136jf-s -mfpu=vfp -ffast-math
+linux-arm-gnueabi-g++: QMAKE_CFLAGS_DEBUG += $$system(sdl-config  --cflags) -D_MOTOMAGX
+linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_DEBUG += $$system(sdl-config  --cflags) -D_MOTOMAGX
+linux-arm-gnueabi-g++: QMAKE_CFLAGS_RELEASE += $$system(sdl-config  --cflags) -D_MOTOMAGX #-march=armv6j -mtune=arm1136jf-s -mfpu=vfp
+linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_RELEASE += $$system(sdl-config  --cflags) -D_MOTOMAGX #-march=armv6j -mtune=arm1136jf-s -mfpu=vfp
 
 # Headers
 INCLUDEPATH += .
@@ -64,14 +66,20 @@ win32-g++: {
     win32-g++: LIBS += -lmingw32 $${SDL_LIBS} $${OTHER_LIBS}
     linux-g++: LIBS += $${SDL_LIBS} $${OTHER_LIBS}
     linux-mips-g++: LIBS += $${SDL_LIBS} $${OTHER_LIBS}
-    linux-arm-gnueabi-g++: QMAKE_LIBDIR += /opt/toolchains/motomagx/arm-eabi2/lib
-    linux-arm-gnueabi-g++: LIBS += $${SDL_LIBS} $${OTHER_LIBS} $${MOTOMAGX_LIBS}
+    linux-arm-gnueabi-g++: LIBS += $${MOTOMAGX_LIBS} $${OTHER_MOTOMAGX_LIBS}
+    stripped {
+        QMAKE_POST_LINK += $(STRIP) $(TARGET)
+    } upxed {
+        QMAKE_POST_LINK += && upx -9 $(TARGET)
+    }
 } else {
     QMAKE_LFLAGS += $${GCC_STATIC_FLAGS}
     win32-g++: LIBS += -lmingw32 $${OTHER_STATIC_LIBS} $${STATIC_SDL_LIBS}
     linux-g++: LIBS += $${OTHER_STATIC_LIBS} $${STATIC_SDL_LIBS}
-    upxed {
-        QMAKE_POST_LINK = upx ${DESTDIR_TARGET}
+    stripped {
+        QMAKE_POST_LINK += $(STRIP) $(TARGET)
+    } upxed {
+        QMAKE_POST_LINK += && upx -9 $(TARGET)
     }
 }
 
