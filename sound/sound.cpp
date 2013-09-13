@@ -1,9 +1,14 @@
-
 /* SOUND.C
   PXT/SS/Org sound interface
 */
+
 #include <stdio.h>
 #include <string.h>
+
+#ifdef _SDL_MIXER
+#include <SDL_mixer.h>
+Mix_Music *music_xm;
+#endif
 
 #include "../nx.h"
 #include "../settings.h"
@@ -23,19 +28,25 @@ static int cursong = 0;
 
 const char *org_names[] =
 {
-	NULL,
-	"egg", "safety", "gameover", "gravity", "grasstown", "meltdown2", "eyesofflame",
-	"gestation", "town", "fanfale1", "balrog", "cemetary", "plant", "pulse", "fanfale2",
-	"fanfale3", "tyrant", "run", "jenka1", "labyrinth", "access", "oppression", "geothermal",
-	"theme", "oside", "heroend", "scorching", "quiet", "lastcave", "balcony", "charge",
-	"lastbattle", "credits", "zombie", "breakdown", "hell", "jenka2", "waterway", "seal",
-	"toroko", "white", "azarashi", NULL
+    NULL,
+    "egg", "safety", "gameover", "gravity", "grasstown", "meltdown2", "eyesofflame",
+    "gestation", "town", "fanfale1", "balrog", "cemetary", "plant", "pulse", "fanfale2",
+    "fanfale3", "tyrant", "run", "jenka1", "labyrinth", "access", "oppression", "geothermal",
+    "theme", "oside", "heroend", "scorching", "quiet", "lastcave", "balcony", "charge",
+    "lastbattle", "credits", "zombie", "breakdow+n", "hell", "jenka2", "waterway", "seal",
+    "toroko", "white", "azarashi", NULL
 };
 
 static const char bossmusic[] = { 4, 7, 10, 11, 15, 16, 17, 18, 21, 22, 31, 33, 35, 0 };
 
 static const char *pxt_dir = "./pxt/";
+
+#ifndef _SDL_MIXER
 static const char *org_dir = "./org/";
+#else
+static const char *xm_dir = "./xm/";
+#endif
+
 static const char *sndcache = "sndcache.pcm";
 static const char *org_wavetable = "wavetable.dat";
 
@@ -68,7 +79,7 @@ void sound(int snd)
 {
 	if (!settings->sound_enabled)
 		return;
-	
+
 	pxt_Stop(snd);
 	pxt_Play(-1, snd, 0);
 }
@@ -118,7 +129,7 @@ void c------------------------------() {}
 
 void music(int songno)
 {
-	if (songno == cursong)
+    if (songno == cursong)
 		return;
 	
 	lastsong = cursong;
@@ -133,7 +144,7 @@ void music(int songno)
 		return;
 	}
 	
-	start_track(songno);
+    start_track(songno);
 }
 
 
@@ -170,35 +181,61 @@ void music_set_enabled(int newstate)
 		
 		settings->music_enabled = newstate;
 		bool play = should_music_play(cursong, newstate);
-		
+
 		if (play != org_is_playing())
-		{
-			if (play)
-				start_track(cursong);
-			else
-				org_stop();
-		}
+        {
+            if (play)
+                start_track(cursong);
+            else
+                org_stop();
+        }
 	}
 }
 
 static void start_track(int songno)
 {
-char fname[MAXPATHLEN];
+    char fname[MAXPATHLEN];
 
-	if (songno == 0)
-	{
-		org_stop();
-		return;
-	}
-	
-	strcpy(fname, org_dir);
-	strcat(fname, org_names[songno]);
-	strcat(fname, ".org");
-	
-	if (!org_load(fname))
-	{
-		org_start(0);
-	}
+    if (songno == 0)
+    {
+        org_stop();
+        return;
+    }
+
+#ifdef _SDL_MIXER
+    music_free();
+
+    strcpy(fname, xm_dir);
+    strcat(fname, org_names[songno]);
+    strcat(fname, ".xm");
+
+    if(music_xm=Mix_LoadMUS(fname)) {
+        stat("openning %s file\n", fname);
+    }
+
+    bool qLooped = (songno == 3 || songno == 10 || songno == 15 || songno == 16);
+
+    if(Mix_PlayMusic(music_xm, (qLooped) ? 0 : -1) == -1) {
+        staterr("Error in Mix_PlayMusic!\n");
+    }
+
+    org_set_playing(true);
+#else
+    strcpy(fname, org_dir);
+    strcat(fname, org_names[songno]);
+    strcat(fname, ".org");
+
+    if (!org_load(fname))
+    {
+        org_start(0);
+    }
+#endif
+}
+
+void music_free()
+{
+    Mix_FreeMusic(music_xm);
+    stat("Music free!\n");
 }
 
 int music_cursong()		{ return cursong; }

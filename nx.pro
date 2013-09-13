@@ -14,7 +14,7 @@ linux-mips-g++: TARGET = nx.dge
 linux-arm-gnueabi-g++: TARGET = nx.magx
 
 CONFIG -= static
-CONFIG += stripped
+CONFIG -= stripped
 
 GCC_STATIC_FLAGS += -static -static-libgcc -static-libstdc++
 
@@ -22,26 +22,26 @@ SDL_LIBS += -lSDLmain -lSDL
 win32-g++: STATIC_SDL_LIBS += -lSDLmain -lSDL -liconv -lm -luser32 -lgdi32 -lwinmm
 linux-arm-gnueabi-g++: MOTOMAGX_LIBS += $$system(sdl-config  --libs)
 
-OTHER_LIBS += -lSDL_ttf
+OTHER_LIBS += -lSDL_ttf -lSDL_mixer
 linux-arm-gnueabi-g++: OTHER_MOTOMAGX_LIBS = -lSDL_ttf -lstdc++ -lm -lfreetype
 OTHER_STATIC_LIBS += -lSDL_ttf -lfreetype -lpng -lz
 
-QMAKE_CFLAGS +=
-QMAKE_CXXFLAGS += -Wreturn-type -Wformat -Wno-multichar
-QMAKE_CXXFLAGS_RELEASE +=
-QMAKE_CXXFLAGS_DEBUG += -D DEBUG
+QMAKE_CFLAGS += -D_RZX50 -D_SDL_MIXER
+QMAKE_CXXFLAGS += -Wreturn-type -Wformat -Wno-multichar -D_RZX50 -D_SDL_MIXER
+QMAKE_CXXFLAGS_RELEASE += -D_RZX50 -D_SDL_MIXER
+QMAKE_CXXFLAGS_DEBUG += -D DEBUG -D_RZX50 -D_SDL_MIXER
 
 # Generic MIPS device
-linux-mips-g++: QMAKE_CFLAGS_DEBUG += -D_RZX50
-linux-mips-g++: QMAKE_CXXFLAGS_DEBUG += -D_RZX50
-linux-mips-g++: QMAKE_CFLAGS_RELEASE += -D_RZX50 -mabi=32 -msoft-float -ffast-math -G0
-linux-mips-g++: QMAKE_CXXFLAGS_RELEASE += -D_RZX50 -mabi=32 -msoft-float -ffast-math -G0
+linux-mips-g++: QMAKE_CFLAGS_DEBUG += -D_RZX50 -D_SDL_MIXER
+linux-mips-g++: QMAKE_CXXFLAGS_DEBUG += -D_RZX50 -D_SDL_MIXER
+linux-mips-g++: QMAKE_CFLAGS_RELEASE += -D_RZX50 -D_SDL_MIXER -mabi=32 -msoft-float -ffast-math -G0
+linux-mips-g++: QMAKE_CXXFLAGS_RELEASE += -D_RZX50 -D_SDL_MIXER -mabi=32 -msoft-float -ffast-math -G0
 
 # Generic MotoMagX Device
-linux-arm-gnueabi-g++: QMAKE_CFLAGS_DEBUG += $$system(sdl-config  --cflags) -D_MOTOMAGX
-linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_DEBUG += $$system(sdl-config  --cflags) -D_MOTOMAGX
-linux-arm-gnueabi-g++: QMAKE_CFLAGS_RELEASE += $$system(sdl-config  --cflags) -D_MOTOMAGX -march=armv6j -mtune=arm1136jf-s -mfpu=vfp
-linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_RELEASE += $$system(sdl-config  --cflags) -D_MOTOMAGX -march=armv6j -mtune=arm1136jf-s -mfpu=vfp
+linux-arm-gnueabi-g++: QMAKE_CFLAGS_DEBUG += $$system(sdl-config  --cflags) -D_MOTOMAGX -D_SDL_MIXER
+linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_DEBUG += $$system(sdl-config  --cflags) -D_MOTOMAGX -D_SDL_MIXER
+linux-arm-gnueabi-g++: QMAKE_CFLAGS_RELEASE += $$system(sdl-config  --cflags) -D_MOTOMAGX -D_SDL_MIXER -march=armv6j -mtune=arm1136jf-s -mfpu=vfp
+linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_RELEASE += $$system(sdl-config  --cflags) -D_MOTOMAGX -D_SDL_MIXER -march=armv6j -mtune=arm1136jf-s -mfpu=vfp
 
 # Headers
 INCLUDEPATH += .

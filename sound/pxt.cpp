@@ -46,7 +46,7 @@ int8_t white[WHITE_LEN];
 // the final sounds ready to play (after pxt_PrepareToPlay)
 static struct
 {
-	int16_t *buffer;
+    int16_t *buffer;
 	int len;
 	int loops_left;
 	void (*DoneCallback)(int, int);
@@ -696,7 +696,7 @@ int malc_size;
 
 	// convert the buffer from 8-bit mono signed to 16-bit stereo signed
 	malc_size = (snd->final_size * 2 * 2);
-	outbuffer = (signed short *)malloc(malc_size);
+    outbuffer = (signed short *)malloc(malc_size);
 	
 	for(i=ap=0;i<snd->final_size;i++)
 	{
@@ -707,9 +707,9 @@ int malc_size;
 		outbuffer[ap++] = value;		// left ch
 		outbuffer[ap++] = value;		// right ch
 	}
+
 	
-	
-	sound_fx[slot].buffer = outbuffer;
+    sound_fx[slot].buffer = outbuffer;
 	sound_fx[slot].len = snd->final_size;
 	//lprintf("pxt ready to play in slot %d\n", slot);
 }
@@ -777,7 +777,7 @@ int pxt_PlayWithCallback(int chan, int slot, char loop, void (*FinishedCB)(int, 
 	{
 		staterr("pxt_Play: sound slot 0x%02x not rendered", slot);
 		return -1;
-	}
+    }
 }
 
 static void pxtSoundDone(int chan, int slot)
@@ -807,7 +807,7 @@ void pxt_Stop(int slot)
 {	/// possible threading issues here? i'm not sure if it's important enough
 	/// i don't want to lock the audio because i'm worried that when the sound is aborted
 	/// it could end up being left locked during the user's sound done callback.
-	if (sound_fx[slot].channel != -1)
+    if (sound_fx[slot].channel != -1)
 	{
 		sound_fx[slot].loops_left = 0;
 		SSAbortChannel(sound_fx[slot].channel);

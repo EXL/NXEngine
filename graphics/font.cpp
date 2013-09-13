@@ -174,7 +174,7 @@ SDL_Surface *letter;
 	{
 		str[0] = i;
 		
-		letter = TTF_RenderText_Solid(font, str, fgcolor);
+        letter = TTF_RenderUTF8_Solid(font, str, fgcolor);
 		if (!letter)
 		{
 			staterr("InitChars: failed to render character %d: %s", i, TTF_GetError());
@@ -213,8 +213,8 @@ SDL_Rect dstrect;
 	{
 		str[0] = i;
 		
-		top = TTF_RenderText_Solid(font, str, fgcolor);
-		bottom = TTF_RenderText_Solid(font, str, shcolor);
+        top = TTF_RenderUTF8_Solid(font, str, fgcolor);
+        bottom = TTF_RenderUTF8_Solid(font, str, shcolor);
 		if (!top || !bottom)
 		{
 			staterr("InitCharsShadowed: failed to render character %d: %s", i, TTF_GetError());

@@ -1,5 +1,10 @@
 
 #include <SDL/SDL.h>
+
+#ifdef _SDL_MIXER
+#include <SDL/SDL_mixer.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -529,7 +534,11 @@ bool org_start(int startbeat)
 void org_stop(void)
 {
 	if (song.playing)
-	{
+    {
+
+#ifdef _SDL_MIXER
+        Mix_HaltMusic();
+#endif
 		song.playing = false;
 		// cancel whichever buffer is playing
 		SSAbortChannel(ORG_CHANNEL);
@@ -539,6 +548,11 @@ void org_stop(void)
 bool org_is_playing(void)
 {
 	return song.playing;
+}
+
+void org_set_playing(bool qPlay)
+{
+    song.playing = qPlay;
 }
 
 // resume a song paused with org_stop

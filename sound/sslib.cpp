@@ -3,6 +3,11 @@
 // more or less, my own version of SDL_mixer
 
 #include <SDL/SDL.h>
+
+#ifdef _SDL_MIXER
+#include <SDL/SDL_mixer.h>
+#endif
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -11,6 +16,7 @@
 
 #include "sslib.h"
 #include "sslib.fdh"
+#include "sound.fdh"
 
 SSChannel channel[SS_NUM_CHANNELS];
 
@@ -22,7 +28,7 @@ int lockcount = 0;
 
 char SSInit(void)
 {
-SDL_AudioSpec fmt, obtained;
+    SDL_AudioSpec fmt, obtained;
 
 	// Set 16-bit stereo audio at 22Khz
 	fmt.freq = SAMPLE_RATE;
@@ -33,18 +39,25 @@ SDL_AudioSpec fmt, obtained;
 	fmt.userdata = NULL;
 	
 	// Open the audio device and start playing sound!
-	if (SDL_OpenAudio(&fmt, &obtained) < 0)
+#ifdef _SDL_MIXER
+    if (Mix_OpenAudio(fmt.freq, fmt.format, fmt.channels, fmt.samples)) {
+        staterr("SS: Unable to open audio: %s", SDL_GetError());
+        return 1;
+    }
+#else
+    if (SDL_OpenAudio(&fmt, &obtained) < 0)
 	{
 		staterr("SS: Unable to open audio: %s", SDL_GetError());
 		return 1;
-	}
+    }
 	
-	if (obtained.format != fmt.format || \
+    if (obtained.format != fmt.format || \
 		obtained.channels != fmt.channels)
 	{
 		staterr("SS: Failed to obtain the audio format I wanted");
 		return 1;
-	}
+    }
+#endif
 	
 	mixbuffer = (uint8_t *)malloc(obtained.samples * obtained.channels * 2);
 	
@@ -56,13 +69,22 @@ SDL_AudioSpec fmt, obtained;
 	stat("sslib: initilization was successful.");
 	
 	lockcount = 0;
-	SDL_PauseAudio(0);
+#ifdef _SDL_MIXER
+    Mix_Pause(-1);
+#else
+    SDL_PauseAudio(0);
+#endif
 	return 0;
 }
 
 void SSClose(void)
 {
-	SDL_CloseAudio();
+#ifdef _SDL_MIXER
+    music_free();
+    Mix_CloseAudio();
+#else
+    SDL_CloseAudio();
+#endif
 	if (mixbuffer) free(mixbuffer);
 }
 
@@ -147,7 +169,7 @@ SSChunk *chunk;
 	SSUnlockAudio();
 	
 	//stat("SSEnqueued buffer %d: %08x of %d bytes to channel %d (containing %d samples); UD %d", loc, buffer, chunk->bytelength, c, len, chunk->userdata);
-	return c;
+    return c;
 }
 
 // works like SSEnqueueChunk, only it does not enqueue. Instead, if a sound
@@ -274,14 +296,18 @@ void c------------------------------() {}
 // the audio "more", and you have to call it the same numbers of times before it will unlock.
 void SSLockAudio(void)
 {
-	if (lockcount==0) SDL_LockAudio();
+#ifndef _SDL_MIXER
+    if (lockcount==0) SDL_LockAudio();
+#endif
 	lockcount++;
 }
 
 void SSUnlockAudio(void)
 {
-	lockcount--;
-	if (!lockcount) SDL_UnlockAudio();
+    lockcount--;
+#ifndef _SDL_MIXER
+    if (!lockcount) SDL_UnlockAudio();
+#endif
 }
 
 /*

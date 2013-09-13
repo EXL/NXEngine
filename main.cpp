@@ -1,5 +1,10 @@
 
 #include "nx.h"
+
+#ifdef _SDL_MIXER
+#include <SDL/SDL_mixer.h>
+#endif
+
 #include <stdarg.h>
 #include <unistd.h>
 #include "graphics/safemode.h"
@@ -25,12 +30,12 @@ int main(int argc, char *argv[])
 bool inhibit_loadfade = false;
 bool error = false;
 bool freshstart;
-	
-	SetLogFilename("debug.txt");
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
-	{
-		staterr("ack, sdl_init failed: %s.", SDL_GetError());
-		return 1;
+
+    SetLogFilename("debug.txt");
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+    {
+        staterr("ack, sdl_init failed: %s.", SDL_GetError());
+        return 1;
     }
 	atexit(SDL_Quit);
 	
@@ -413,7 +418,13 @@ void InitNewGame(bool with_intro)
 void AppMinimized(void)
 {
 	stat("Game minimized or lost focus--pausing...");
-	SDL_PauseAudio(1);
+
+#ifdef _SDL_MIXER
+    Mix_Pause(-1);
+    Mix_PauseMusic();
+#else
+    SDL_PauseAudio(1);
+#endif
 	
 	for(;;)
 	{
@@ -425,8 +436,12 @@ void AppMinimized(void)
 		input_poll();
 		SDL_Delay(20);
 	}
-	
-	SDL_PauseAudio(0);
+#ifdef _SDL_MIXER
+    Mix_Resume(-1);
+    Mix_ResumeMusic();
+#else
+    SDL_PauseAudio(0);
+#endif
 	stat("Focus regained, resuming play...");
 }
 

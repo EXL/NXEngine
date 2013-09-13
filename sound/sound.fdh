@@ -18,6 +18,7 @@ bool should_music_play(int songno, int musicmode);
 bool music_is_boss(int songno);
 void music_set_enabled(int newstate);
 static void start_track(int songno);
+void music_free();
 int music_cursong();
 int music_lastsong();
 
@@ -35,6 +36,7 @@ void SSClose(void);
 int org_init(const char *wavetable_fname, const char *drum_pxt_dir, int org_volume);
 void org_stop(void);
 bool org_is_playing(void);
+void org_set_playing(bool);
 char org_load(char *fname);
 bool org_start(int startbeat);
 
