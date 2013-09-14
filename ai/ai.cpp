@@ -192,7 +192,7 @@ void transfer_damage(Object *o, Object *target)
 	{
 		// if you forget to set hp to 1000 when creating the puppet object,
 		// it can immediately destroy the main object, possibly leading to crashes.
-		#ifdef DEBUG
+        #ifdef DEBUG
 			ASSERT(o->hp != 0);
 		#endif
 		

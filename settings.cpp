@@ -35,7 +35,7 @@ bool settings_load(Settings *setfile)
 		
 		setfile->enable_debug_keys = false;
 		setfile->sound_enabled = true;
-        setfile->music_enabled = 0;	// both Boss and Regular music
+        setfile->music_enabled = 1;	// both Boss and Regular music
 		
 		setfile->instant_quit = false;
 		setfile->emulate_bugs = false;

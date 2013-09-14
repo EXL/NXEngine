@@ -7,6 +7,7 @@
 
 #ifdef _SDL_MIXER
 #include <SDL_mixer.h>
+
 Mix_Music *music_xm;
 #endif
 
@@ -77,7 +78,7 @@ void c------------------------------() {}
 
 void sound(int snd)
 {
-	if (!settings->sound_enabled)
+    if (!settings->sound_enabled)
 		return;
 
 	pxt_Stop(snd);
@@ -203,7 +204,9 @@ static void start_track(int songno)
     }
 
 #ifdef _SDL_MIXER
-    music_free();
+    if (music_xm) {
+        music_free();
+    }
 
     strcpy(fname, xm_dir);
     strcat(fname, org_names[songno]);
@@ -216,7 +219,7 @@ static void start_track(int songno)
     bool qLooped = (songno == 3 || songno == 10 || songno == 15 || songno == 16);
 
     if(Mix_PlayMusic(music_xm, (qLooped) ? 0 : -1) == -1) {
-        staterr("Error in Mix_PlayMusic!\n");
+        staterr("Error in Mix_PlayMusic!");
     }
 
     org_set_playing(true);
@@ -232,11 +235,15 @@ static void start_track(int songno)
 #endif
 }
 
+#ifdef _SDL_MIXER
 void music_free()
 {
     Mix_FreeMusic(music_xm);
-    stat("Music free!\n");
+#ifdef DEBUG
+    stat("Music is free!");
+#endif
 }
+#endif
 
 int music_cursong()		{ return cursong; }
 int music_lastsong() 	{ return lastsong; }

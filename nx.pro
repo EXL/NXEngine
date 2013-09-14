@@ -26,18 +26,19 @@ OTHER_LIBS += -lSDL_ttf -lSDL_mixer
 linux-arm-gnueabi-g++: OTHER_MOTOMAGX_LIBS = -lSDL_ttf -lstdc++ -lm -lfreetype
 OTHER_STATIC_LIBS += -lSDL_ttf -lfreetype -lpng -lz
 
+# Generic X86 (GNU/Linux, MS Windows)
 QMAKE_CFLAGS += -D_RZX50 -D_SDL_MIXER
 QMAKE_CXXFLAGS += -Wreturn-type -Wformat -Wno-multichar -D_RZX50 -D_SDL_MIXER
 QMAKE_CXXFLAGS_RELEASE += -D_RZX50 -D_SDL_MIXER
 QMAKE_CXXFLAGS_DEBUG += -D DEBUG -D_RZX50 -D_SDL_MIXER
 
-# Generic MIPS device
+# Generic MIPS device (Dingoo A320->Dingux, Ritmix RZX-50, etc)
 linux-mips-g++: QMAKE_CFLAGS_DEBUG += -D_RZX50 -D_SDL_MIXER
 linux-mips-g++: QMAKE_CXXFLAGS_DEBUG += -D_RZX50 -D_SDL_MIXER
 linux-mips-g++: QMAKE_CFLAGS_RELEASE += -D_RZX50 -D_SDL_MIXER -mabi=32 -msoft-float -ffast-math -G0
 linux-mips-g++: QMAKE_CXXFLAGS_RELEASE += -D_RZX50 -D_SDL_MIXER -mabi=32 -msoft-float -ffast-math -G0
 
-# Generic MotoMagX Device
+# Generic MotoMagX Device (Motorola Models: ZN5(T-Mob), E8, EM30, VE66, EM35, Z6, V8, etc)
 linux-arm-gnueabi-g++: QMAKE_CFLAGS_DEBUG += $$system(sdl-config  --cflags) -D_MOTOMAGX -D_SDL_MIXER
 linux-arm-gnueabi-g++: QMAKE_CXXFLAGS_DEBUG += $$system(sdl-config  --cflags) -D_MOTOMAGX -D_SDL_MIXER
 linux-arm-gnueabi-g++: QMAKE_CFLAGS_RELEASE += $$system(sdl-config  --cflags) -D_MOTOMAGX -D_SDL_MIXER -march=armv6j -mtune=arm1136jf-s -mfpu=vfp

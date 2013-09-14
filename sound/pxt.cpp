@@ -7,6 +7,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _SDL_MIXER
+#include <SDL/SDL_mixer.h>
+
+Mix_Chunk *mixChunk;
+#endif
+
 #if defined(__MINGW32__) || defined(_RZX50) || defined(_MOTOMAGX)
 #define htole16(x) (x)
 #else
@@ -735,13 +741,25 @@ int insize = snd->final_size;
 	snd->final_size = outsize;
 }
 
-
 // begins playing the pxt in the given slot.
 // the SSChannel is returned.
 // on error, returns -1.
 int pxt_Play(int chan, int slot, char loop)
 {
-	return pxt_PlayWithCallback(chan, slot, loop, NULL);
+#ifdef _SDL_MIXER
+    if (mixChunk) {
+        pxt_chunk_free();
+    }
+
+    /* I don't know correct this or no, but this work */
+    mixChunk = Mix_QuickLoad_RAW((Uint8 *)sound_fx[slot].buffer, sound_fx[slot].len);
+
+    if(Mix_PlayChannel(chan, mixChunk, loop)==-1) {
+        stat("Mix_PlayChannel: %s\n",Mix_GetError());
+    }
+#else
+    return pxt_PlayWithCallback(chan, slot, loop, NULL);
+#endif
 }
 
 int pxt_PlayWithCallback(int chan, int slot, char loop, void (*FinishedCB)(int, int))
@@ -807,6 +825,13 @@ void pxt_Stop(int slot)
 {	/// possible threading issues here? i'm not sure if it's important enough
 	/// i don't want to lock the audio because i'm worried that when the sound is aborted
 	/// it could end up being left locked during the user's sound done callback.
+
+#ifdef _SDL_MIXER
+    Mix_HaltChannel(sound_fx[slot].channel);
+#ifdef DEBUG
+    stat("Halt channel");
+#endif
+#endif
     if (sound_fx[slot].channel != -1)
 	{
 		sound_fx[slot].loops_left = 0;
@@ -1243,6 +1268,15 @@ int i, j;
 	return 0;
 }
 
+#ifdef _SDL_MIXER
+void pxt_chunk_free()
+{
+    Mix_FreeChunk(mixChunk);
+#ifdef DEBUG
+    stat("Chunk free!");
+#endif
+}
+#endif
 
 static void SaveComponent(FILE *fp, const char *name, stPXWave *pxw)
 {

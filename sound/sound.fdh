@@ -50,7 +50,7 @@ void pxt_freeSoundFX(void);
 void pxt_Stop(int slot);
 int pxt_Play(int chan, int slot, char loop);
 char pxt_IsPlaying(int slot);
-
+void pxt_chunk_free();
 
 /* located in common/stat.cpp */
 

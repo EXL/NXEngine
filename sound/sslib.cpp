@@ -80,6 +80,7 @@ char SSInit(void)
 void SSClose(void)
 {
 #ifdef _SDL_MIXER
+    pxt_chunk_free();
     music_free();
     Mix_CloseAudio();
 #else
