@@ -27,7 +27,7 @@ static int current_res = -1;
 
 bool Graphics::init(int resolution)
 {
-#ifdef _RZX50
+#ifdef _480X272 // 480x272 widescreen fix
     resolution = 0;
 #endif
 
@@ -70,7 +70,7 @@ bool Graphics::init(int resolution)
 void Graphics::close()
 {
 	stat("Graphics::Close()");
-#ifndef _RZX50
+#ifndef _480X272 // 480x272 widescreen fix
 	SDL_ShowCursor(true);
 #endif
 }
@@ -109,7 +109,7 @@ SDL_Surface *sdl_screen;
 	
 	SDL_WM_SetCaption("NXEngine", NULL);
 
-#if defined (_RZX50) || defined (_MOTOMAGX)
+#if defined (_480X272) || defined (_320X240)
     SDL_ShowCursor(false);
 #else
     SDL_ShowCursor(is_fullscreen == false);
@@ -156,7 +156,7 @@ bool Graphics::SetResolution(int r, bool restoreOnFailure)
 	
 	if (r == 0)
 	{
-#if defined (_RZX50) || defined (_MOTOMAGX)
+#if defined (_480X272) || defined (_320X240)
         is_fullscreen = false;
         factor = 1;
 #else
@@ -197,13 +197,13 @@ bool Graphics::SetResolution(int r, bool restoreOnFailure)
 // return a pointer to a null-terminated list of available resolutions.
 const char **Graphics::GetResolutions()
 {
-#ifdef _RZX50
+#ifdef _480X272 // 480x272 widescreen fix
     static const char *res_str[]   =
     {
         "480x272",
         NULL
     };
-#elif _MOTOMAGX
+#elif _320X240
     static const char *res_str[]   =
     {
         "320x240",

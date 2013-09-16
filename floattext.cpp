@@ -160,18 +160,8 @@ int x, y, i;
 	y = ft->objY + ft->yoff;
 	// adjust to object's onscreen position
 
-#ifdef _RZX50
-        if(map.maxxscroll < 0 && map.maxyscroll < 0) {
-            x -= (map.displayed_xscroll >> CSG);
-            y -= (map.displayed_yscroll >> CSG);
-        } else {
-            x -= (map.displayed_xscroll >> CSF);
-            y -= (map.displayed_yscroll >> CSF);
-        }
-#else
     x -= (map.displayed_xscroll >> CSF);
     y -= (map.displayed_yscroll >> CSF);
-#endif
 	
 	// draw the text char by char
 	for(i=0;i<textlen;i++)

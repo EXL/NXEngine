@@ -5,7 +5,7 @@
 #include "nxsurface.h"
 // (unscaled) screen size/video mode
 
-#ifndef _RZX50
+#ifndef _480X272 // 480x272 widescreen fix
 #define SCREEN_WIDTH		320
 #define SCREEN_HEIGHT		240
 #else

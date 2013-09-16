@@ -1614,19 +1614,8 @@ int scr_x, scr_y;
 	player->XPText->UpdatePos(player);
 	
     // get screen position to draw him at
-
-#ifdef _RZX50
-        if(map.maxxscroll < 0 && map.maxyscroll < 0) {
-            scr_x = (player->x >> CSF) - (map.displayed_xscroll >> CSG);
-            scr_y = (player->y >> CSF) - (map.displayed_yscroll >> CSG);
-        } else {
-            scr_x = (player->x >> CSF) - (map.displayed_xscroll >> CSF);
-            scr_y = (player->y >> CSF) - (map.displayed_yscroll >> CSF);
-        }
-#else
     scr_x = (player->x >> CSF) - (map.displayed_xscroll >> CSF);
     scr_y = (player->y >> CSF) - (map.displayed_yscroll >> CSF);
-#endif
 
 	// draw his gun
 	if (player->curWeapon != WPN_NONE && player->curWeapon != WPN_BLADE)

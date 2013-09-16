@@ -5,7 +5,7 @@
 using namespace Options;
 extern FocusStack optionstack;
 
-#ifdef _RZX50
+#ifdef _480X272 // 480x272 widescreen fix
 #define DLG_X		((SCREEN_WIDTH / 2) - 110)
 #define DLG_Y		((SCREEN_HEIGHT / 2) - 90)
 #define DLG_W		240

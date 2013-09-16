@@ -79,7 +79,7 @@ int curwpn = 0;
 	inv.w = 244;
 	inv.h = 152;
 	inv.x = (SCREEN_WIDTH / 2) - (inv.w / 2);
-#ifndef _RZX50
+#ifndef _480X272 // 480x272 widescreen fix
 	inv.y = 8;
 #else
     inv.y = 30;

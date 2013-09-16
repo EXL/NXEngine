@@ -87,8 +87,3 @@ void pause_tick()
 	}
 }
 
-
-
-
-
-

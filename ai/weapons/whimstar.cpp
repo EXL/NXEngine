@@ -89,19 +89,10 @@ Whimstar *stars = wh->stars;
 int i;
 int scr_x, scr_y;
 	for(i=0;i<wh->nstars;i++)
-	{
-#ifdef _RZX50
-    if(map.maxxscroll < 0 && map.maxyscroll < 0) {
-        scr_x = (stars[i].x >> CSF) - (map.displayed_xscroll >> CSG);
-        scr_y = (stars[i].y >> CSF) - (map.displayed_yscroll >> CSG);
-    } else {
+    {
         scr_x = (stars[i].x >> CSF) - (map.displayed_xscroll >> CSF);
         scr_y = (stars[i].y >> CSF) - (map.displayed_yscroll >> CSF);
-    }
-#else
-        scr_x = (stars[i].x >> CSF) - (map.displayed_xscroll >> CSF);
-        scr_y = (stars[i].y >> CSF) - (map.displayed_yscroll >> CSF);
-#endif
+
 		draw_sprite_at_dp(scr_x, scr_y, SPR_WHIMSICAL_STAR, i);
 	}
 }

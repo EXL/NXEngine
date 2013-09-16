@@ -63,21 +63,21 @@ int i;
 	sprites[SPR_SISTERS_HEAD].bbox.y2
 	); exit(1);*/
 	
-	main = CreateObject(((10*TILE_W))<<CSF, ((8*TILE_H)-4)<<CSF, OBJ_SISTERS_MAIN);
+    main = CreateObject(((10*TILE_W))<<CSF, ((8*TILE_H)-4)<<CSF, OBJ_SISTERS_MAIN);
 	main->invisible = true;
 	
 	for(i=0;i<NUM_SISTERS;i++)
 	{
-		body[i] = CreateObject((64<<CSF) + (50<<CSF)*i, 80<<CSF, OBJ_SISTERS_BODY);
+        body[i] = CreateObject((64<<CSF) + (50<<CSF)*i, 80<<CSF, OBJ_SISTERS_BODY);
 		body[i]->sprite = SPR_SISTERS_BODY;
 		body[i]->damage = SISTERS_DAMAGE;
 	}
 	
 	for(i=0;i<NUM_SISTERS;i++)
 	{
-		head[i] = CreateObject((64<<CSF) + (50<<CSF)*i, 64<<CSF, OBJ_SISTERS_HEAD);
+        head[i] = CreateObject((64<<CSF) + (50<<CSF)*i, 64<<CSF, OBJ_SISTERS_HEAD);
 		head[i]->hp = 1000;
-		head[i]->damage = SISTERS_DAMAGE;
+        head[i]->damage = SISTERS_DAMAGE;
 		
 		// we give each dragon a different but identical-looking head sprite
 		// so that we can hack their bboxes individually.
@@ -88,8 +88,14 @@ int i;
 	objprop[OBJ_SISTERS_HEAD].hurt_sound = SND_ENEMY_HURT_COOL;
 	
 	mainangle = 0;
-	main->xmark = 180;
-	main->ymark = 61;
+
+#ifdef _480X272
+    main->xmark = 180 * 2;
+    main->ymark = 61 * 2;
+#else
+    main->xmark = 180;
+    main->ymark = 61;
+#endif
 	main->timer2 = random(700, 1200);
 	main->hp = 500;
 	
@@ -111,7 +117,7 @@ void c------------------------------() {}
 
 void SistersBoss::Run(void)
 {
-int i;
+    int i;
 
 	Object *o = main;
 	if (!o) return;
@@ -124,6 +130,10 @@ int i;
 	{
 		case 20:	// fight begin (script-triggered)
 		{
+#ifdef _480X272
+            main->xmark = 180;
+            main->ymark = 61;
+#endif
 			if (++o->timer > 68)
 			{
 				o->xmark = 112;		// bodies zoom onto screen via force of their interpolation

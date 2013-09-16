@@ -32,7 +32,6 @@ using Sprites::get_spritesheet;
 using Tileset::draw_tile;
 
 #define CSF				9
-#define CSG				10
 
 class Object;
 

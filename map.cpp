@@ -29,12 +29,12 @@ char fname[MAXPATHLEN];
 	stat(" >> Entering stage %d: '%s'.", stage_no, stages[stage_no].stagename);
 	game.curmap = stage_no;		// do it now so onspawn events will have it
 	
-	if (use_palette)
+    if (use_palette)
 	{
 		palette_reset();
 		Sprites::FlushSheets();
 		map_flush_graphics();
-	}
+    }
 
 	if (Tileset::Load(stages[stage_no].tileset))
 		return 1;
@@ -91,7 +91,7 @@ int x, y;
 	fgetc(fp);
 	map.xsize = fgeti(fp);
 	map.ysize = fgeti(fp);
-	
+
 	if (map.xsize > MAP_MAXSIZEX || map.ysize > MAP_MAXSIZEY)
 	{
 		staterr("load_map: map is too large -- size %dx%d but max is %dx%d", map.xsize, map.ysize, MAP_MAXSIZEX, MAP_MAXSIZEY);
@@ -109,11 +109,32 @@ int x, y;
 		map.tiles[x][y] = fgetc(fp);
 	}
 	
-	fclose(fp);
-	
-	map.maxxscroll = (((map.xsize * TILE_W) - SCREEN_WIDTH) - 8) << CSF;
-	map.maxyscroll = (((map.ysize * TILE_H) - SCREEN_HEIGHT) - 8) << CSF;
-	
+    fclose(fp);
+
+#ifdef _480X272 // 480x272 widescreen fix
+    if (map.xsize * TILE_W<SCREEN_WIDTH && map.ysize * TILE_W<SCREEN_HEIGHT) {
+        map.maxxscroll = (((map.xsize * TILE_W) - (SCREEN_WIDTH - 80)) - 8) << CSF;
+        map.maxyscroll = (((map.ysize * TILE_H) - (SCREEN_HEIGHT - 16)) - 8) << CSF;
+    } else if (map.xsize * TILE_W<SCREEN_WIDTH) {
+        if (x == 25) { // MazeI
+            map.maxxscroll = (((map.xsize * TILE_W) - (SCREEN_WIDTH - 48)) - 8) << CSF;
+            map.maxyscroll = (((map.ysize * TILE_H) - SCREEN_HEIGHT) - 8) << CSF;
+        } else { // Others
+            map.maxxscroll = (((map.xsize * TILE_W) - (SCREEN_WIDTH - 80)) - 8) << CSF;
+            map.maxyscroll = (((map.ysize * TILE_H) - SCREEN_HEIGHT) - 8) << CSF;
+        }
+    } else if (map.ysize * TILE_W<SCREEN_HEIGHT) {
+        map.maxxscroll = (((map.xsize * TILE_W) - SCREEN_WIDTH) - 8) << CSF;
+        map.maxyscroll = (((map.ysize * TILE_H) - (SCREEN_HEIGHT - 16)) - 8) << CSF;
+    } else {
+        map.maxxscroll = (((map.xsize * TILE_W) - SCREEN_WIDTH) - 8) << CSF;
+        map.maxyscroll = (((map.ysize * TILE_H) - SCREEN_HEIGHT) - 8) << CSF;
+    }
+#else
+    map.maxxscroll = (((map.xsize * TILE_W) - SCREEN_WIDTH) - 8) << CSF;
+    map.maxyscroll = (((map.ysize * TILE_H) - SCREEN_HEIGHT) - 8) << CSF;
+#endif
+
 	stat("load_map: '%s' loaded OK! - %dx%d", fname, map.xsize, map.ysize);
 	return 0;
 }
@@ -380,11 +401,11 @@ int x, y;
 		case BK_HIDE:
 		case BK_HIDE2:
 		case BK_HIDE3:
-		{
-			if (game.curmap == STAGE_KINGS)		// intro cutscene
-				ClearScreen(BLACK);
-			else
-				ClearScreen(DK_BLUE);
+        {
+            if (game.curmap == STAGE_KINGS)		// intro cutscene
+                ClearScreen(BLACK);
+            else
+                ClearScreen(DK_BLUE);
 		}
 		return;
 		
@@ -411,7 +432,7 @@ int x, y;
 // blit OSide's BK_FASTLEFT_LAYERS
 static void DrawFastLeftLayered(void)
 {
-#ifndef _RZX50
+#ifndef _480X272 // 480x272 widescreen fix
     static const int layer_ys[] = { 80, 122, 145, 176, 240 };
 #else
     static const int layer_ys[] = { 80, 122, 145, 176, 272 };
@@ -453,7 +474,7 @@ char fname[MAXPATHLEN];
 		// use chromakey (transparency) on bkwater, all others don't
 		bool use_chromakey = (backdrop_no == 8);
 
-#ifdef _RZX50
+#ifdef _480X272 // 480x272 widescreen fix
         if (backdrop_no == 9) {
             if (sprintf(fname, "%s/%s.pbm", data_dir, "bkMoon480fix") < 0) {
                 staterr("Error opening bkMoon480fix file");
@@ -546,18 +567,8 @@ int mapx, mapy;
 int blit_x, blit_y, blit_x_start;
 int scroll_x, scroll_y;
 
-#ifdef _RZX50
-    if(map.maxxscroll < 0 && map.maxyscroll < 0) {
-        scroll_x = (map.displayed_xscroll >> CSG);
-        scroll_y = (map.displayed_yscroll >> CSG);
-    } else {
-        scroll_x = (map.displayed_xscroll >> CSF);
-        scroll_y = (map.displayed_yscroll >> CSF);
-    }
-#else
     scroll_x = (map.displayed_xscroll >> CSF);
     scroll_y = (map.displayed_yscroll >> CSF);
-#endif
 	
     /*
     printf("(%d)x(%d):\t:", map.displayed_xscroll, map.displayed_yscroll);
@@ -574,19 +585,20 @@ int scroll_x, scroll_y;
 	
 	// MAP_DRAW_EXTRA_Y etc is 1 if resolution is changed to
 	// something not a multiple of TILE_H.
+
     for(y=0; y <= (SCREEN_HEIGHT / TILE_H)+MAP_DRAW_EXTRA_Y; y++)
-	{
-		blit_x = blit_x_start;
-		
+    {
+        blit_x = blit_x_start;
+
         for(x=0; x <= (SCREEN_WIDTH / TILE_W)+MAP_DRAW_EXTRA_X; x++)
-		{
+        {
             int t = map.tiles[mapx+x][mapy+y];
             if ((tileattr[t] & TA_FOREGROUND) == foreground)
-				draw_tile(blit_x, blit_y, t);
-			
+                draw_tile(blit_x, blit_y, t);
+
             blit_x += TILE_W;
-		}
-		
+        }
+
         blit_y += TILE_H;
     }
 }

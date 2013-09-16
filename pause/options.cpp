@@ -180,7 +180,7 @@ void _res_get(ODItem *item)
 	}
 	else
     {
-#if defined (_RZX50) || defined (_MOTOMAGX)
+#if defined (_480X272) || defined (_320X240)
         strcpy(item->suffix, reslist[0]);
 #else
         strcpy(item->suffix, reslist[settings->resolution]);
@@ -212,7 +212,7 @@ int newres;
 	}
 	if (!Graphics::SetResolution(newres, true))
 	{
-#if defined (_RZX50) || defined (_MOTOMAGX)
+#if defined (_480X272) || defined (_320X240)
         settings->resolution = 0;
 #else
         settings->resolution = newres;
@@ -464,17 +464,3 @@ int i;
 	sound(SND_MENU_SELECT);
 	opt.dlg->Refresh();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

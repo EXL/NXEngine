@@ -39,7 +39,7 @@ void TB_SaveSelect::SetVisible(bool enable, bool saving)
     fCoords.w = 244;
     fCoords.h = 152;
 
-#ifdef _RZX50
+#ifdef _480X272 // 480x272 widescreen fix
     fCoords.x = (SCREEN_WIDTH / 2) - (fCoords.w / 2);
     fCoords.y = 30;
 #else
@@ -333,14 +333,3 @@ void TB_SaveSelect::Draw(void)
 	if (fHaveProfile[fCurSel])
 		DrawExtendedInfo();
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -2,31 +2,23 @@
 // PXT sound file player
 // see bottom of file for info on how to use this module
 
-#include <stdio.h>
-#include <math.h>			// for sin()
-#include <stdlib.h>
-#include <string.h>
-
 #ifdef _SDL_MIXER
 #include <SDL/SDL_mixer.h>
 
 Mix_Chunk *mixChunk;
 #endif
 
-#if defined(__MINGW32__) || defined(_RZX50) || defined(_MOTOMAGX)
-#define htole16(x) (x)
-#else
-#include <endian.h>
-#endif
+#include <stdio.h>
+#include <math.h>			// for sin()
+#include <stdlib.h>
+#include <string.h>
 
-#include "../config.h"
 #include "pxt.h"
 #include "sslib.h"
 
 #include "pxt.fdh"
 
 #define MODEL_SIZE			256
-#define PXCACHE_MAGICK		'PXC1'
 
 // gets the next byte from wave "wave", scales it by the waves volume, and places result in "out".
 // x * (y / z) = (x * y) / z
@@ -47,12 +39,12 @@ Mix_Chunk *mixChunk;
 
 
 #define WHITE_LEN		22050
-int8_t white[WHITE_LEN];
+signed char white[WHITE_LEN];
 
 // the final sounds ready to play (after pxt_PrepareToPlay)
 static struct
 {
-    int16_t *buffer;
+	signed short *buffer;
 	int len;
 	int loops_left;
 	void (*DoneCallback)(int, int);
@@ -63,7 +55,7 @@ int load_top;
 
 static struct
 {
-	uint8_t table[256];
+	unsigned char table[256];
 } wave[PXT_NO_MODELS];
 
 
@@ -78,7 +70,7 @@ static unsigned short rand_next(void)
 
 static void GenerateSineModel(unsigned char *table)
 {
-double twopi = 6.283184000f;
+double tpi = 6.283184000f;
 double ratio = 256.00f;
 double rat64 = 64.00f;
 double reg;
@@ -87,7 +79,7 @@ int i;
 	for(i=0;i<256;i++)
 	{
 		reg = (double)i;
-		reg *= twopi;
+		reg *= tpi;
 		reg /= ratio;
 		reg = sin(reg);
 		reg *= rat64;
@@ -142,7 +134,7 @@ static void GenerateSquareModel(unsigned char *table)
 int i;
 
 	for(i=0;i<128;i++) table[i] = 0x40;
-	for(;i<256;i++) table[i] = (uint8_t)-0x40;
+	for(;i<256;i++) table[i] = -0x40;
 }
 
 
@@ -177,7 +169,7 @@ static void GeneratePulseModel(unsigned char *table)
 int i;
 
 	for(i=0;i<192;i++) table[i] = 0x40;
-	for(;i<256;i++) table[i] = (uint8_t)-0x40;
+	for(;i<256;i++) table[i] = -0x40;
 }
 
 
@@ -190,7 +182,7 @@ int i;
 
 	if (inited)
 	{
-		staterr("pxt_init: pxt module already initialized");
+		staterr("pxt_init: pxt module already initilized");
 		return 0;
 	}
 	else inited = 1;
@@ -702,28 +694,27 @@ int malc_size;
 
 	// convert the buffer from 8-bit mono signed to 16-bit stereo signed
 	malc_size = (snd->final_size * 2 * 2);
-    outbuffer = (signed short *)malloc(malc_size);
+	outbuffer = (signed short *)malloc(malc_size);
 	
 	for(i=ap=0;i<snd->final_size;i++)
 	{
 		value = buffer[i];
 		value *= 200;
-		value = htole16(value);
 		
 		outbuffer[ap++] = value;		// left ch
 		outbuffer[ap++] = value;		// right ch
 	}
-
 	
-    sound_fx[slot].buffer = outbuffer;
+	
+	sound_fx[slot].buffer = outbuffer;
 	sound_fx[slot].len = snd->final_size;
 	//lprintf("pxt ready to play in slot %d\n", slot);
 }
 
 // quick-and-dirty function to raise or lower the pitch of a sound.
 // I say quick-and-dirty because it also changes the length.
-// We need this for the "SSS" (Stream Sound) which is supposed to
-// have adjustable pitch.
+// We need this for the "SSS" (Stream Sound) which is supposed to have
+// adjustable pitch.
 void pxt_ChangePitch(stPXSound *snd, double factor)
 {
 signed char *inbuffer = snd->final_buffer;
@@ -740,6 +731,7 @@ int insize = snd->final_size;
 	snd->final_buffer = outbuffer;
 	snd->final_size = outsize;
 }
+
 
 // begins playing the pxt in the given slot.
 // the SSChannel is returned.
@@ -795,7 +787,7 @@ int pxt_PlayWithCallback(int chan, int slot, char loop, void (*FinishedCB)(int, 
 	{
 		staterr("pxt_Play: sound slot 0x%02x not rendered", slot);
 		return -1;
-    }
+	}
 }
 
 static void pxtSoundDone(int chan, int slot)
@@ -825,15 +817,14 @@ void pxt_Stop(int slot)
 {	/// possible threading issues here? i'm not sure if it's important enough
 	/// i don't want to lock the audio because i'm worried that when the sound is aborted
 	/// it could end up being left locked during the user's sound done callback.
-
+	if (sound_fx[slot].channel != -1)
+	{
 #ifdef _SDL_MIXER
     Mix_HaltChannel(sound_fx[slot].channel);
 #ifdef DEBUG
     stat("Halt channel");
 #endif
 #endif
-    if (sound_fx[slot].channel != -1)
-	{
 		sound_fx[slot].loops_left = 0;
 		SSAbortChannel(sound_fx[slot].channel);
 	}
@@ -866,15 +857,14 @@ FILE *fp = NULL;
 			return 0;
 		}
 		
-		fp = fileopen(cache_name, "wb");
+		fp = fopen(cache_name, "wb");
 		if (!fp)
 		{
 			staterr("LoadSoundFX: failed open: '%s'", cache_name);
 			return 1;
 		}
 		
-		uint32_t magick = PXCACHE_MAGICK;
-		fwrite(&magick, 4, 1, fp);	// fwrite allows us to verify endianness, as well
+		fputl('PXC1', fp);
 		fputi(top, fp);
 	}
 	
@@ -886,6 +876,7 @@ FILE *fp = NULL;
 		sprintf(fname, "%sfx%02x.pxt", path, slot);
 		
 		if (pxt_load(fname, &snd)) continue;
+		
 		pxt_Render(&snd);
 		
 		// dirty hack; lower the pitch of the Stream Sounds
@@ -925,23 +916,18 @@ static char LoadFXCache(const char *fname, int top)
 {
 FILE *fp;
 int slot;
-uint32_t magick;
 stPXSound snd;
 
-	fp = fileopen(fname, "rb");
+	fp = fopen(fname, "rb");
 	if (!fp)
 	{
 		stat("LoadFXCache: audio cache %s not exist", fname);
 		return 1;
 	}
 	
-	// I don't use endian-agnostic fgetl as this file is endian-specific and we
-	// want the check to fail if the file were moved from a little-endian to
-	// big-endian system or vice-versa.
-	fread(&magick, sizeof(magick), 1, fp);
-	if (magick != PXCACHE_MAGICK)
+	if (fgetl(fp) != 'PXC1')
 	{
-		stat("LoadFXCache: %s is incorrect format: expected %08x, got %08x", fname, PXCACHE_MAGICK, magick);
+		stat("LoadFXCache: %s is incorrect format", fname);
 		fclose(fp);
 		return 1;
 	}
@@ -1065,13 +1051,14 @@ void FreePXTBuf(stPXSound *snd)
 char pxt_load(const char *fname, stPXSound *snd)
 {
 FILE *fp;
-char load_extended_section = 0;
 char ch;
-int i, cc;
+char cc;
+int i;
+char load_extended_section = 0;
 
 #define BRACK		'{'		// my damn IDE is borking up the Function List if i put this inline
 
-	fp = fileopen(fname, "rb");
+	fp = fopen(fname, "rb");
 	if (!fp) { staterr("pxt_load: file '%s' not found.", fname); return 1; }
 	
 	//lprintf("pxt_load: reading %s...\n", fname);
@@ -1193,7 +1180,7 @@ char pxt_save(const char *fname, stPXSound *snd)
 FILE *fp;
 int i, j;
 
-	fp = fileopen(fname, "wb");
+	fp = fopen(fname, "wb");
 	if (!fp)
 	{
 		stat("save_pxt: unable to open '%s'", fname);
@@ -1313,7 +1300,7 @@ static void SaveEnvVertice(FILE *fp, stPXEnvelope *env, int v)
 	structure with the proper values as spec'd in the file.
 	
 	Then you must synthesize or *render* the sound. First make sure the synthesizer
-	is initialized by calling pxt_init & pxt_initsynth.
+	is initilized by calling pxt_init & pxt_initsynth.
 	
 	Send your stPXSound through render_pxt. Now it includes 8-bit signed PCM audio
 	in final_buffer.

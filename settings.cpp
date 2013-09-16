@@ -25,7 +25,7 @@ bool settings_load(Settings *setfile)
 		stat("No saved settings; using defaults.");
 		
 		memset(setfile, 0, sizeof(Settings));
-#if defined (_RZX50) || defined (_MOTOMAGX)
+#if defined (_480X272) || defined (_320X240)
         setfile->resolution = 0;		// 640x480 Windowed, should be safe value
 #else
         setfile->resolution = 2;
