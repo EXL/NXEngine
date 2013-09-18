@@ -571,7 +571,11 @@ void org_set_playing(bool qPlay)
 void org_fade(void)
 {
 	stat("org_fade");
+#ifdef _SDL_MIXER
+    song.fading = false;
+#else
 	song.fading = true;
+#endif
 	song.last_fade_time = 0;
 }
 

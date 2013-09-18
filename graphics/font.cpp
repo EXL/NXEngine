@@ -57,9 +57,9 @@ bool error = false;
 	sdl_screen = screen->GetSDLSurface();
 	
 	// at 320x240 switch to bitmap fonts for better appearance
-	#ifdef CONFIG_ENABLE_TTF
-	if (SCALE == 1)
-	#endif
+    #ifdef CONFIG_ENABLE_TTF
+    if (SCALE == 1)
+    #endif
 	{
 		stat("fonts: using bitmapped from %s", bmpfontfile);
 		
@@ -77,7 +77,7 @@ bool error = false;
 		error |= bluefont.InitBitmapChars(sheet, fgindex, 0xa0b5de);
 		error |= shadowfont.InitBitmapCharsShadowed(sheet, fgindex, 0xffffff, 0x000000);
 	}
-	#ifdef CONFIG_ENABLE_TTF
+    #ifdef CONFIG_ENABLE_TTF
 	else
 	{
 		stat("fonts: using truetype at %dpt", pointsize[SCALE]);
@@ -88,8 +88,8 @@ bool error = false;
 			staterr("Couldn't initialize SDL_ttf: %s", TTF_GetError());
 			return 1;
 		}
-		
-		TTF_Font *font = TTF_OpenFont(ttffontfile, pointsize[SCALE]);
+
+        TTF_Font *font = TTF_OpenFont(ttffontfile, pointsize[SCALE]);
 		if (!font)
 		{
 			staterr("Couldn't open font: '%s'", ttffontfile);
@@ -103,7 +103,7 @@ bool error = false;
 		
 		TTF_CloseFont(font);
 	}
-	#endif
+    #endif
 	
 	error |= create_shade_sfc();
 	if (error) return 1;

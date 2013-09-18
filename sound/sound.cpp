@@ -53,23 +53,23 @@ static const char *org_wavetable = "wavetable.dat";
 
 bool sound_init(void)
 {
-	if (SSInit()) return 1;
-	if (pxt_init()) return 1;
-	if (pxt_LoadSoundFX(pxt_dir, sndcache, NUM_SOUNDS)) return 1;
-	
-	if (org_init(org_wavetable, pxt_dir, ORG_VOLUME))
-	{
-		staterr("Music failed to initialize");
-		return 1;
-	}
-	
-	return 0;
+    if (SSInit()) return 1;
+    if (pxt_init()) return 1;
+    if (pxt_LoadSoundFX(pxt_dir, sndcache, NUM_SOUNDS)) return 1;
+
+    if (org_init(org_wavetable, pxt_dir, ORG_VOLUME))
+    {
+        staterr("Music failed to initialize");
+        return 1;
+    }
+
+    return 0;
 }
 
 void sound_close(void)
 {
-	pxt_freeSoundFX();
-	SSClose();
+    pxt_freeSoundFX();
+    SSClose();
 }
 
 /*
@@ -79,49 +79,49 @@ void c------------------------------() {}
 void sound(int snd)
 {
     if (!settings->sound_enabled)
-		return;
+        return;
 
-	pxt_Stop(snd);
-	pxt_Play(-1, snd, 0);
+    pxt_Stop(snd);
+    pxt_Play(-1, snd, 0);
 }
 
 void sound_loop(int snd)
 {
-	if (!settings->sound_enabled)
-		return;
-	
-	pxt_Play(-1, snd, -1);
+    if (!settings->sound_enabled)
+        return;
+
+    pxt_Play(-1, snd, -1);
 }
 
 void sound_stop(int snd)
 {
-	pxt_Stop(snd);
+    pxt_Stop(snd);
 }
 
 bool sound_is_playing(int snd)
 {
-	return pxt_IsPlaying(snd);
+    return pxt_IsPlaying(snd);
 }
 
 
 void StartStreamSound(int freq)
 {
-	// pxt_ChangePitch(SND_STREAM1, some_formula);
-	// pxt_ChangePitch(SND_STREAM2, some_other_formula);
-	sound_loop(SND_STREAM1);
-	sound_loop(SND_STREAM2);
+    // pxt_ChangePitch(SND_STREAM1, some_formula);
+    // pxt_ChangePitch(SND_STREAM2, some_other_formula);
+    sound_loop(SND_STREAM1);
+    sound_loop(SND_STREAM2);
 }
 
 void StartPropSound(void)
 {
-	sound_loop(SND_PROPELLOR);
+    sound_loop(SND_PROPELLOR);
 }
 
 void StopLoopSounds(void)
 {
-	sound_stop(SND_STREAM1);
-	sound_stop(SND_STREAM2);
-	sound_stop(SND_PROPELLOR);
+    sound_stop(SND_STREAM1);
+    sound_stop(SND_STREAM2);
+    sound_stop(SND_PROPELLOR);
 }
 
 /*
@@ -131,66 +131,66 @@ void c------------------------------() {}
 void music(int songno)
 {
     if (songno == cursong)
-		return;
-	
-	lastsong = cursong;
-	cursong = songno;
-	
-	stat(" >> music(%d)", songno);
-	
-	if (songno != 0 && !should_music_play(songno, settings->music_enabled))
-	{
-		stat("Not playing track %d because music_enabled is %d", songno, settings->music_enabled);
-		org_stop();
-		return;
-	}
-	
+        return;
+
+    lastsong = cursong;
+    cursong = songno;
+
+    stat(" >> music(%d)", songno);
+
+    if (songno != 0 && !should_music_play(songno, settings->music_enabled))
+    {
+        stat("Not playing track %d because music_enabled is %d", songno, settings->music_enabled);
+        org_stop();
+        return;
+    }
+
     start_track(songno);
 }
 
 
 bool should_music_play(int songno, int musicmode)
 {
-    /*
-     *if (game.mode == GM_TITLE || game.mode == GM_CREDITS)
-		return true;
-    */
-	switch(musicmode)
-	{
-		case MUSIC_OFF: return false;
-		case MUSIC_ON:  return true;
-		case MUSIC_BOSS_ONLY:
-			return music_is_boss(songno);
-	}
-	
-	return false;
+
+    if (game.mode == GM_TITLE || game.mode == GM_CREDITS)
+        return true;
+
+    switch(musicmode)
+    {
+    case MUSIC_OFF: return false;
+    case MUSIC_ON:  return true;
+    case MUSIC_BOSS_ONLY:
+        return music_is_boss(songno);
+    }
+
+    return false;
 }
 
 bool music_is_boss(int songno)
 {
-	if (strchr(bossmusic, songno))
-		return true;
-	else
-		return false;
+    if (strchr(bossmusic, songno))
+        return true;
+    else
+        return false;
 }
 
 void music_set_enabled(int newstate)
 {
-	if (newstate != settings->music_enabled)
-	{
-		stat("music_set_enabled(%d)", newstate);
-		
-		settings->music_enabled = newstate;
-		bool play = should_music_play(cursong, newstate);
+    if (newstate != settings->music_enabled)
+    {
+        stat("music_set_enabled(%d)", newstate);
 
-		if (play != org_is_playing())
+        settings->music_enabled = newstate;
+        bool play = should_music_play(cursong, newstate);
+
+        if (play != org_is_playing())
         {
             if (play)
                 start_track(cursong);
             else
                 org_stop();
         }
-	}
+    }
 }
 
 static void start_track(int songno)
@@ -223,6 +223,7 @@ static void start_track(int songno)
     }
 
     org_set_playing(true);
+
 #else
     strcpy(fname, org_dir);
     strcat(fname, org_names[songno]);

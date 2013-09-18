@@ -144,6 +144,7 @@ Dialog *dlg = opt.dlg;
 	dlg->AddSeparator();
 #if defined (_MOTOMAGX) || defined (_RZX50)
     dlg->AddItem("Show FPS", _fps_change, _fps_get);
+    dlg->AddItem("Enable GodMode", _godmode, _godmode_get);
 #else
 	dlg->AddItem("Enable Debug Keys", _debug_change, _debug_get);
 #endif
@@ -223,6 +224,19 @@ int newres;
 		new Message("Resolution change failed");
 		sound(SND_GUN_CLICK);
     }
+}
+
+void _godmode(ODItem *item, int dir)
+{
+    settings->enable_debug_keys ^= 1;
+    game.debug.god ^= 1;
+    sound(SND_MENU_SELECT);
+}
+
+void _godmode_get(ODItem *item)
+{
+    static const char *strs[] = { "", " =" };
+    strcpy(item->suffix, strs[game.debug.god]);
 }
 
 void _fps_change(ODItem *item, int dir)
