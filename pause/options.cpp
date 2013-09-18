@@ -143,8 +143,7 @@ Dialog *dlg = opt.dlg;
 	
 	dlg->AddSeparator();
 #if defined (_MOTOMAGX) || defined (_RZX50)
-    dlg->AddItem("Show FPS", _fps_change, _fps_get);
-    dlg->AddItem("Enable GodMode", _godmode, _godmode_get);
+    dlg->AddItem("Debug Menu", EnterDebugMenu);
 #else
 	dlg->AddItem("Enable Debug Keys", _debug_change, _debug_get);
 #endif
@@ -226,6 +225,28 @@ int newres;
     }
 }
 
+/************ DEBUG MENU ************/
+static void EnterDebugMenu(ODItem *item, int dir)
+{
+    Dialog *dlg = opt.dlg;
+    dlg->Clear();
+
+    sound(SND_MENU_MOVE);
+
+    dlg->AddItem("Show FPS", _fps_change, _fps_get);
+    dlg->AddItem("Enable GodMode", _godmode, _godmode_get);
+    dlg->AddItem("Draw Boxes", _drawBoxes, _drawBoxes_get);
+
+    dlg->AddSeparator();
+
+    dlg->AddItem("Add +1 XP", _add_xp);
+    dlg->AddItem("Save now", _save_now);
+
+    dlg->AddSeparator();
+
+    dlg->AddDismissalItem();
+}
+
 void _godmode(ODItem *item, int dir)
 {
     settings->enable_debug_keys ^= 1;
@@ -250,6 +271,33 @@ void _fps_get(ODItem *item)
     static const char *strs[] = { "", " =" };
     strcpy(item->suffix, strs[settings->show_fps]);
 }
+
+void _save_now(ODItem *item, int dir)
+{
+    game_save(settings->last_save_slot);
+    sound(SND_SWITCH_WEAPON);
+    console.Print("Game saved.");
+}
+
+void _drawBoxes(ODItem *item, int dir)
+{
+    settings->enable_debug_keys ^= 1;
+    game.debug.DrawBoundingBoxes ^= 1;
+    sound(SND_COMPUTER_BEEP);
+}
+
+void _drawBoxes_get(ODItem *item)
+{
+    static const char *strs[] = { "", " =" };
+    strcpy(item->suffix, strs[game.debug.DrawBoundingBoxes]);
+}
+
+void _add_xp(ODItem *item, int dir)
+{
+    AddXP(1);
+}
+
+/************ END DEBUG MENU ************/
 
 void _debug_change(ODItem *item, int dir)
 {

@@ -35,7 +35,7 @@ void DrawDebug(void)
 			console.Print("Game saved.");
 		}
 		
-		if (justpushed(F6KEY))
+        if (justpushed(F6KEY))
 		{
 			game.debug.DrawBoundingBoxes ^= 1;
 			sound(SND_COMPUTER_BEEP);
@@ -46,7 +46,7 @@ void DrawDebug(void)
             SDL_SaveBMP(screen->GetSDLSurface(), "screen.bmp");
         }
 
-		if (justpushed(F9KEY))
+        if (justpushed(F9KEY))
 		{
 			AddXP(1);
 		}

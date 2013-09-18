@@ -45,10 +45,17 @@ static void EnterMainMenu();
 void LeavingMainMenu();
 void _res_get(ODItem *item);
 void _res_change(ODItem *item, int dir);
+
+static void EnterDebugMenu(ODItem *item, int dir);
 void _godmode(ODItem *item, int dir);
 void _godmode_get(ODItem *item);
 void _fps_change(ODItem *item, int dir);
 void _fps_get(ODItem *item);
+void _save_now(ODItem *item, int dir);
+void _drawBoxes(ODItem *item, int dir);
+void _drawBoxes_get(ODItem *item);
+void _add_xp(ODItem *item, int dir);
+
 void _debug_change(ODItem *item, int dir);
 void _debug_get(ODItem *item);
 void _save_change(ODItem *item, int dir);
