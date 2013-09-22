@@ -241,6 +241,7 @@ static void EnterDebugMenu(ODItem *item, int dir)
 
     dlg->AddItem("Add +1 XP", _add_xp);
     dlg->AddItem("Save now", _save_now);
+    dlg->AddItem("Disable Debug features", _disable_debug);
 
     dlg->AddSeparator();
 
@@ -249,7 +250,9 @@ static void EnterDebugMenu(ODItem *item, int dir)
 
 void _godmode(ODItem *item, int dir)
 {
-    settings->enable_debug_keys ^= 1;
+    if (!(settings->enable_debug_keys)) {
+        settings->enable_debug_keys = true;
+    }
     game.debug.god ^= 1;
     sound(SND_MENU_SELECT);
 }
@@ -275,15 +278,17 @@ void _fps_get(ODItem *item)
 void _save_now(ODItem *item, int dir)
 {
     game_save(settings->last_save_slot);
-    sound(SND_SWITCH_WEAPON);
+    sound(SND_MENU_SELECT);
     console.Print("Game saved.");
 }
 
 void _drawBoxes(ODItem *item, int dir)
 {
-    settings->enable_debug_keys ^= 1;
+    if (!(settings->enable_debug_keys)) {
+        settings->enable_debug_keys = true;
+    }
     game.debug.DrawBoundingBoxes ^= 1;
-    sound(SND_COMPUTER_BEEP);
+    sound(SND_MENU_SELECT);
 }
 
 void _drawBoxes_get(ODItem *item)
@@ -295,6 +300,11 @@ void _drawBoxes_get(ODItem *item)
 void _add_xp(ODItem *item, int dir)
 {
     AddXP(1);
+}
+
+void _disable_debug(ODItem *item, int dir)
+{
+    settings->enable_debug_keys = false;
 }
 
 /************ END DEBUG MENU ************/

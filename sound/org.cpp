@@ -597,7 +597,9 @@ static void runfade()
 		if (newvol <= 0)
 		{
 			song.fading = false;
+#ifndef _SDL_MIXER
 			org_stop();
+#endif
 		}
 		else
 		{

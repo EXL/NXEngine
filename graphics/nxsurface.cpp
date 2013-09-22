@@ -346,7 +346,7 @@ void NXSurface::Scale8(SDL_Surface *src, SDL_Surface *dst, int factor)
 {
 int x, y, i;
 
-	for(y=0;y<src->h;y++)
+    for(y=0;y<src->h;y++)
 	{
 		uint8_t *srcline = (uint8_t *)src->pixels + (y * src->pitch);
 		uint8_t *dstline = (uint8_t *)dst->pixels + (y * factor * dst->pitch);
@@ -364,7 +364,7 @@ int x, y, i;
 			dstptr += dst->pitch;
 			memcpy(dstptr, dstline, dst->pitch);
 		}
-	}
+    }
 }
 
 /*

@@ -64,6 +64,7 @@ void _sound_change(ODItem *item, int dir);
 void _sound_get(ODItem *item);
 void _music_change(ODItem *item, int dir);
 void _music_get(ODItem *item);
+void _disable_debug(ODItem *item, int dir);
 static void EnterReplayMenu(ODItem *item, int dir);
 void _upd_replay(ODItem *item);
 void EnterReplaySubmenu(ODItem *item, int dir);
