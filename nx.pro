@@ -20,11 +20,12 @@ GCC_STATIC_FLAGS += -static -static-libgcc -static-libstdc++
 
 SDL_LIBS += -lSDLmain -lSDL
 win32-g++: STATIC_SDL_LIBS += -lSDLmain -lSDL -liconv -lm -luser32 -lgdi32 -lwinmm
+
 linux-arm-gnueabi-g++: MOTOMAGX_LIBS += $$system(sdl-config  --libs)
 
 OTHER_LIBS += -lSDL_ttf -lSDL_mixer
 linux-arm-gnueabi-g++: OTHER_MOTOMAGX_LIBS = -lSDL_ttf -lstdc++ -lm -lfreetype
-OTHER_STATIC_LIBS += -lSDL_ttf -lfreetype -lpng -lz
+OTHER_STATIC_LIBS += -lSDL_mixer -lmad -lmikmod -lvorbisfile -lvorbis -logg -lSDL_ttf -lfreetype -lpng -lz
 
 # Defines
 RZX50_FLAGS += -D_480X272 -D_RZX50 -D_SDL_MIXER
