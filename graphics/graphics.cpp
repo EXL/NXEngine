@@ -27,7 +27,7 @@ static int current_res = -1;
 
 bool Graphics::init(int resolution)
 {
-#ifdef _480X272 // 480x272 widescreen fix
+#if defined(_480X272) || defined(_320X240)
     resolution = 0;
 #endif
 
@@ -70,7 +70,7 @@ bool Graphics::init(int resolution)
 void Graphics::close()
 {
 	stat("Graphics::Close()");
-#ifndef _480X272 // 480x272 widescreen fix
+#if !defined(_480X272) || !defined(_320X240)
 	SDL_ShowCursor(true);
 #endif
 }

@@ -38,7 +38,7 @@ bool options_init(int retmode)
 	opt.dlg->ondismiss = DialogDismissed;
 	opt.dlg->ShowFull();
 
-#if defined (_RZX50) || defined (_MOTOMAGX)
+#if defined (_DINGUX) || defined (_MOTOMAGX)
     inputs[OPTIONS_KEY] = 0;
 #else
     inputs[F3KEY] = 0;
@@ -66,7 +66,7 @@ void options_tick()
 int i;
 FocusHolder *fh;
 
-#if defined (_RZX50) || defined (_MOTOMAGX)
+#if defined (_DINGUX) || defined (_MOTOMAGX)
     if (justpushed(OPTIONS_KEY))
 #else
     if (justpushed(F3KEY))
@@ -142,7 +142,7 @@ Dialog *dlg = opt.dlg;
 	dlg->AddItem("Replay", EnterReplayMenu);
 	
 	dlg->AddSeparator();
-#if defined (_MOTOMAGX) || defined (_RZX50)
+#if defined (_DINGUX) || defined (_MOTOMAGX)
     dlg->AddItem("Debug Menu", EnterDebugMenu);
 #else
 	dlg->AddItem("Enable Debug Keys", _debug_change, _debug_get);

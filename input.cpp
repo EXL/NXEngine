@@ -38,7 +38,7 @@ bool input_init(void)
 		mappings[SDLK_UP] = UPKEY;
 		mappings[SDLK_DOWN] = DOWNKEY;
 
-#ifdef _RZX50
+#ifdef _DINGUX
         mappings[SDLK_LCTRL] = JUMPKEY;
         mappings[SDLK_LALT] = FIREKEY;
         mappings[SDLK_s] = PREVWPNKEY;
