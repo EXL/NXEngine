@@ -474,7 +474,9 @@ Dialog *dlg = opt.dlg;
 	dlg->AddItem("Up", _edit_control, _upd_control, UPKEY);
 	dlg->AddItem("Down", _edit_control, _upd_control, DOWNKEY);
 	
+#ifndef _L18N_CP1251
 	dlg->AddSeparator();
+#endif
 	
 	dlg->AddItem("Jump", _edit_control, _upd_control, JUMPKEY);
 	dlg->AddItem("Fire", _edit_control, _upd_control,  FIREKEY);
@@ -483,7 +485,9 @@ Dialog *dlg = opt.dlg;
 	dlg->AddItem("Inventory", _edit_control, _upd_control, INVENTORYKEY);
 	dlg->AddItem("Map", _edit_control, _upd_control, MAPSYSTEMKEY);
 	
+#ifndef _L18N_CP1251
 	dlg->AddSeparator();
+#endif
 	dlg->AddDismissalItem();
 }
 

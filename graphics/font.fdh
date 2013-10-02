@@ -12,6 +12,7 @@ static int text_draw(int x, int y, const char *text, int spacing, NXFont *font);
 int GetFontWidth(const char *text, int spacing, bool is_shaded);
 int GetFontHeight();
 static bool create_shade_sfc(void);
+int win1251_to_utf8(const char* text, char* utext);
 int font_draw(int x, int y, const char *text, int spacing, NXFont *font);
 int font_draw_shaded(int x, int y, const char *text, int spacing, NXFont *font);
 

@@ -11,7 +11,7 @@ CONFIG += warn_off
 
 # Platform section
 # Write here the necessary platform.
-# Available platforms (only linux-mips-g++):
+# Available platforms (only for linux-mips-g++):
 ######################
 # platform-rzx50
 # platform-a320

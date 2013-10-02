@@ -12,7 +12,11 @@
 #endif
 
 #define NUM_FONT_LETTERS		256
+#ifndef _L18N_CP1251
 #define NUM_LETTERS_RENDERED	128
+#else
+#define NUM_LETTERS_RENDERED	256
+#endif
 #define FONT_DEFAULT_SPACING	5
 
 class NXFont
@@ -23,6 +27,8 @@ public:
 	
 	bool InitChars(TTF_Font *font, uint32_t color);
 	bool InitCharsShadowed(TTF_Font *top, uint32_t color, uint32_t shadowcolor);
+
+    int win1251_to_utf8(const char* text, char* utext);
 	
 	bool InitBitmapChars(SDL_Surface *sheet, uint32_t fgcolor, uint32_t color);
 	bool InitBitmapCharsShadowed(SDL_Surface *sheet, uint32_t fgcolor, uint32_t color, uint32_t shadowcolor);

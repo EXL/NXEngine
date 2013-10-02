@@ -19,6 +19,18 @@ static int text_draw(int x, int y, const char *text, int spacing=0, NXFont *font
 #define BITMAP_SPAC_WIDTH	8		// how far apart chars are from each other on the sheet
 #define BITMAP_SPAC_HEIGHT	12		// ditto for Y-spacing
 
+// For conver cp1251 to utf-8
+int wtable[64] = {
+  0x0402, 0x0403, 0x201A, 0x0453, 0x201E, 0x2026, 0x2020, 0x2021,
+  0x20AC, 0x2030, 0x0409, 0x2039, 0x040A, 0x040C, 0x040B, 0x040F,
+  0x0452, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014,
+  0x007F, 0x2122, 0x0459, 0x203A, 0x045A, 0x045C, 0x045B, 0x045F,
+  0x00A0, 0x040E, 0x045E, 0x0408, 0x00A4, 0x0490, 0x00A6, 0x00A7,
+  0x0401, 0x00A9, 0x0404, 0x00AB, 0x00AC, 0x00AD, 0x00AE, 0x0407,
+  0x00B0, 0x00B1, 0x0406, 0x0456, 0x0491, 0x00B5, 0x00B6, 0x00B7,
+  0x0451, 0x2116, 0x0454, 0x00BB, 0x0458, 0x0405, 0x0455, 0x0457
+};
+
 static const char bitmap_map[] = {		// letter order of bitmap font sheet
 	" !\"#$%&`()*+,-./0123456789:;<=>?"
 	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]%_"
@@ -26,7 +38,12 @@ static const char bitmap_map[] = {		// letter order of bitmap font sheet
 };
 
 const char *bmpfontfile = "smalfont.bmp";
+
+#if defined(_320X240) || defined(_480X272)
+const char *ttffontfile = "DroidSansMono.ttf";
+#else
 const char *ttffontfile = "font.ttf";
+#endif
 
 static SDL_Surface *sdl_screen = NULL;
 static SDL_Surface *shadesfc = NULL;
@@ -42,7 +59,7 @@ NXFont bluefont;		// used for "F3:Options" text on pause screen
 NXFont shadowfont;		// white letters w/ drop shadow
 
 // point sizes for each valid scaling factor
-int pointsize[] = { -1,  8, 17, 26 };
+int pointsize[] = { -1,  10, 17, 26 };
 
 /*
 void c------------------------------() {}
@@ -57,9 +74,11 @@ bool error = false;
 	sdl_screen = screen->GetSDLSurface();
 	
 	// at 320x240 switch to bitmap fonts for better appearance
-    #ifdef CONFIG_ENABLE_TTF
+#if defined(_320X240) || defined(_480X272) || defined(_L18N_CP1251)
+    if (false)
+#elif defined(CONFIG_ENABLE_TTF)
     if (SCALE == 1)
-    #endif
+#endif
 	{
 		stat("fonts: using bitmapped from %s", bmpfontfile);
 		
@@ -166,6 +185,10 @@ SDL_Surface *letter;
 	fgcolor.r = (uint8_t)(color >> 16);
 	fgcolor.g = (uint8_t)(color >> 8);
 	fgcolor.b = (uint8_t)(color);
+
+#ifdef _L18N_CP1251
+    char utf8_str[2];
+#endif
 	
 	char str[2];
 	str[1] = 0;
@@ -173,8 +196,12 @@ SDL_Surface *letter;
 	for(int i=1;i<NUM_LETTERS_RENDERED;i++)
 	{
 		str[0] = i;
-		
+#ifndef _L18N_CP1251
         letter = TTF_RenderUTF8_Solid(font, str, fgcolor);
+#else
+        win1251_to_utf8(str, utf8_str);
+        letter = TTF_RenderUTF8_Solid(font, utf8_str, fgcolor);
+#endif
 		if (!letter)
 		{
 			staterr("InitChars: failed to render character %d: %s", i, TTF_GetError());
@@ -202,6 +229,10 @@ SDL_Rect dstrect;
 	shcolor.r = (uint8_t)(shadowcolor >> 16);
 	shcolor.g = (uint8_t)(shadowcolor >> 8);
 	shcolor.b = (uint8_t)(shadowcolor);
+
+#ifdef _L18N_CP1251
+    char utf8_str[2];
+#endif
 	
 	char str[2];
 	str[1] = 0;
@@ -213,8 +244,14 @@ SDL_Rect dstrect;
 	{
 		str[0] = i;
 		
+#ifndef _L18N_CP1251
         top = TTF_RenderUTF8_Solid(font, str, fgcolor);
         bottom = TTF_RenderUTF8_Solid(font, str, shcolor);
+#else
+        win1251_to_utf8(str, utf8_str);
+        top = TTF_RenderUTF8_Solid(font, utf8_str, fgcolor);
+        bottom = TTF_RenderUTF8_Solid(font, utf8_str, shcolor);
+#endif
 		if (!top || !bottom)
 		{
 			staterr("InitCharsShadowed: failed to render character %d: %s", i, TTF_GetError());
@@ -242,7 +279,58 @@ SDL_Rect dstrect;
 		SDL_BlitSurface(top, NULL, letters[i], &dstrect);
 	}
 	
-	return 0;
+    return 0;
+}
+
+/* Universal way to convert Windows-1251 to UTF-8 by Den Zurin
+ * (c) http://www.gamedev.ru/code/forum/?id=119312&page=2#m17 */
+
+int NXFont::win1251_to_utf8(const char *text, char *utext)
+{
+    int wc;
+    int i, j;
+    if (!utext) {
+        return 0;
+    }
+    i=0;
+    j=0;
+    while (i<strlen(text)) {
+        wc = (unsigned char)text[i++];
+        // Windows-1251 to Unicode
+        if (wc>=0x80) {
+            if (wc<=0xBF) {
+                wc = wtable[wc-0x80];
+            }
+            else if (wc>=0xC0 && wc<=0xDF) {
+                wc = wc - 0xC0 + 0x0410;
+            }
+            else if (wc>=0xE0) {
+                wc = wc - 0xE0 + 0x0430;
+            }
+        }
+        // Unicode to UTF-8
+        // 0x00000000 — 0x0000007F -> 0xxxxxxx
+        // 0x00000080 — 0x000007FF -> 110xxxxx 10xxxxxx
+        // 0x00000800 — 0x0000FFFF -> 1110xxxx 10xxxxxx 10xxxxxx
+        // 0x00010000 — 0x001FFFFF -> 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+        if (wc<0x80) {
+            utext[j++] = (char)wc;
+        } else if (wc<0x800) {
+            utext[j++] = (char)((wc>>6)   | 0xC0);
+            utext[j++] = (char)((wc&0x3F) | 0x80);
+        } else if (wc<0x10000) {
+            utext[j++] = (char)((wc>>12)  | 0xE0);
+            utext[j++] = (char)((wc>>6)   | 0x80);
+            utext[j++] = (char)((wc&0x3F) | 0x80);
+        } else {
+            utext[j++] = (char)((wc>>18)  | 0xF0);
+            utext[j++] = (char)((wc>>12)  | 0x80);
+            utext[j++] = (char)((wc>>6)   | 0x80);
+            utext[j++] = (char)((wc&0x3F) | 0x80);
+        }
+    }
+    utext[j] = 0x00;
+    return 1;
 }
 
 #endif		//CONFIG_ENABLE_TTF

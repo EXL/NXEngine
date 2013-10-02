@@ -216,20 +216,31 @@ static void draw_title()
 	
 	// top logo
 	int tx = (SCREEN_WIDTH / 2) - (sprites[SPR_TITLE].w / 2) - 2;
-	draw_sprite(tx, 40, SPR_TITLE);
-	
+    draw_sprite(tx, 40, SPR_TITLE);
+
+#ifdef _L18N_CP1251
+    const char t_new[2][11] = {
+        { 0xCD, 0xEE, 0xE2, 0xE0, 0xFF, 0xA0, 0xE8, 0xE3, 0xF0, 0xE0, NULL }, // New Game in CP1251, Russian
+        { 0xC7, 0xE0, 0xE3, 0xF0, 0xF3, 0xE7, 0xE8, 0xF2, 0xFC, NULL } // Load Game in CP1251, Russian
+    };
+#endif
+
 	// draw menu
 	int cx = (SCREEN_WIDTH / 2) - (sprites[SPR_MENU].w / 2) - 8;
 	int cy = (SCREEN_HEIGHT / 2) + 8;
 	for(int i=0;i<sprites[SPR_MENU].nframes;i++)
-	{
-		draw_sprite(cx, cy, SPR_MENU, i);
+    {
+#ifdef _L18N_CP1251
+        font_draw(cx, cy, t_new[i > 0], 6);
+#else
+        draw_sprite(cx, cy, SPR_MENU, i);
+#endif
 		if (i == title.cursel)
 		{
-			draw_sprite(cx - 16, cy - 1, title.sprite, title.selframe);
+            draw_sprite(cx - 16, cy - 1, title.sprite, title.selframe);
 		}
 		
-		cy += (sprites[SPR_MENU].h + 4);
+        cy += (sprites[SPR_MENU].h + 4);
 	}
 	
 	// animate character
@@ -247,7 +258,7 @@ static void draw_title()
 	
 	// version
     static const char *VERSION = "NXEngine v. 1.0.0.4 | Rev 1";
-	static const int SPACING = 5;
+    static const int SPACING = 5;
 	int wd = GetFontWidth(VERSION, SPACING);
 	cx = (SCREEN_WIDTH / 2) - (wd / 2);
 	font_draw(cx, acc_y + sprites[SPR_PIXEL_FOREVER].h + 4, VERSION, SPACING);

@@ -210,7 +210,6 @@ const char **Graphics::GetResolutions()
         NULL
     };
 #else
-
     static const char *res_str[]   =
     {
         "Fullscreen",
