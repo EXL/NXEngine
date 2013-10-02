@@ -241,7 +241,7 @@ static void EnterDebugMenu(ODItem *item, int dir)
 
     dlg->AddItem("Add +1 XP", _add_xp);
     dlg->AddItem("Save now", _save_now);
-    dlg->AddItem("Disable Debug features", _disable_debug);
+    // dlg->AddItem("Disable Debug Features", _disable_debug);
 
     dlg->AddSeparator();
 
@@ -304,7 +304,13 @@ void _add_xp(ODItem *item, int dir)
 
 void _disable_debug(ODItem *item, int dir)
 {
-    settings->enable_debug_keys = false;
+    if(settings->enable_debug_keys) {
+        game.debug.god = false;
+        game.debug.DrawBoundingBoxes = false;
+        settings->enable_debug_keys = false;
+        settings->show_fps = false;
+        sound(SND_MENU_SELECT);
+    }
 }
 
 /************ END DEBUG MENU ************/

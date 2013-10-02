@@ -41,7 +41,7 @@ bool input_init(void)
 #ifdef _DINGUX
         mappings[SDLK_LCTRL] = JUMPKEY;
         mappings[SDLK_LALT] = FIREKEY;
-        mappings[SDLK_s] = PREVWPNKEY;
+        mappings[SDLK_SPACE] = PREVWPNKEY;
         mappings[SDLK_LSHIFT] = NEXTWPNKEY;
         mappings[SDLK_BACKSPACE] = INVENTORYKEY;
         mappings[SDLK_RETURN] = MAPSYSTEMKEY;
@@ -84,7 +84,11 @@ bool input_init(void)
 #else
         mappings[SDLK_TAB] = OPTIONS_KEY;
 #endif
+#ifndef _DINGUX
         mappings[SDLK_SPACE] = FREEZE_FRAME_KEY;
+#else
+        mappings[SDLK_s] = FREEZE_FRAME_KEY;
+#endif
 		mappings[SDLK_c] = FRAME_ADVANCE_KEY;
 		mappings[SDLK_v] = DEBUG_FLY_KEY;
 	}
