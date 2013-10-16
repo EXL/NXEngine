@@ -70,15 +70,15 @@ bool input_init(void)
         mappings[SDLK_F1] = F1KEY;
         mappings[SDLK_F2] = F2KEY;
         mappings[SDLK_F3] = F3KEY;
-		mappings[SDLK_F4] = F4KEY;
-		mappings[SDLK_F5] = F5KEY;
-		mappings[SDLK_F6] = F6KEY;
-		mappings[SDLK_F7] = F7KEY;
-		mappings[SDLK_F8] = F8KEY;
-		mappings[SDLK_F9] = F9KEY;
-		mappings[SDLK_F10] = F10KEY;
-		mappings[SDLK_F11] = F11KEY;
-		mappings[SDLK_F12] = F12KEY;
+        mappings[SDLK_F4] = F4KEY;
+        mappings[SDLK_F5] = F5KEY;
+        mappings[SDLK_F6] = F6KEY;
+        mappings[SDLK_F7] = F7KEY;
+        mappings[SDLK_F8] = F8KEY;
+        mappings[SDLK_F9] = F9KEY;
+        mappings[SDLK_F10] = F10KEY;
+        mappings[SDLK_F11] = F11KEY;
+        mappings[SDLK_F12] = F12KEY;
 #ifdef _MOTOMAGX
         mappings[SDLK_HASH] = OPTIONS_KEY; // SDLK_HASH
 #else
