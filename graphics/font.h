@@ -12,7 +12,7 @@
 #endif
 
 #define NUM_FONT_LETTERS		256
-#ifndef _L18N_CP1251
+#ifndef _L10N_CP1251
 #define NUM_LETTERS_RENDERED	128
 #else
 #define NUM_LETTERS_RENDERED	256

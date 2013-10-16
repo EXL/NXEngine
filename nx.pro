@@ -2,12 +2,22 @@
 # Written by EXL on Sun Sep 1 11:04:56 2013
 ######################################################################
 
+# Platform Defines
+# -D_480X272        - Use widescreen 480x272 resolution.
+# -D_320X240        - Use normal 320x240 resolution.
+# -D_DINGUX         - Dingux platform and keyboard layout (Ritmix RZX-50, Dingoo A320, Dingoo A380, etc).
+# -D_MOTOMAGX       - MotoMagx platform and keyboard layout (Motorola ZN5, Z6, E8, EM30, VE66, etc).
+# -D_SDL_MIXER      - Don't use generatining music, *.xm and sounds playing via SDL_mixer.
+# -D_DEBUG          - Enable detailed debug output to the console.
+# -D_L10N_CP1251    - Enable russian localization (need a *.ttf font and russian data-files)
+
 # Global App Settings
 TEMPLATE = app
 CONFIG -= console
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += warn_off
+CONFIG -= l10n_rus
 
 # Platform section
 # Write here the necessary platform.
@@ -50,6 +60,11 @@ win32-g++|linux-g++ {
 # Debug
 CONFIG(debug, debug|release) {
     DEFINES += DEBUG
+}
+
+# Localization
+l10n_rus {
+    DEFINES += _L10N_CP1251
 }
 
 # Platform C/C++ Flags, CPU Optimization

@@ -84,6 +84,7 @@ bool input_init(void)
 #else
         mappings[SDLK_TAB] = OPTIONS_KEY;
 #endif
+
 #ifndef _DINGUX
         mappings[SDLK_SPACE] = FREEZE_FRAME_KEY;
 #else

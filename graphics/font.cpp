@@ -74,7 +74,7 @@ bool error = false;
 	sdl_screen = screen->GetSDLSurface();
 	
 	// at 320x240 switch to bitmap fonts for better appearance
-#if defined(_320X240) || defined(_480X272) || defined(_L18N_CP1251)
+#if (defined(_320X240) || defined(_480X272)) && defined(_L10N_CP1251)
     if (false)
 #elif defined(CONFIG_ENABLE_TTF)
     if (SCALE == 1)
@@ -186,7 +186,7 @@ SDL_Surface *letter;
 	fgcolor.g = (uint8_t)(color >> 8);
 	fgcolor.b = (uint8_t)(color);
 
-#ifdef _L18N_CP1251
+#ifdef _L10N_CP1251
     char utf8_str[2];
 #endif
 	
@@ -196,7 +196,7 @@ SDL_Surface *letter;
 	for(int i=1;i<NUM_LETTERS_RENDERED;i++)
 	{
 		str[0] = i;
-#ifndef _L18N_CP1251
+#ifndef _L10N_CP1251
         letter = TTF_RenderUTF8_Solid(font, str, fgcolor);
 #else
         win1251_to_utf8(str, utf8_str);
@@ -230,7 +230,7 @@ SDL_Rect dstrect;
 	shcolor.g = (uint8_t)(shadowcolor >> 8);
 	shcolor.b = (uint8_t)(shadowcolor);
 
-#ifdef _L18N_CP1251
+#ifdef _L10N_CP1251
     char utf8_str[2];
 #endif
 	
@@ -244,7 +244,7 @@ SDL_Rect dstrect;
 	{
 		str[0] = i;
 		
-#ifndef _L18N_CP1251
+#ifndef _L10N_CP1251
         top = TTF_RenderUTF8_Solid(font, str, fgcolor);
         bottom = TTF_RenderUTF8_Solid(font, str, shcolor);
 #else

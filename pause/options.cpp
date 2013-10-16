@@ -210,7 +210,13 @@ int newres;
 		sound(SND_GUN_CLICK);
 		return;
 	}
-	if (!Graphics::SetResolution(newres, true))
+#if defined(_L10N_CP1251) && (!defined (_480X272) || !defined (_320X240)) // L10N Hack
+    if (newres == 1) {
+        new Message("Failed change resolution to 320x240");
+        return;
+    }
+#endif
+    if (!Graphics::SetResolution(newres, true))
 	{
 #if defined (_480X272) || defined (_320X240)
         settings->resolution = 0;
@@ -480,7 +486,7 @@ Dialog *dlg = opt.dlg;
 	dlg->AddItem("Up", _edit_control, _upd_control, UPKEY);
 	dlg->AddItem("Down", _edit_control, _upd_control, DOWNKEY);
 	
-#ifndef _L18N_CP1251
+#ifndef _L10N_CP1251
 	dlg->AddSeparator();
 #endif
 	
@@ -491,7 +497,7 @@ Dialog *dlg = opt.dlg;
 	dlg->AddItem("Inventory", _edit_control, _upd_control, INVENTORYKEY);
 	dlg->AddItem("Map", _edit_control, _upd_control, MAPSYSTEMKEY);
 	
-#ifndef _L18N_CP1251
+#ifndef _L10N_CP1251
 	dlg->AddSeparator();
 #endif
 	dlg->AddDismissalItem();

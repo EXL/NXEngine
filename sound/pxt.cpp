@@ -743,7 +743,7 @@ int pxt_Play(int chan, int slot, char loop)
         pxt_chunk_free();
     }
 
-    /* I don't know correct this or no, but this work */
+    /* I don't know correct this way or no, but this work */
     mixChunk = Mix_QuickLoad_RAW((Uint8 *)sound_fx[slot].buffer, sound_fx[slot].len);
 
     if(Mix_PlayChannel(chan, mixChunk, loop)==-1) {

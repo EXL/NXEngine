@@ -218,7 +218,7 @@ static void draw_title()
 	int tx = (SCREEN_WIDTH / 2) - (sprites[SPR_TITLE].w / 2) - 2;
     draw_sprite(tx, 40, SPR_TITLE);
 
-#ifdef _L18N_CP1251
+#ifdef _L10N_CP1251
     const char t_new[2][11] = {
         { 0xCD, 0xEE, 0xE2, 0xE0, 0xFF, 0xA0, 0xE8, 0xE3, 0xF0, 0xE0, NULL }, // New Game in CP1251, Russian
         { 0xC7, 0xE0, 0xE3, 0xF0, 0xF3, 0xE7, 0xE8, 0xF2, 0xFC, NULL } // Load Game in CP1251, Russian
@@ -230,7 +230,7 @@ static void draw_title()
 	int cy = (SCREEN_HEIGHT / 2) + 8;
 	for(int i=0;i<sprites[SPR_MENU].nframes;i++)
     {
-#ifdef _L18N_CP1251
+#ifdef _L10N_CP1251
         font_draw(cx, cy, t_new[i > 0], 6);
 #else
         draw_sprite(cx, cy, SPR_MENU, i);
@@ -257,7 +257,7 @@ static void draw_title()
 	draw_sprite(cx, acc_y, SPR_PIXEL_FOREVER);
 	
 	// version
-    static const char *VERSION = "NXEngine v. 1.0.0.4 | Rev 1";
+    static const char *VERSION = "NXEngine v. 1.0.0.4 | Rev 2";
     static const int SPACING = 5;
 	int wd = GetFontWidth(VERSION, SPACING);
 	cx = (SCREEN_WIDTH / 2) - (wd / 2);

@@ -70,7 +70,9 @@ bool Graphics::init(int resolution)
 void Graphics::close()
 {
 	stat("Graphics::Close()");
-#if !defined(_480X272) || !defined(_320X240)
+#if defined(_480X272) || defined(_320X240)
+    SDL_ShowCursor(false);
+#else
 	SDL_ShowCursor(true);
 #endif
 }

@@ -144,7 +144,7 @@ bool first_crc_failure = true;
 		fseek(exefp, files[i].offset, SEEK_SET);
 		fread(file, files[i].length, 1, exefp);
 		
-#ifndef _L18N_CP1251
+#ifndef _L10N_CP1251
 		if (check_crc)
 		{
 			crc = crc_calc(file, files[i].length);
