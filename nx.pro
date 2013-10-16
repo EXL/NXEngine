@@ -73,7 +73,7 @@ linux-mips-g++ {
     QMAKE_CXXFLAGS_RELEASE += $${QMAKE_CFLAGS_RELEASE}
 } linux-arm-gnueabi-g++ {
     QMAKE_CFLAGS += $$system(sdl-config  --cflags)
-    QMAKE_CXXFLAGS += $${QMAKE_CFLAGS_DEBUG}
+    QMAKE_CXXFLAGS += $${QMAKE_CFLAGS}
     QMAKE_CFLAGS_RELEASE += -march=armv6j -mtune=arm1136jf-s -mfpu=vfp
     QMAKE_CXXFLAGS_RELEASE += $${QMAKE_CFLAGS_RELEASE}
 }
