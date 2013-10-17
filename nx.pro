@@ -23,7 +23,7 @@ CONFIG -= l10n_rus
 # Write here the necessary platform.
 # Available platforms (only for linux-mips-g++):
 ######################
-# platform-rzx50
+# platform-rzx50 (default)
 # platform-a320
 ######################
 linux-mips-g++: CONFIG += platform-rzx50
