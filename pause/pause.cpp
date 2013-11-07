@@ -1,6 +1,7 @@
 
 #include "../nx.h"
 #include "pause.fdh"
+#include "../l10n_strings.h"
 
 bool pause_init(int param)
 {
@@ -16,26 +17,38 @@ void pause_tick()
     int cx = (SCREEN_WIDTH / 2) - (GetFontWidth(strMenu, 0) / 2) - 4;
     int cy = (SCREEN_HEIGHT / 2) - GetFontHeight();
     int f3wd = font_draw(cx, cy, "Select", 0);
-    int f3wd1 = font_draw(f3wd + cx, cy, ":Quit", 0, &bluefont);
+    int f3wd1 = font_draw(f3wd + cx, cy, LC_PS_QUIT, 0, &bluefont);
     int f3wd2 = font_draw(f3wd1 + f3wd + cx,  cy, " / B", 0);
-    int f3wd3 = font_draw(f3wd2 + f3wd1 + f3wd + cx, cy, ":Resume", 0, &bluefont);
+    int f3wd3 = font_draw(f3wd2 + f3wd1 + f3wd + cx, cy, LC_PS_RESUME, 0, &bluefont);
     int f3wd4 = font_draw(f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, " / A", 0);
-    font_draw(f3wd4 + f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, ":Reset", 0, &bluefont);
+    font_draw(f3wd4 + f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, LC_PS_RESET, 0, &bluefont);
 #elif _MOTOMAGX
     ClearScreen(DK_BLUE);
     const char *strMenu = "Camera:Quit / Center:Resume / Vol+:Reset";
     int cx = (SCREEN_WIDTH / 2) - (GetFontWidth(strMenu, 0) / 2) - 4;
     int cy = (SCREEN_HEIGHT / 2) - GetFontHeight();
     int f3wd = font_draw(cx, cy, "Camera", 0);
-    int f3wd1 = font_draw(f3wd + cx, cy, ":Quit", 0, &bluefont);
+    int f3wd1 = font_draw(f3wd + cx, cy, LC_PS_QUIT, 0, &bluefont);
     int f3wd2 = font_draw(f3wd1 + f3wd + cx,  cy, " / Center", 0);
-    int f3wd3 = font_draw(f3wd2 + f3wd1 + f3wd + cx, cy, ":Resume", 0, &bluefont);
+    int f3wd3 = font_draw(f3wd2 + f3wd1 + f3wd + cx, cy, LC_PS_RESUME, 0, &bluefont);
     int f3wd4 = font_draw(f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, " / Vol+", 0);
-    font_draw(f3wd4 + f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, ":Reset", 0, &bluefont);
+    font_draw(f3wd4 + f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, LC_PS_RESET, 0, &bluefont);
+#elif defined(_L10N_CP1251) && !defined(_DINGUX) && !defined(_MOTOMAGX)
+    ClearScreen(BLACK);
+    const char *strMenu = "ESC:Quit / F1:Resume / F2:Reset";
+    int cx = (SCREEN_WIDTH / 2) - (GetFontWidth(strMenu, 0) / 2) - 4;
+    int cy = (SCREEN_HEIGHT / 2) - GetFontHeight();
+    int f3wd = font_draw(cx, cy, "ESC", 0);
+    int f3wd1 = font_draw(f3wd + cx, cy, LC_PS_QUIT, 0, &bluefont);
+    int f3wd2 = font_draw(f3wd1 + f3wd + cx,  cy, " / F1", 0);
+    int f3wd3 = font_draw(f3wd2 + f3wd1 + f3wd + cx, cy, LC_PS_RESUME, 0, &bluefont);
+    int f3wd4 = font_draw(f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, " / F2", 0);
+    font_draw(f3wd4 + f3wd3 + f3wd2 + f3wd1 + f3wd + cx, cy, LC_PS_RESET, 0, &bluefont);
 #else
     ClearScreen(BLACK);
     int cx = (SCREEN_WIDTH / 2) - (sprites[SPR_RESETPROMPT].w / 2);
     int cy = (SCREEN_HEIGHT / 2) - (sprites[SPR_RESETPROMPT].h / 2);
+    int f3wd = 0;
     draw_sprite(cx, cy, SPR_RESETPROMPT);
 #endif
 
@@ -53,9 +66,9 @@ void pause_tick()
     const char *str = "F3:Options";
     cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;
     cy = (SCREEN_HEIGHT - 8) - GetFontHeight();
-    int f3wd = font_draw(cx, cy, "F3", 0);
+    f3wd = font_draw(cx, cy, "F3", 0);
 #endif
-    font_draw(cx + f3wd, cy, ":Options", 0, &bluefont);
+    font_draw(cx + f3wd, cy, LC_PS_OPTIONS, 0, &bluefont);
 	
 #if defined (_DINGUX) || defined (_MOTOMAGX)
 #define F1KEY FIREKEY

@@ -4,7 +4,10 @@
 #include "options.h"
 #include "dialog.h"
 #include "message.h"
+#include "../l10n_strings.h"
+
 using namespace Options;
+
 #include "options.fdh"
 
 FocusStack optionstack;
@@ -137,22 +140,22 @@ Dialog *dlg = opt.dlg;
 
 	dlg->Clear();
 	
-	dlg->AddItem("Resolution: ", _res_change, _res_get);
-	dlg->AddItem("Controls", EnterControlsMenu);
-	dlg->AddItem("Replay", EnterReplayMenu);
+    dlg->AddItem(LC_RES, _res_change, _res_get);
+    dlg->AddItem(LC_KEYS, EnterControlsMenu);
+    dlg->AddItem(LC_REPLAY, EnterReplayMenu);
 	
 	dlg->AddSeparator();
 #if defined (_DINGUX) || defined (_MOTOMAGX)
-    dlg->AddItem("Debug Menu", EnterDebugMenu);
+    dlg->AddItem(LC_DEBUG, EnterDebugMenu);
 #else
-	dlg->AddItem("Enable Debug Keys", _debug_change, _debug_get);
+    dlg->AddItem(LC_DEBUG_KEYS, _debug_change, _debug_get);
 #endif
-	dlg->AddItem("Save Slots: ", _save_change, _save_get);
+    dlg->AddItem(LC_SAVE_SLOTS, _save_change, _save_get);
 	
 	dlg->AddSeparator();
 	
-	dlg->AddItem("Music: ", _music_change, _music_get);
-	dlg->AddItem("Sound: ", _sound_change, _sound_get);
+    dlg->AddItem(LC_MUSIC, _music_change, _music_get);
+    dlg->AddItem(LC_SOUND, _sound_change, _sound_get);
 	
 	dlg->AddSeparator();
 	dlg->AddDismissalItem();
@@ -206,13 +209,13 @@ int newres;
 	// the windows when I press it accidently.
 	if (newres == 0 && settings->inhibit_fullscreen)
 	{
-		new Message("Fullscreen disabled via", "inhibit-fullscreen console setting");
+        new Message(LC_FULLSCREEN_DIS, LC_FULLSCREEN_CON);
 		sound(SND_GUN_CLICK);
 		return;
 	}
 #if defined(_L10N_CP1251) && (!defined (_480X272) || !defined (_320X240)) // L10N Hack
     if (newres == 1) {
-        new Message("Failed change resolution to 320x240");
+        new Message(LC_RES_FAILED_320);
         return;
     }
 #endif
@@ -226,7 +229,7 @@ int newres;
 	}
 	else
 	{
-		new Message("Resolution change failed");
+        new Message(LC_RES_FAILED);
 		sound(SND_GUN_CLICK);
     }
 }
@@ -239,14 +242,14 @@ static void EnterDebugMenu(ODItem *item, int dir)
 
     sound(SND_MENU_MOVE);
 
-    dlg->AddItem("Show FPS", _fps_change, _fps_get);
-    dlg->AddItem("Enable GodMode", _godmode, _godmode_get);
-    dlg->AddItem("Draw Boxes", _drawBoxes, _drawBoxes_get);
+    dlg->AddItem(LC_FPS, _fps_change, _fps_get);
+    dlg->AddItem(LC_GODMODE, _godmode, _godmode_get);
+    dlg->AddItem(LC_BOXES, _drawBoxes, _drawBoxes_get);
 
     dlg->AddSeparator();
 
-    dlg->AddItem("Add +1 XP", _add_xp);
-    dlg->AddItem("Save now", _save_now);
+    dlg->AddItem(LC_ADDEXP, _add_xp);
+    dlg->AddItem(LC_SAVE_NOW, _save_now);
     // dlg->AddItem("Disable Debug Features", _disable_debug);
 
     dlg->AddSeparator();
@@ -355,7 +358,7 @@ void _sound_change(ODItem *item, int dir)
 
 void _sound_get(ODItem *item)
 {
-	static const char *strs[] = { "Off", "On" };
+    static const char *strs[] = { LC_OFF, LC_ON };
 	strcpy(item->suffix, strs[settings->sound_enabled]);
 }
 
@@ -367,7 +370,7 @@ void _music_change(ODItem *item, int dir)
 
 void _music_get(ODItem *item)
 {
-	static const char *strs[] = { "Off", "On", "Boss Only" };
+    static const char *strs[] = { LC_OFF, LC_ON, LC_BOSS_ONLY };
 	strcpy(item->suffix, strs[settings->music_enabled]);
 }
 
@@ -397,7 +400,7 @@ bool have_replays = false;
 	}
 	
 	if (!have_replays)
-		dlg->AddDismissalItem("[no replays yet]");
+        dlg->AddDismissalItem(LC_NO_RPL);
 	
 	dlg->AddSeparator();
 	dlg->AddDismissalItem();
@@ -425,8 +428,8 @@ void EnterReplaySubmenu(ODItem *item, int dir)
 	opt.subdlg = new Dialog;
 	opt.subdlg->SetSize(80, 60);
 	
-	opt.subdlg->AddItem("Play", _play_replay);
-	opt.subdlg->AddItem("Keep", _keep_replay);
+    opt.subdlg->AddItem(LC_PLAY, _play_replay);
+    opt.subdlg->AddItem(LC_KEEP, _keep_replay);
 }
 
 
@@ -439,7 +442,7 @@ ReplayHeader hdr;
 	
 	if (Replay::LoadHeader(fname, &hdr))
 	{
-		new Message("Failed to load header.");
+        new Message(LC_FAIL_LOAD_HEADER);
 		sound(SND_GUN_CLICK);
 		opt.dismiss_on_focus = opt.subdlg;
 		return;
@@ -449,7 +452,7 @@ ReplayHeader hdr;
 	
 	if (Replay::SaveHeader(fname, &hdr))
 	{
-		new Message("Failed to write header.");
+        new Message(LC_FAIL_WRITE_HEADER);
 		sound(SND_GUN_CLICK);
 		opt.dismiss_on_focus = opt.subdlg;
 		return;
@@ -481,21 +484,21 @@ Dialog *dlg = opt.dlg;
 	dlg->Clear();
 	sound(SND_MENU_MOVE);
 	
-	dlg->AddItem("Left", _edit_control, _upd_control, LEFTKEY);
-	dlg->AddItem("Right", _edit_control, _upd_control, RIGHTKEY);
-	dlg->AddItem("Up", _edit_control, _upd_control, UPKEY);
-	dlg->AddItem("Down", _edit_control, _upd_control, DOWNKEY);
+    dlg->AddItem(LC_KB_LEFT, _edit_control, _upd_control, LEFTKEY);
+    dlg->AddItem(LC_KB_RIGHT, _edit_control, _upd_control, RIGHTKEY);
+    dlg->AddItem(LC_KB_UP, _edit_control, _upd_control, UPKEY);
+    dlg->AddItem(LC_KB_DOWN, _edit_control, _upd_control, DOWNKEY);
 	
 #ifndef _L10N_CP1251
 	dlg->AddSeparator();
 #endif
 	
-	dlg->AddItem("Jump", _edit_control, _upd_control, JUMPKEY);
-	dlg->AddItem("Fire", _edit_control, _upd_control,  FIREKEY);
-	dlg->AddItem("Wpn Prev", _edit_control, _upd_control, PREVWPNKEY);
-	dlg->AddItem("Wpn Next", _edit_control, _upd_control, NEXTWPNKEY);
-	dlg->AddItem("Inventory", _edit_control, _upd_control, INVENTORYKEY);
-	dlg->AddItem("Map", _edit_control, _upd_control, MAPSYSTEMKEY);
+    dlg->AddItem(LC_KB_JUMP, _edit_control, _upd_control, JUMPKEY);
+    dlg->AddItem(LC_KB_FIRE, _edit_control, _upd_control,  FIREKEY);
+    dlg->AddItem(LC_KB_WPN_PREV, _edit_control, _upd_control, PREVWPNKEY);
+    dlg->AddItem(LC_KB_WPN_NEXT, _edit_control, _upd_control, NEXTWPNKEY);
+    dlg->AddItem(LC_KB_INV, _edit_control, _upd_control, INVENTORYKEY);
+    dlg->AddItem(LC_KB_MAP, _edit_control, _upd_control, MAPSYSTEMKEY);
 	
 #ifndef _L10N_CP1251
 	dlg->AddSeparator();
@@ -518,7 +521,7 @@ Message *msg;
 	opt.remapping_key = item->id;
 	opt.new_sdl_key = -1;
 	
-	msg = new Message("Press new key for:", input_get_name(opt.remapping_key));
+    msg = new Message(LC_KB_NEW_KEY, input_get_name(opt.remapping_key));
 	msg->rawKeyReturn = &opt.new_sdl_key;
 	msg->on_dismiss = _finish_control_edit;
 	
@@ -542,7 +545,7 @@ int i;
 	{
 		if (i != inputno && input_get_mapping(i) == new_sdl_key)
 		{
-			new Message("Key already in use by:", input_get_name(i));
+            new Message(LC_KB_BUSY, input_get_name(i));
 			sound(SND_GUN_CLICK);
 			return;
 		}

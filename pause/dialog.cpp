@@ -2,6 +2,8 @@
 #include "../nx.h"
 #include "dialog.h"
 #include "dialog.fdh"
+#include "../l10n_strings.h"
+
 using namespace Options;
 extern FocusStack optionstack;
 
@@ -96,7 +98,7 @@ ODItem *Dialog::AddSeparator()
 
 ODItem *Dialog::AddDismissalItem(const char *text)
 {
-	if (!text) text = "Return";
+    if (!text) text = LC_RETURN;
 	return AddItem(text, NULL, NULL, -1, OD_DISMISS);
 }
 

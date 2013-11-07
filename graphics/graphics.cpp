@@ -12,6 +12,7 @@
 #include "sprites.h"
 #include "../dirnames.h"
 #include "graphics.fdh"
+#include "../l10n_strings.h"
 
 NXSurface *screen = NULL;				// created from SDL's screen
 static NXSurface *drawtarget = NULL;	// target of DrawRect etc; almost always screen
@@ -214,7 +215,7 @@ const char **Graphics::GetResolutions()
 #else
     static const char *res_str[]   =
     {
-        "Fullscreen",
+        LC_FULLSCREEN,
         "320x240",
         "640x480",
         "960x720",

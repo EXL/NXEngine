@@ -359,7 +359,8 @@ HEADERS += caret.h \
            ai/weapons/weapons.fdh \
            ai/weapons/whimstar.fdh \
            ai/weed/balrog_boss_flying.fdh \
-           ai/weed/frenzied_mimiga.fdh
+           ai/weed/frenzied_mimiga.fdh \
+    l10n_strings.h
 
 SOURCES += caret.cpp \
            console.cpp \
