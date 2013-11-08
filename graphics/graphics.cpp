@@ -14,6 +14,9 @@
 #include "graphics.fdh"
 #include "../l10n_strings.h"
 
+#include "icon.xpm"
+#include "xpmloader.h"
+
 NXSurface *screen = NULL;				// created from SDL's screen
 static NXSurface *drawtarget = NULL;	// target of DrawRect etc; almost always screen
 bool use_palette = false;				// true if we are in an indexed-color video mode
@@ -84,7 +87,18 @@ void c------------------------------() {}
 
 bool Graphics::InitVideo()
 {
-SDL_Surface *sdl_screen;
+    SDL_Surface *sdl_screen;
+
+    SDL_Surface *image;
+    Uint32 colorkey;
+
+    image = IMG_ReadXPMFromArray(icon_xpm);
+    if(!image) {
+        printf("IMG_ReadXPMFromArray: %s\n", "Error Loading XPM!");
+    }
+    colorkey = SDL_MapRGB(image->format, 255, 0, 255);
+    SDL_SetColorKey(image, SDL_SRCCOLORKEY, colorkey);
+    SDL_WM_SetIcon(image, NULL);
 
 	if (drawtarget == screen) drawtarget = NULL;
 	if (screen) delete screen;

@@ -61,7 +61,7 @@ namespace Graphics
 	void set_clip_rect(NXRect *rect);
 	void clear_clip_rect();
 	
-	void SetDrawTarget(NXSurface *surface);
+    void SetDrawTarget(NXSurface *surface);
 };
 
 #endif
