@@ -98,10 +98,10 @@ win32-g++: {
 # Librares
 win32-g++ {
     QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
-    LIBS += -lmingw32 -lSDL_mixer -lmad -lmikmod -lvorbisfile -lvorbis -logg \
-            -lSDL_ttf -lfreetype -lpng -lz -lSDLmain -lSDL -liconv -lm \
-            -luser32 -lgdi32 -lwinmm
-} linux-g++|linux-mips-g++ {
+    LIBS += -lmingw32 -lSDL_ttf -lfreetype -lpng -lz -lSDLmain -lSDL -lgdi32 -lwinmm
+} linux-g++ {
+    LIBS += -lSDLmain -lSDL -lSDL_ttf
+} linux-mips-g++ {
     LIBS += -lSDLmain -lSDL -lSDL_ttf -lSDL_mixer
 } linux-arm-gnueabi-g++ {
     LIBS += $$system(sdl-config  --libs) -lSDL_mixer -lSDL_ttf -lstdc++ -lm -lfreetype
@@ -505,6 +505,5 @@ SOURCES += caret.cpp \
            platform/Linux/vbesync.c \
            graphics/xpmloader.cpp
 
-OTHER_FILES += \
-    nx.rc \
-    icon.xpm
+OTHER_FILES += nx.rc \
+               icon.xpm
