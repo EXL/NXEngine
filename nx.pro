@@ -29,7 +29,7 @@ CONFIG -= l10n_rus
 linux-mips-g++: CONFIG += platform-rzx50
 
 # Targets
-win32-g++|linux-g++ {
+win32-g++ | linux-g++ | linux-g++-64 {
     TARGET = nx
 } linux-mips-g++ {
     TARGET = nx.dge
@@ -39,13 +39,13 @@ win32-g++|linux-g++ {
 
 # Strip release binary
 CONFIG(release, debug|release) {
-    linux-g++ | linux-mips-g++ | linux-arm-gnueabi-g++ {
+    linux-g++ | linux-g++-64 | linux-mips-g++ | linux-arm-gnueabi-g++ {
         QMAKE_POST_LINK += $(STRIP) $(TARGET)
     }
 }
 
 # Defines
-win32-g++|linux-g++ {
+win32-g++ | linux-g++ | linux-g++-64 {
     DEFINES +=
 } linux-mips-g++ {
     CONFIG(platform-rzx50, platform-rzx50|platform-a320) {
@@ -84,7 +84,7 @@ INCLUDEPATH += .
 win32-g++: {
     INCLUDEPATH += C:/MinGW/include
     INCLUDEPATH += C:/MinGW/include/SDL
-} linux-g++ {
+} linux-g++ | linux-g++-64 {
     INCLUDEPATH += /usr/include
     INCLUDEPATH += /usr/include/SDL
 } linux-mips-g++ {
@@ -99,7 +99,7 @@ win32-g++: {
 win32-g++ {
     QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
     LIBS += -lmingw32 -lSDL_ttf -lfreetype -lpng -lz -lSDLmain -lSDL -lgdi32 -lwinmm
-} linux-g++ {
+} linux-g++ | linux-g++-64 {
     LIBS += -lSDLmain -lSDL -lSDL_ttf
 } linux-mips-g++ {
     LIBS += -lSDLmain -lSDL -lSDL_ttf -lSDL_mixer

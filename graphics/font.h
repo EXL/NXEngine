@@ -28,7 +28,7 @@ public:
 	bool InitChars(TTF_Font *font, uint32_t color);
 	bool InitCharsShadowed(TTF_Font *top, uint32_t color, uint32_t shadowcolor);
 
-    int win1251_to_utf8(const char* text, char* utext);
+    static int win1251_to_utf8(const char* text, char* utext);
 	
 	bool InitBitmapChars(SDL_Surface *sheet, uint32_t fgcolor, uint32_t color);
 	bool InitBitmapCharsShadowed(SDL_Surface *sheet, uint32_t fgcolor, uint32_t color, uint32_t shadowcolor);
