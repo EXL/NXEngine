@@ -169,8 +169,7 @@ SOURCES =	caret.cpp \
 			ai/weed/balrog_boss_flying.cpp \
 			ai/weed/frenzied_mimiga.cpp \
 			ai/weed/weed.cpp \
-			platform/Linux/vbesync.c \
-			graphics/xpmloader.cpp 
+			platform/Linux/vbesync.c 
 
 OBJECTS =	caret.o \
 			console.o \
@@ -311,8 +310,7 @@ OBJECTS =	caret.o \
 			balrog_boss_flying.o \
 			frenzied_mimiga.o \
 			weed.o \
-			vbesync.o \
-			xpmloader.o
+			vbesync.o 
 
 TARGET		= nx
 
@@ -2164,8 +2162,7 @@ graphics.o: graphics/graphics.cpp config.h \
 		dirnames.h \
 		graphics/graphics.fdh \
 		l10n_strings.h \
-		icon.xpm \
-		graphics/xpmloader.h
+		nx_icon.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graphics.o graphics/graphics.cpp
 
 nxsurface.o: graphics/nxsurface.cpp settings.h \
@@ -6383,9 +6380,6 @@ weed.o: ai/weed/weed.cpp ai/stdai.h \
 
 vbesync.o: platform/Linux/vbesync.c 
 	$(CC) -c $(CFLAGS) $(INCPATH) -o vbesync.o platform/Linux/vbesync.c
-
-xpmloader.o: graphics/xpmloader.cpp graphics/xpmloader.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o xpmloader.o graphics/xpmloader.cpp
 
 ####### Install
 
