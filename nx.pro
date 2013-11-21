@@ -361,7 +361,7 @@ HEADERS += caret.h \
            ai/weed/balrog_boss_flying.fdh \
            ai/weed/frenzied_mimiga.fdh \
            l10n_strings.h \
-           graphics/xpmloader.h
+           nx_icon.h
 
 SOURCES += caret.cpp \
            console.cpp \
@@ -502,8 +502,6 @@ SOURCES += caret.cpp \
            ai/weed/balrog_boss_flying.cpp \
            ai/weed/frenzied_mimiga.cpp \
            ai/weed/weed.cpp \
-           platform/Linux/vbesync.c \
-           graphics/xpmloader.cpp
+           platform/Linux/vbesync.c
 
-OTHER_FILES += nx.rc \
-               icon.xpm
+OTHER_FILES += nx.rc

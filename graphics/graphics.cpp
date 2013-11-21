@@ -14,8 +14,9 @@
 #include "graphics.fdh"
 #include "../l10n_strings.h"
 
-#include "icon.xpm"
-#include "xpmloader.h"
+#if !defined(_DINGUX) || !defined(_MOTOMAGX)
+#include "../nx_icon.h"
+#endif
 
 NXSurface *screen = NULL;				// created from SDL's screen
 static NXSurface *drawtarget = NULL;	// target of DrawRect etc; almost always screen
@@ -89,16 +90,28 @@ bool Graphics::InitVideo()
 {
     SDL_Surface *sdl_screen;
 
-    SDL_Surface *image;
-    Uint32 colorkey;
-
-    image = IMG_ReadXPMFromArray(icon_xpm);
-    if(!image) {
-        printf("IMG_ReadXPMFromArray: %s\n", "Error Loading XPM!");
-    }
-    colorkey = SDL_MapRGB(image->format, 255, 0, 255);
-    SDL_SetColorKey(image, SDL_SRCCOLORKEY, colorkey);
-    SDL_WM_SetIcon(image, NULL);
+#if !defined(_DINGUX) || !defined(_MOTOMAGX)
+    SDL_Surface *icon;
+    icon = SDL_CreateRGBSurfaceFrom((void *)WINDOW_TITLE_ICON.pixel_data,
+                                    WINDOW_TITLE_ICON.width,
+                                    WINDOW_TITLE_ICON.height,
+                                    WINDOW_TITLE_ICON.bytes_per_pixel * 8,
+                                    WINDOW_TITLE_ICON.bytes_per_pixel * WINDOW_TITLE_ICON.width,
+                                #if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+                                    0xff000000, /* Red bit mask. */
+                                    0x00ff0000, /* Green bit mask. */
+                                    0x0000ff00, /* Blue bit mask. */
+                                    0x000000ff  /* Alpha bit mask. */
+                                #else
+                                    0x000000ff, /* Red bit mask. */
+                                    0x0000ff00, /* Green bit mask. */
+                                    0x00ff0000, /* Blue bit mask. */
+                                    0xff000000  /* Alpha bit mask. */
+                                #endif
+                                    );
+    SDL_WM_SetIcon(icon, NULL);
+    SDL_FreeSurface(icon);
+#endif
 
 	if (drawtarget == screen) drawtarget = NULL;
 	if (screen) delete screen;
