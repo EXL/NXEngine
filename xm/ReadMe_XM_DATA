@@ -1,5 +1,0 @@
-Please download "*.xm" music here:
-
-And unpack files into "xm" dir:
-	mkdir xm && cd xm
-	unzip ../xm.zip 

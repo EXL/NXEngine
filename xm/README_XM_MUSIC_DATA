@@ -1,0 +1,7 @@
+Please download "*.xm"-music archive here:
+
+http://cloud.z-lab.me/public.php?service=files&t=13c2848f4959e54d68d97115f0b7ff27&download
+
+And unpack files into "xm" dir:
+	mkdir xm && cd xm
+	unzip ../xm.zip 
