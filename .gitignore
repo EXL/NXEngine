@@ -15,5 +15,9 @@
 *.a
 *.lib
 
+# User files
+*.pro.user
+.directory
+
 # Executables
 *.exe
