@@ -27,7 +27,9 @@ Platform Defines:
 
 -D_DINGUX         - Dingux platform and keyboard layout (Ritmix RZX-50, Dingoo A320, Dingoo A380, etc).
 
--D_MOTOMAGX       - MotoMagx platform and keyboard layout (Motorola ZN5, Z6, E8, EM30, VE66, etc).
+-D_MOTOMAGX       - MotoMAGX platform and keyboard layout (Motorola ZN5, Z6, E8, EM30, VE66, etc).
+
+-D_MOTOEZX        - MotoEZX platform and keyboard layout (Motorola E2, E6, A1200, A1600).
 
 -D_SDL_MIXER      - Don't use generatining music, *.xm and sounds playing via SDL_mixer.
 

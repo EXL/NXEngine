@@ -32,7 +32,7 @@ linux-mips-g++: CONFIG += platform-rzx50
 # Targets
 win32-g++ | linux-g++ | linux-g++-64 { # Host
     TARGET = nx
-} linux-mips-g++ { c
+} linux-mips-g++ {
     TARGET = nx.dge
 } linux-arm-gnueabi-g++ { # MotoMAGX
     TARGET = nx.magx
@@ -520,4 +520,5 @@ SOURCES += caret.cpp \
            ai/weed/weed.cpp \
            platform/Linux/vbesync.c
 
-OTHER_FILES += nx.rc
+OTHER_FILES += nx.rc \
+               README.md

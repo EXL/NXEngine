@@ -10,14 +10,14 @@
 #include <string.h>
 #include <math.h>
 
-#if defined(__MINGW32__) || defined(_DINGUX) || defined (_MOTOMAGX) || defined(__GNUC_RH_RELEASE__)
+#if defined(__MINGW32__) || defined(_DINGUX) || defined (_MOTOMAGX) || defined (_MOTOEZX) || defined(__GNUC_RH_RELEASE__)
 #define htole16(x) (x)
 #else
 #include <endian.h>
 #endif
 
 #include "../common/basics.h"
-#include "org.h"
+#include "org.h"|| defined (_MOTOMAGX)
 #include "pxt.h"			// for loading drums
 #include "sslib.h"			// SAMPLE_RATE
 #include "org.fdh"

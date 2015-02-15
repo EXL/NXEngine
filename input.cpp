@@ -52,6 +52,13 @@ bool input_init(void)
         mappings[SDLK_8] = NEXTWPNKEY;
         mappings[SDLK_2] = INVENTORYKEY;
         mappings[SDLK_5] = MAPSYSTEMKEY;
+#elif _MOTOEZX
+        mappings[SDLK_PLUS] = JUMPKEY;
+        mappings[SDLK_RETURN] = FIREKEY;
+        mappings[SDLK_j] = PREVWPNKEY;
+        mappings[SDLK_MINUS] = NEXTWPNKEY;
+        mappings[SDLK_o] = INVENTORYKEY;
+        mappings[SDLK_w] = MAPSYSTEMKEY;
 #else
         mappings[SDLK_z] = JUMPKEY;
         mappings[SDLK_x] = FIREKEY;

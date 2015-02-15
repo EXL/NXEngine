@@ -41,7 +41,7 @@ bool options_init(int retmode)
 	opt.dlg->ondismiss = DialogDismissed;
 	opt.dlg->ShowFull();
 
-#if defined (_DINGUX) || defined (_MOTOMAGX)
+#if defined (_DINGUX) || defined (_MOTOMAGX) || defined (_MOTOEZX)
     inputs[OPTIONS_KEY] = 0;
 #else
     inputs[F3KEY] = 0;
@@ -69,7 +69,7 @@ void options_tick()
 int i;
 FocusHolder *fh;
 
-#if defined (_DINGUX) || defined (_MOTOMAGX)
+#if defined (_DINGUX) || defined (_MOTOMAGX) || defined (_MOTOEZX)
     if (justpushed(OPTIONS_KEY))
 #else
     if (justpushed(F3KEY))
@@ -145,7 +145,7 @@ Dialog *dlg = opt.dlg;
     dlg->AddItem(LC_REPLAY, EnterReplayMenu);
 	
 	dlg->AddSeparator();
-#if defined (_DINGUX) || defined (_MOTOMAGX)
+#if defined (_DINGUX) || defined (_MOTOMAGX) || defined (_MOTOEZX)
     dlg->AddItem(LC_DEBUG, EnterDebugMenu);
 #else
     dlg->AddItem(LC_DEBUG_KEYS, _debug_change, _debug_get);

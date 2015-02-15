@@ -278,7 +278,7 @@ static int frameskip = 0;
 			game.pause(GP_PAUSED);
 		}
 	}
-#if defined (_DINGUX) || defined (_MOTOMAGX)
+#if defined (_DINGUX) || defined (_MOTOMAGX) || defined (_MOTOEZX)
     else if (justpushed(OPTIONS_KEY))
 #else
     else if (justpushed(F3KEY))

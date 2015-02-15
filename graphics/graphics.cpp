@@ -14,7 +14,7 @@
 #include "graphics.fdh"
 #include "../l10n_strings.h"
 
-#if !defined(_DINGUX) || !defined(_MOTOMAGX)
+#if !defined(_DINGUX) || !defined(_MOTOMAGX) || !defined(_MOTOEZX)
 #include "../nx_icon.h"
 #endif
 
@@ -90,7 +90,7 @@ bool Graphics::InitVideo()
 {
     SDL_Surface *sdl_screen;
 
-#if !defined(_DINGUX) || !defined(_MOTOMAGX)
+#if !defined(_DINGUX) || !defined(_MOTOMAGX) || !defined(_MOTOEZX)
     SDL_Surface *icon;
     icon = SDL_CreateRGBSurfaceFrom((void *)WINDOW_TITLE_ICON.pixel_data,
                                     WINDOW_TITLE_ICON.width,
