@@ -6,10 +6,11 @@
 # -D_480X272        - Use widescreen 480x272 resolution.
 # -D_320X240        - Use normal 320x240 resolution.
 # -D_DINGUX         - Dingux platform and keyboard layout (Ritmix RZX-50, Dingoo A320, Dingoo A380, etc).
-# -D_MOTOMAGX       - MotoMagx platform and keyboard layout (Motorola ZN5, Z6, E8, EM30, VE66, etc).
+# -D_MOTOMAGX       - MotoMAGX platform and keyboard layout (Motorola ZN5, Z6, E8, EM30, VE66, etc).
+# -D_MOTOEZX        - MotoEZX platform and keyboard layout (Motorola E2, E6, A1200, A1600).
 # -D_SDL_MIXER      - Don't use generatining music, *.xm and sounds playing via SDL_mixer.
 # -D_DEBUG          - Enable detailed debug output to the console.
-# -D_L10N_CP1251    - Enable russian localization (need a *.ttf font and russian data-files)
+# -D_L10N_CP1251    - Enable russian localization (need a *.ttf font and russian data-files).
 
 # Global App Settings
 TEMPLATE = app
@@ -29,32 +30,34 @@ CONFIG -= l10n_rus
 linux-mips-g++: CONFIG += platform-rzx50
 
 # Targets
-win32-g++ | linux-g++ | linux-g++-64 {
+win32-g++ | linux-g++ | linux-g++-64 { # Host
     TARGET = nx
-} linux-mips-g++ {
+} linux-mips-g++ { c
     TARGET = nx.dge
-} linux-arm-gnueabi-g++ {
+} linux-arm-gnueabi-g++ { # MotoMAGX
     TARGET = nx.magx
+} linux-arm-gnu-g++ | iwmmxt_le-g++ { # MotoEZX
+    TARGET = nx.ezx
 }
 
 # Strip release binary
 CONFIG(release, debug|release) {
-    linux-g++ | linux-g++-64 | linux-mips-g++ | linux-arm-gnueabi-g++ {
-        QMAKE_POST_LINK += $(STRIP) $(TARGET)
-    }
+    !win32-g++: QMAKE_POST_LINK += $(STRIP) $(TARGET)
 }
 
 # Defines
-win32-g++ | linux-g++ | linux-g++-64 {
+win32-g++ | linux-g++ | linux-g++-64 { # Host
     DEFINES +=
-} linux-mips-g++ {
-    CONFIG(platform-rzx50, platform-rzx50|platform-a320) {
+} linux-mips-g++ { # Dingux
+    CONFIG(platform-rzx50, platform-rzx50 | platform-a320) { # RZX-50
         DEFINES += _480X272 _DINGUX _SDL_MIXER
-    } CONFIG(platform-a320, platform-rzx50|platform-a320) {
+    } CONFIG(platform-a320, platform-rzx50 | platform-a320) { # A320
         DEFINES += _320X240 _DINGUX _SDL_MIXER
     }
-} linux-arm-gnueabi-g++ {
+} linux-arm-gnueabi-g++ { # MotoMAGX
     DEFINES += _320X240 _MOTOMAGX _SDL_MIXER
+} linux-arm-gnu-g++ | iwmmxt_le-g++ { # MotoEZX
+    DEFINES += _320X240 _MOTOEZX _SDL_MIXER
 }
 
 # Debug
@@ -67,48 +70,61 @@ l10n_rus {
     DEFINES += _L10N_CP1251
 }
 
+# MotoEZX sdl-config
+EZX_SDL_CONFIG = /opt/toolchains/motoezx/bin/sdl-config
+
 # Platform C/C++ Flags, CPU Optimization
-linux-mips-g++ {
+linux-mips-g++ { # Dingux
     QMAKE_CFLAGS_RELEASE += -mabi=32 -msoft-float -ffast-math -G0
     QMAKE_CXXFLAGS_RELEASE += $${QMAKE_CFLAGS_RELEASE}
-} linux-arm-gnueabi-g++ {
+} linux-arm-gnueabi-g++ { # MotoMAGX
     QMAKE_CFLAGS += $$system(sdl-config  --cflags)
     QMAKE_CXXFLAGS += $${QMAKE_CFLAGS}
     QMAKE_CFLAGS_RELEASE += -march=armv6j -mtune=arm1136jf-s -mfpu=vfp
+    QMAKE_CXXFLAGS_RELEASE += $${QMAKE_CFLAGS_RELEASE}
+} linux-arm-gnu-g++ | iwmmxt_le-g++ { # MotoEZX
+    QMAKE_CFLAGS += $$system($${EZX_SDL_CONFIG}  --cflags)
+    QMAKE_CXXFLAGS += $${QMAKE_CFLAGS}
+    QMAKE_CFLAGS_RELEASE += -mcpu=iwmmxt -mtune=iwmmxt -march=iwmmxt -marm
     QMAKE_CXXFLAGS_RELEASE += $${QMAKE_CFLAGS_RELEASE}
 }
 
 # Headers
 INCLUDEPATH += .
 
-win32-g++: {
+win32-g++ { # Host MinGW Windows
     INCLUDEPATH += C:/MinGW/include
     INCLUDEPATH += C:/MinGW/include/SDL
-} linux-g++ | linux-g++-64 {
+} linux-g++ | linux-g++-64 { # Host GCC Linux
     INCLUDEPATH += /usr/include
     INCLUDEPATH += /usr/include/SDL
-} linux-mips-g++ {
+} linux-mips-g++ { # Dingux
     INCLUDEPATH += /opt/mipsel-linux-uclibc/usr/include
     INCLUDEPATH += /opt/mipsel-linux-uclibc/usr/include/SDL
-} linux-arm-gnueabi-g++: {
+} linux-arm-gnueabi-g++ { # MotoMAGX
     INCLUDEPATH += /opt/toolchains/motomagx/arm-eabi2/include
     INCLUDEPATH += /opt/toolchains/motomagx/arm-eabi2/include/SDL
+} linux-arm-gnu-g++ { # MotoEZX
+    INCLUDEPATH += /opt/toolchains/motoezx/include/
+    INCLUDEPATH += /opt/toolchains/motoezx/include/SDL
 }
 
 # Librares
-win32-g++ {
+win32-g++ { # Host MinGW Windows
     QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
     LIBS += -lmingw32 -lSDL_ttf -lfreetype -lpng -lz -lSDLmain -lSDL -lgdi32 -lwinmm
-} linux-g++ | linux-g++-64 {
+} linux-g++ | linux-g++-64 { # Host GCC Linux
     LIBS += -lSDLmain -lSDL -lSDL_ttf
-} linux-mips-g++ {
+} linux-mips-g++ { # Dingux
     LIBS += -lSDLmain -lSDL -lSDL_ttf -lSDL_mixer
-} linux-arm-gnueabi-g++ {
+} linux-arm-gnueabi-g++ { # MotoMAGX
     LIBS += $$system(sdl-config  --libs) -lSDL_mixer -lSDL_ttf -lstdc++ -lm -lfreetype
+} linux-arm-gnu-g++ { # MotoEZX
+    LIBS += $$system($${EZX_SDL_CONFIG}  --libs) -lSDL_mixer -lSDL_ttf -lstdc++ -lm -lfreetype
 }
 
 # Win32 Icon
-win32-g++:RC_FILE = nx.rc
+win32-g++: RC_FILE = nx.rc
 
 DEPENDPATH += . \
               ai \
