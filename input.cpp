@@ -2,6 +2,10 @@
 #include "nx.h"
 #include "input.fdh"
 
+#ifdef _MOTOEZX
+#include "platform/EZX/EZX_SDL_PollEvent.h"
+#endif
+
 uint8_t mappings[SDLK_LAST];
 
 bool inputs[INPUT_COUNT];
@@ -171,8 +175,11 @@ void input_poll(void)
 {
 SDL_Event evt;
 int ino, key;
-	
+#if !defined(_MOTOEZX)
 	while(SDL_PollEvent(&evt))
+#else
+	while(EZX_SDL_PollEvent(&evt))
+#endif
 	{
 		switch(evt.type)
 		{

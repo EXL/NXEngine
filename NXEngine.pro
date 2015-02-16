@@ -123,6 +123,13 @@ win32-g++ { # Host MinGW Windows
     LIBS += $$system($${EZX_SDL_CONFIG}  --libs) -lSDL_mixer -lSDL_ttf -lstdc++ -lm -lfreetype
 }
 
+# Additional MotoEZX files
+linux-arm-gnu-g++ | iwmmxt_le-g++ {
+    DEPENDPATH += platform/EZX
+    HEADERS += platform/EZX/EZX_SDL_PollEvent.h
+    SOURCES += platform/EZX/EZX_SDL_PollEvent.cpp
+}
+
 # Win32 Icon
 win32-g++: RC_FILE = nx.rc
 
