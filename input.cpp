@@ -54,11 +54,11 @@ bool input_init(void)
         mappings[SDLK_5] = MAPSYSTEMKEY;
 #elif _MOTOEZX
         mappings[SDLK_PLUS] = JUMPKEY;
-        mappings[SDLK_RETURN] = FIREKEY;
-        mappings[SDLK_j] = PREVWPNKEY;
-        mappings[SDLK_MINUS] = NEXTWPNKEY;
-        mappings[SDLK_o] = INVENTORYKEY;
-        mappings[SDLK_w] = MAPSYSTEMKEY;
+        mappings[SDLK_MINUS] = FIREKEY;
+        mappings[SDLK_d] = PREVWPNKEY;
+        mappings[SDLK_c] = NEXTWPNKEY;
+        mappings[SDLK_RETURN] = INVENTORYKEY;
+        mappings[SDLK_b] = MAPSYSTEMKEY;
 #else
         mappings[SDLK_z] = JUMPKEY;
         mappings[SDLK_x] = FIREKEY;
@@ -68,7 +68,7 @@ bool input_init(void)
         mappings[SDLK_w] = MAPSYSTEMKEY;
 #endif
 
-#ifdef _MOTOMAGX
+#if defined(_MOTOMAGX) || defined(_MOTOEZX)
         mappings[SDLK_PAUSE] = ESCKEY;
 #else
         mappings[SDLK_ESCAPE] = ESCKEY;
@@ -87,17 +87,24 @@ bool input_init(void)
         mappings[SDLK_F11] = F11KEY;
         mappings[SDLK_F12] = F12KEY;
 #ifdef _MOTOMAGX
-        mappings[SDLK_HASH] = OPTIONS_KEY; // SDLK_HASH
+        mappings[SDLK_HASH] = OPTIONS_KEY; // #
+#elif _MOTOEZX
+        mappings[SDLK_e] = OPTIONS_KEY; // Mod Key + Camera
 #else
         mappings[SDLK_TAB] = OPTIONS_KEY;
 #endif
 
-#ifndef _DINGUX
+#if !defined(_DINGUX) && !defined(_MOTOEZX) && !defined(_MOTOMAGX)
         mappings[SDLK_SPACE] = FREEZE_FRAME_KEY;
 #else
         mappings[SDLK_s] = FREEZE_FRAME_KEY;
 #endif
+
+#if !defined(_MOTOEZX)
 		mappings[SDLK_c] = FRAME_ADVANCE_KEY;
+#else
+		mappings[SDLK_i] = FRAME_ADVANCE_KEY;
+#endif
 		mappings[SDLK_v] = DEBUG_FLY_KEY;
 	}
 	#endif

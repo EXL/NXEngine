@@ -158,7 +158,11 @@ bool first_crc_failure = true;
 					print("Ignore [A]ll");
 					print("[S]top");
 					#define IGNORE_BTN		SDLK_i
+#if defined(_MOTOMAGX) || defined(_MOTOEZX)
+					#define IGNORE_ALL_BTN	SDLK_PLUS
+#else
 					#define IGNORE_ALL_BTN	SDLK_a
+#endif
 					#define STOP_BTN		SDLK_s
 				#else
 					print("B1 - Ignore");
