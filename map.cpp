@@ -313,8 +313,13 @@ FILE *fp;
 	}
 	
 	num_stages = fgetc(fp);
-	for(int i=0;i<num_stages;i++)
-		fread(&stages[i], sizeof(MapRecord), 1, fp);
+
+	// Dirty hack for packed structs
+	int size_of_MapRecord = sizeof(MapRecord().filename) + sizeof(MapRecord().stagename) + 6;
+
+	for(int i=0;i<num_stages;i++) {
+		fread(&stages[i], size_of_MapRecord, 1, fp);
+	}
 	
 	return 0;
 }
