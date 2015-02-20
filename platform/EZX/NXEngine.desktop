@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Cave Story
+Version=1.0.0.4-Rev4
+Description=Cave Story is a freeware platform-adventure video game released in 2004 for the PC. It was developed over five years by Daisuke "Pixel" Amaya in his free time. Cave Story features 2D platform mechanics and is a homage to the classic games the developer played in his youth, such as Metroid.
+Author=Cave Story: Daisuke "Pixel" Amaya; NXEngine: Caitlin "rogueeve" Shaw.
+Comment=Ported to EZX (A1200, A1600, E2, E6) by EXL, 16-FEB-2015
+Vendor=forum.motofan.ru
+Exec=run.sh
+BigIcon=icon_ezx_big.png
+Icon=icon_ezx_small.png
+Type=Application
+Category=Games
+Shared=2

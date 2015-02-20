@@ -3,7 +3,7 @@ NXEngine
 
 NXEngine is open-source rewrite engine of the Cave Story. Author - Caitlin Shaw (rogueeve)
 
-Added: 
+Added:
 
 1. Sound through SDL_mixer;
 
@@ -11,7 +11,7 @@ Added:
 
 3. Russification.
 
-## Building: 
+## Building:
 
 Building NXEngine requires next SDL libraries: SDL-1.2, SDL_ttf-2.0, SDL_mixer-1.2 (optional).
 
@@ -43,13 +43,16 @@ Platform Defines:
 
 Ritmix RZX-50:
 
-![Ritmix RZX-50](https://raw.github.com/EXL/NXEngine/master/screens/Cave_Story_Ritmix_1.png) 
+![Ritmix RZX-50](https://raw.github.com/EXL/NXEngine/master/screens/Cave_Story_Ritmix_1.png)
 
 ![Ritmix RZX-50](https://raw.github.com/EXL/NXEngine/master/screens/Cave_Story_Ritmix_2.png)
 
 Windows 8.1:
 
-![Windows 8.1](https://raw.github.com/EXL/NXEngine/master/screens/Cave_Story_Windows.png) 
+![Windows 8.1](https://raw.github.com/EXL/NXEngine/master/screens/Cave_Story_Windows.png)
+
+##Photos:
+![Motorola ROKR E6](https://raw.github.com/EXL/NXEngine/master/platform/EZX/NXEngine-EZX-ROKR_E6.jpg)
 
 ##Binares:
 
