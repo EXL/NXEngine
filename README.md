@@ -39,7 +39,7 @@ Platform Defines:
 
 [More building information](http://exlmoto.ru/nxengine/#3 "More building information")
 
-##Screens:
+## Screens:
 
 Ritmix RZX-50:
 
@@ -51,10 +51,10 @@ Windows 8.1:
 
 ![Windows 8.1](https://raw.github.com/EXL/NXEngine/master/screens/Cave_Story_Windows.png)
 
-##Photos:
+## Photos:
 ![Motorola ROKR E6](https://raw.github.com/EXL/NXEngine/master/platform/EZX/NXEngine-EZX-ROKR_E6.jpg)
 
-##Binares:
+## Binares:
 
 Download ready-to-run packages with NXEngine you can here:
 
