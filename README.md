@@ -43,16 +43,16 @@ Platform Defines:
 
 Ritmix RZX-50:
 
-![Ritmix RZX-50](https://raw.github.com/EXL/NXEngine/master/screens/Cave_Story_Ritmix_1.png)
+![Ritmix RZX-50](screens/Cave_Story_Ritmix_1.png)
 
-![Ritmix RZX-50](https://raw.github.com/EXL/NXEngine/master/screens/Cave_Story_Ritmix_2.png)
+![Ritmix RZX-50](screens/Cave_Story_Ritmix_2.png)
 
 Windows 8.1:
 
-![Windows 8.1](https://raw.github.com/EXL/NXEngine/master/screens/Cave_Story_Windows.png)
+![Windows 8.1](screens/Cave_Story_Windows.png)
 
 ## Photos:
-![Motorola ROKR E6](https://raw.github.com/EXL/NXEngine/master/platform/EZX/NXEngine-EZX-ROKR_E6.jpg)
+![Motorola ROKR E6](platform/EZX/NXEngine-EZX-ROKR_E6.jpg)
 
 ## Binares:
 
