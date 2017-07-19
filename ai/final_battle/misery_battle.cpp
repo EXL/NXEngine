@@ -138,9 +138,9 @@ static void run_spells(Object *o)
 			{
 				int x = player->x - (8 << CSF);
 				int y = player->y - (64 << CSF);
-				CreateObject(x, y, OBJ_FALLING_BLOCK);
-				o->sprite = SPR_BALCONY_BLOCK_LARGE;
-				o->dir = DOWN;	// tell block it was spawned by Misery
+				Object *block = CreateObject(x, y, OBJ_FALLING_BLOCK);
+				block->sprite = SPR_BALCONY_BLOCK_LARGE;
+				block->dir = DOWN; // tell block it was spawned by Misery
 			}
 			
 			if (o->timer > 30)
