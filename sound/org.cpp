@@ -17,7 +17,7 @@
 #endif
 
 #include "../common/basics.h"
-#include "org.h"|| defined (_MOTOMAGX)
+#include "org.h"
 #include "pxt.h"			// for loading drums
 #include "sslib.h"			// SAMPLE_RATE
 #include "org.fdh"
