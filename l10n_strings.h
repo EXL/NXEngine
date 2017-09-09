@@ -3,86 +3,75 @@
 
 #ifdef _L10N_CP1251
 // Russian Win1251 Strings
-const char LC_RES[] = { 0xD0, 0xE0, 0xE7, 0xF0, 0xE5, 0xF8, 0xE5, 0xED, 0xE8, 0xE5, ':', ' ', NULL };
-const char LC_KEYS[] = { 0xD3, 0xEF, 0xF0, 0xE0, 0xE2, 0xEB, 0xE5, 0xED, 0xE8, 0xE5, NULL };
-const char LC_REPLAY[] = { 0xCF, 0xEE, 0xE2, 0xF2, 0xEE, 0xF0, 0xFB, NULL };
-const char LC_DEBUG[] = { 0xCC, 0xE5, 0xED, 0xFE, ' ', 0xEE, 0xF2, 0xEB, 0xE0, 0xE4, 0xEA, 0xE8, NULL };
-const char LC_DEBUG_KEYS[] = { 0xC2, 0xEA, 0xEB, 0xFE, 0xF7, 0xE8, 0xF2, 0xFC, ' ',
-                               'D', 'e', 'b', 'u', 'g', '-', 0xEA, 0xEB, 0xE0, 0xE2, 0xE8, 0xF8, 0xE8, NULL };
-const char LC_SAVE_SLOTS[] = { 0xD1, 0xEB, 0xEE, 0xF2, 0xFB, ' ',
-                               0xF1, 0xEE, 0xF5, 0xF0, 0xE0, 0xED, 0xE5, 0xED, 0xE5, 0xE9, ':', ' ', NULL };
-const char LC_MUSIC[] = { 0xCC, 0xF3, 0xE7, 0xFB, 0xEA, 0xE0, ':', ' ', NULL };
-const char LC_SOUND[] = { 0xC7, 0xE2, 0xF3, 0xEA, ':', ' ', NULL };
+const char LC_RES[] =               "\xD0\xE0\xE7\xF0\xE5\xF8\xE5\xED\xE8\xE5" ": ";
+const char LC_KEYS[] =              "\xD3\xEF\xF0\xE0\xE2\xEB\xE5\xED\xE8\xE5";
+const char LC_REPLAY[] =            "\xCF\xEE\xE2\xF2\xEE\xF0\xFB";
+const char LC_DEBUG[] =             "\xCC\xE5\xED\xFE" " " "\xEE\xF2\xEB\xE0\xE4\xEA\xE8";
+const char LC_DEBUG_KEYS[] =        "\xC2\xEA\xEB\xFE\xF7\xE8\xF2\xFC" " Debug-" "\xEA\xEB\xE0\xE2\xE8\xF8\xE8";
+const char LC_SAVE_SLOTS[] =        "\xD1\xEB\xEE\xF2\xFB" " " "\xF1\xEE\xF5\xF0\xE0\xED\xE5\xED\xE5\xE9" ": ";
+const char LC_MUSIC[] =             "\xCC\xF3\xE7\xFB\xEA\xE0" ": ";
+const char LC_SOUND[] =             "\xC7\xE2\xF3\xEA" ": ";
 
-const char LC_FULLSCREEN_DIS[] = { 0xCF, 0xEE, 0xEB, 0xED, 0xEE, 0xFD, 0xEA, 0xF0, 0xE0, 0xED, 0xED, 0xFB, 0xE9, ' ',
-                                   0xF0, 0xE5, 0xE6, 0xE8, 0xEC, ' ',
-                                   0xEE, 0xF2, 0xEA, 0xEB, 0xFE, 0xF7, 0xE5, 0xED, NULL};
-const char LC_FULLSCREEN_CON[] = { 0xF7, 0xE5, 0xF0, 0xE5, 0xE7, ' ', 0xEA, 0xEE, 0xED, 0xF1, 0xEE, 0xEB, 0xFC, NULL};
-const char LC_RES_FAILED_320[] = { 0xCE, 0xF8, 0xE8, 0xE1, 0xEA, 0xE0, ' ',
-                                   0xE8, 0xE7, 0xEC, 0xE5, 0xED, 0xE5, 0xED, 0xE8, 0xFF, ' ',
-                                   0xF0, 0xE0, 0xE7, 0xF0, 0xE5, 0xF8, 0xE5, 0xED, 0xE8, 0xFF, ' ',
-                                   0xED, 0xE0, ' ',
-                                   '3', '2', '0', 'x', '2', '4', '0', NULL};
-const char LC_RES_FAILED[] = { 0xCE, 0xF8, 0xE8, 0xE1, 0xEA, 0xE0, ' ',
-                               0xE8, 0xE7, 0xEC, 0xE5, 0xED, 0xE5, 0xED, 0xE8, 0xFF, ' ',
-                               0xF0, 0xE0, 0xE7, 0xF0, 0xE5, 0xF8, 0xE5, 0xED, 0xE8, 0xFF, ' ', NULL };
+const char LC_FULLSCREEN_DIS[] =    "\xCF\xEE\xEB\xED\xEE\xFD\xEA\xF0\xE0\xED\xED\xFB\xE9" " "
+                                    "\xF0\xE5\xE6\xE8\xEC" " " "\xEE\xF2\xEA\xEB\xFE\xF7\xE5\xED";
+const char LC_FULLSCREEN_CON[] =    "\xF7\xE5\xF0\xE5\xE7" " " "\xEA\xEE\xED\xF1\xEE\xEB\xFC";
+const char LC_RES_FAILED_320[] =    "\xCE\xF8\xE8\xE1\xEA\xE0" " "
+                                    "\xE8\xE7\xEC\xE5\xED\xE5\xED\xE8\xFF" " "
+                                    "\xF0\xE0\xE7\xF0\xE5\xF8\xE5\xED\xE8\xFF" " "
+                                    "\xED\xE0" " " "320x240";
+const char LC_RES_FAILED[] =        "\xCE\xF8\xE8\xE1\xEA\xE0" " "
+                                    "\xE8\xE7\xEC\xE5\xED\xE5\xED\xE8\xFF" " "
+                                    "\xF0\xE0\xE7\xF0\xE5\xF8\xE5\xED\xE8\xFF" " ";
 
-const char LC_FPS[] = { 0xCF, 0xEE, 0xEA, 0xE0, 0xE7, 0xE0, 0xF2, 0xFC, ' ', 'F', 'P', 'S', NULL };
-const char LC_GODMODE[] = { 0xC2, 0xEA, 0xEB, 0xFE, 0xF7, 0xE8, 0xF2, 0xFC, ' ',
-                            0xED, 0xE5, 0xF3, 0xFF, 0xE7, 0xE2, 0xE8, 0xEC, 0xEE, 0xF1, 0xF2, 0xFC, NULL };
-const char LC_BOXES[] = { 0xD0, 0xE8, 0xF1, 0xEE, 0xE2, 0xE0, 0xF2, 0xFC, ' ',
-                          0xE1, 0xEE, 0xEA, 0xF1, 0xFB, NULL };
-const char LC_ADDEXP[] = { 0xC4, 0xEE, 0xE1, 0xE0, 0xE2, 0xE8, 0xF2, 0xFC, ' ',
-                           '+', '1', ' ', 'X', 'P', NULL };
-const char LC_SAVE_NOW[] = { 0xD1, 0xEE, 0xF5, 0xF0, 0xE0, 0xED, 0xE8, 0xF2, 0xFC, ' ',
-                             0xE8, 0xE3, 0xF0, 0xF3, ' ',
-                             0xF1, 0xE5, 0xE9, 0xF7, 0xE0, 0xF1, NULL };
+const char LC_FPS[] =               "\xCF\xEE\xEA\xE0\xE7\xE0\xF2\xFC" " " "FPS";
+const char LC_GODMODE[] =           "\xC2\xEA\xEB\xFE\xF7\xE8\xF2\xFC" " " "\xED\xE5\xF3\xFF\xE7\xE2\xE8\xEC\xEE\xF1\xF2\xFC";
+const char LC_BOXES[] =             "\xD0\xE8\xF1\xEE\xE2\xE0\xF2\xFC" " " "\xE1\xEE\xEA\xF1\xFB";
+const char LC_ADDEXP[] =            "\xC4\xEE\xE1\xE0\xE2\xE8\xF2\xFC" " +1 XP";
+const char LC_SAVE_NOW[] =          "\xD1\xEE\xF5\xF0\xE0\xED\xE8\xF2\xFC" " " "\xE8\xE3\xF0\xF3" " " "\xF1\xE5\xE9\xF7\xE0\xF1";
 
-const char LC_ON[] = { 0xC2, 0xEA, 0xEB, NULL };
-const char LC_OFF[] = { 0xC2, 0xFB, 0xEA, 0xEB, NULL };
-const char LC_BOSS_ONLY[] = { 0xD2, 0xEE, 0xEB, 0xFC, 0xEA, 0xEE, ' ',
-                              0xED, 0xE0, ' ',
-                              0xE1, 0xEE, 0xF1, 0xF1, 0xE0, 0xF5, NULL };
+const char LC_ON[] =                "\xC2\xEA\xEB";
+const char LC_OFF[] =               "\xC2\xFB\xEA\xEB";
+const char LC_BOSS_ONLY[] =         "\xD2\xEE\xEB\xFC\xEA\xEE" " " "\xED\xE0" " " "\xE1\xEE\xF1\xF1\xE0\xF5";
 
-const char LC_NO_RPL[] = { '[', 0xED, 0xE5, 0xF2, ' ',
-                           0xEF, 0xEE, 0xE2, 0xF2, 0xEE, 0xF0, 0xEE, 0xE2, ']', NULL };
-const char LC_PLAY[] = { 0xC8, 0xE3, 0xF0, 0xE0, 0xF2, 0xFC, NULL };
-const char LC_KEEP[] = { 0xD1, 0xEE, 0xF5, 0xF0, 0xE0, 0xED, 0xE8, 0xF2, 0xFC, NULL };
-const char LC_FAIL_LOAD_HEADER[] = { 0xCE, 0xF8, 0xE8, 0xE1, 0xEA, 0xE0, ' ',
-                                     0xE7, 0xE0, 0xE3, 0xF0, 0xF3, 0xE7, 0xEA, 0xE8, ' ',
-                                     0xE7, 0xE0, 0xE3, 0xEE, 0xEB, 0xEE, 0xE2, 0xEA, 0xE0, '.', NULL };
-const char LC_FAIL_WRITE_HEADER[] = { 0xCE, 0xF8, 0xE8, 0xE1, 0xEA, 0xE0, ' ',
-                                      0xE7, 0xE0, 0xEF, 0xE8, 0xF1, 0xE8, ' ',
-                                      0xE7, 0xE0, 0xE3, 0xEE, 0xEB, 0xEE, 0xE2, 0xEA, 0xE0, '.', NULL };
+const char LC_NO_RPL[] =            "[" "\xED\xE5\xF2" " " "\xEF\xEE\xE2\xF2\xEE\xF0\xEE\xE2" "]";
+const char LC_PLAY[] =              "\xC8\xE3\xF0\xE0\xF2\xFC";
+const char LC_KEEP[] =              "\xD1\xEE\xF5\xF0\xE0\xED\xE8\xF2\xFC";
+const char LC_FAIL_LOAD_HEADER[] =  "\xCE\xF8\xE8\xE1\xEA\xE0" " "
+                                    "\xE7\xE0\xE3\xF0\xF3\xE7\xEA\xE8" " "
+                                    "\xE7\xE0\xE3\xEE\xEB\xEE\xE2\xEA\xE0" " ";
 
-const char LC_KB_LEFT[] = { 0xC2, 0xEB, 0xE5, 0xE2, 0xEE, NULL };
-const char LC_KB_RIGHT[] = { 0xC2, 0xEF, 0xF0, 0xE0, 0xE2, 0xEE, NULL };
-const char LC_KB_UP[] = { 0xC2, 0xE2, 0xE5, 0xF0, 0xF5, NULL };
-const char LC_KB_DOWN[] = { 0xC2, 0xED, 0xE8, 0xE7, NULL };
-const char LC_KB_JUMP[] = { 0xCF, 0xF0, 0xFB, 0xE6, 0xEE, 0xEA, NULL };
-const char LC_KB_FIRE[] = { 0xCE, 0xE3, 0xEE, 0xED, 0xFC, NULL };
-const char LC_KB_WPN_PREV[] = { 0xCF, 0xF0, 0xE5, 0xE4, '.', ' ',
-                                0xEE, 0xF0, 0xF3, 0xE6, 0xE8, 0xE5, NULL };
-const char LC_KB_WPN_NEXT[] = { 0xD1, 0xEB, 0xE5, 0xE4, '.', ' ',
-                                0xEE, 0xF0, 0xF3, 0xE6, 0xE8, 0xE5, NULL };
-const char LC_KB_INV[] = { 0xC8, 0xED, 0xE2, 0xE5, 0xED, 0xF2, 0xE0, 0xF0, 0xFC, NULL };
-const char LC_KB_MAP[] = { 0xCA, 0xE0, 0xF0, 0xF2, 0xE0, NULL };
-const char LC_KB_NEW_KEY[] = { 0xCD, 0xE0, 0xE6, 0xEC, 0xE8, 0xF2, 0xE5, ' ',
-                               0xED, 0xEE, 0xE2, 0xF3, 0xFE, ' ',
-                               0xEA, 0xEB, 0xE0, 0xE2, 0xE8, 0xF8, 0xF3, ' ',
-                               0xE4, 0xEB, 0xFF, ':', NULL };
-const char LC_KB_BUSY[] = { 0xCA, 0xEB, 0xE0, 0xE2, 0xE8, 0xF8, 0xE0, ' ',
-                            0xF3, 0xE6, 0xE5, ' ',
-                            0xE8, 0xF1, 0xEF, 0xEE, 0xEB, 0xFC, 0xE7, 0xF3, 0xE5, 0xF2, 0xF1, 0xFF, ' ',
-                            0xED, 0xE0, ':', NULL };
+const char LC_FAIL_WRITE_HEADER[] = "\xCE\xF8\xE8\xE1\xEA\xE0" " "
+                                    "\xE7\xE0\xEF\xE8\xF1\xE8" " "
+                                    "\xE7\xE0\xE3\xEE\xEB\xEE\xE2\xEA\xE0" ".";
 
-const char LC_RETURN[] = { 0xC2, 0xEE, 0xE7, 0xE2, 0xF0, 0xE0, 0xF2, NULL};
-const char LC_FULLSCREEN[] = { 0xCF, 0xEE, 0xEB, 0xED, 0xFB, 0xE9, ' ', 0xFD, 0xEA, 0xF0, 0xE0, 0xED, NULL};
+const char LC_KB_LEFT[] =           "\xC2\xEB\xE5\xE2\xEE";
+const char LC_KB_RIGHT[] =          "\xC2\xEF\xF0\xE0\xE2\xEE";
+const char LC_KB_UP[] =             "\xC2\xE2\xE5\xF0\xF5";
+const char LC_KB_DOWN[] =           "\xC2\xED\xE8\xE7";
+const char LC_KB_JUMP[] =           "\xCF\xF0\xFB\xE6\xEE\xEA";
+const char LC_KB_FIRE[] =           "\xCE\xE3\xEE\xED\xFC";
+const char LC_KB_WPN_PREV[] =       "\xCF\xF0\xE5\xE4" ". "
+                                    "\xEE\xF0\xF3\xE6\xE8\xE5";
+const char LC_KB_WPN_NEXT[] =       "\xD1\xEB\xE5\xE4" ". "
+                                    "\xEE\xF0\xF3\xE6\xE8\xE5";
+const char LC_KB_INV[] =            "\xC8\xED\xE2\xE5\xED\xF2\xE0\xF0\xFC";
+const char LC_KB_MAP[] =            "\xCA\xE0\xF0\xF2\xE0";
+const char LC_KB_NEW_KEY[] =        "\xCD\xE0\xE6\xEC\xE8\xF2\xE5" " "
+                                    "\xED\xEE\xE2\xF3\xFE" " "
+                                    "\xEA\xEB\xE0\xE2\xE8\xF8\xF3" " "
+                                    "\xE4\xEB\xFF" ":";
+const char LC_KB_BUSY[] =           "\xCA\xEB\xE0\xE2\xE8\xF8\xE0" " "
+                                    "\xF3\xE6\xE5" " "
+                                    "\xE8\xF1\xEF\xEE\xEB\xFC\xE7\xF3\xE5\xF2\xF1\xFF" " "
+                                    "\xED\xE0" ":";
 
-const char LC_PS_QUIT[] = { ':', 0xC2, 0xFB, 0xF5, 0xEE, 0xE4, NULL};
-const char LC_PS_RESUME[] = { ':', 0xC2, 0xEE, 0xE7, 0xE2, 0xF0, 0xE0, 0xF2, NULL};
-const char LC_PS_RESET[] = { ':', 0xD1, 0xE1, 0xF0, 0xEE, 0xF1, NULL};
-const char LC_PS_OPTIONS[] = { ':', 0xCE, 0xEF, 0xF6, 0xE8, 0xE8, NULL};
+const char LC_RETURN[] =            "\xC2\xEE\xE7\xE2\xF0\xE0\xF2";
+const char LC_FULLSCREEN[] =        "\xCF\xEE\xEB\xED\xFB\xE9" " " "\xFD\xEA\xF0\xE0\xED";
+
+const char LC_PS_QUIT[] =           ":" "\xC2\xFB\xF5\xEE\xE4";
+const char LC_PS_RESUME[] =         ":" "\xC2\xEE\xE7\xE2\xF0\xE0\xF2";
+const char LC_PS_RESET[] =          ":" "\xD1\xE1\xF0\xEE\xF1";
+const char LC_PS_OPTIONS[] =        ":" "\xCE\xEF\xF6\xE8\xE8";
 #else
 const char LC_RES[] = "Resolution: ";
 const char LC_KEYS[] = "Controls";

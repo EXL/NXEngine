@@ -220,8 +220,8 @@ static void draw_title()
 
 #ifdef _L10N_CP1251
     const char t_new[2][11] = {
-        { 0xCD, 0xEE, 0xE2, 0xE0, 0xFF, 0xA0, 0xE8, 0xE3, 0xF0, 0xE0, NULL }, // New Game in CP1251, Russian
-        { 0xC7, 0xE0, 0xE3, 0xF0, 0xF3, 0xE7, 0xE8, 0xF2, 0xFC, NULL } // Load Game in CP1251, Russian
+        "\xCD\xEE\xE2\xE0\xFF\xA0\xE8\xE3\xF0\xE0", // New Game in CP1251, Russian
+        "\xC7\xE0\xE3\xF0\xF3\xE7\xE8\xF2\xFC"      // Load Game in CP1251, Russian
     };
 #endif
 
