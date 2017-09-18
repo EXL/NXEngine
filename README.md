@@ -1,15 +1,21 @@
 NXEngine
 ========
 
-My fork of NXEngine is open-source rewrite engine of the Cave Story. Author -- Caitlin Shaw (rogueeve)
+NXEngine is open-source rewrite engine of the Cave Story. Author -- Caitlin Shaw (rogueeve)
 
-Added:
+This project is my NXEngine fork with some improvements:
 
 1. Sound through SDL_mixer;
 
 2. Support for widescreen displays (480x272);
 
 3. Russification.
+
+## Downloads:
+
+You can download ready-to-run packages with NXEngine at this link (English and Russian versions):
+
+[Download NXEngine Packages](http://exlmoto.ru/nxengine/#4 "Download NXEngine Packages")
 
 ## Building:
 
@@ -44,9 +50,3 @@ Windows 8.1:
 
 ## Photos:
 ![Motorola ROKR E6](platform/EZX/NXEngine-EZX-ROKR_E6.jpg)
-
-## Packages:
-
-You can download ready-to-run packages with NXEngine at this link (English and Russian versions):
-
-[Download NXEngine Packages](http://exlmoto.ru/nxengine/#4 "Download NXEngine Packages")
