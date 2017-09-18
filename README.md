@@ -1,9 +1,9 @@
 NXEngine
 ========
 
-NXEngine is open-source rewrite engine of the Cave Story. Author -- Caitlin Shaw (rogueeve)
+NXEngine is open-source rewrite engine of the [Cave Story](https://en.wikipedia.org/wiki/Cave_Story) game. Author -- Caitlin Shaw (rogueeve)
 
-This project is my NXEngine fork with some improvements:
+This project is my NXEngine fork for weak devices with some improvements:
 
 1. Sound through SDL_mixer;
 
@@ -15,7 +15,7 @@ This project is my NXEngine fork with some improvements:
 
 You can download ready-to-run packages with NXEngine at this link (English and Russian versions):
 
-[Download NXEngine Packages](http://exlmoto.ru/nxengine/#4 "Download NXEngine Packages")
+[Download NXEngine Packages](http://exlmoto.ru/nxengine/#4 "Download NXEngine Packages").
 
 ## Building:
 
@@ -34,7 +34,7 @@ Platform Defines:
 | `-D_DEBUG` | Enable detailed debug output to the console. |
 | `-D_L10N_CP1251` | Enable Russian l10n (you need a `*.ttf` font and Russian data-files). |
 
-[Addition building information (in Russian)](http://exlmoto.ru/nxengine/#3 "Addition building information (in Russian)")
+[Addition building information (in Russian)](http://exlmoto.ru/nxengine/#3 "Addition building information (in Russian)").
 
 ## Screens:
 
@@ -49,4 +49,9 @@ Windows 8.1:
 ![Windows 8.1](screens/Cave_Story_Windows.png)
 
 ## Photos:
+
 ![Motorola ROKR E6](platform/EZX/NXEngine-EZX-ROKR_E6.jpg)
+
+## Videos:
+
+Demonstration [video on YouTube](https://youtu.be/aZPgX9Ismq4) of the launch Cave Story game with this engine on the Ritmix RZX-50 device.
