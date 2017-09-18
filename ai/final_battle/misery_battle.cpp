@@ -101,7 +101,7 @@ static void run_spells(Object *o)
 				o->timer = 0;
 				o->frame = 4;
 				
-				if (++o->timer >= 3)
+				if (++o->timer2 >= 3)
 				{
 					o->state = STATE_SUMMON_BLOCK;
 					o->timer2 = 0;
