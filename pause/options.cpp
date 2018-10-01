@@ -213,7 +213,7 @@ int newres;
 		sound(SND_GUN_CLICK);
 		return;
 	}
-#if defined(_L10N_CP1251) && (!defined (_480X272) || !defined (_320X240)) // L10N Hack
+#if (defined(_L10N_CP1251) && (!defined (_480X272) || !defined (_320X240))) || defined(__HAIKU__) // L10N Hack
     if (newres == 1) {
         new Message(LC_RES_FAILED_320);
         return;

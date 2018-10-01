@@ -1,13 +1,13 @@
+#ifdef __HAIKU__
+#include <libgen.h>
+#include <sys/stat.h>
+#include <PathFinder.h>
+#endif
 
 #include "nx.h"
 
 #ifdef _SDL_MIXER
 #include <SDL/SDL_mixer.h>
-#endif
-
-#ifdef __HAIKU__
-#include <libgen.h>
-#include <sys/stat.h>
 #endif
 
 #include <stdarg.h>
@@ -34,10 +34,14 @@ int main(int argc, char *argv[])
 {
 
 #ifdef __HAIKU__
+    char *haikuPath = getHaikuSettingsPath();
     // To make it able to start from Tracker
     chdir(dirname(argv[0]));
-    mkdir("/boot/home/config/settings/NXEngine/", 0755);
-    mkdir("/boot/home/config/settings/NXEngine/replay", 0755);
+    char path[PATH_MAX];
+    strcpy(path, haikuPath);
+    strcat(path, "replay");
+    mkdir(haikuPath, 0755);
+    mkdir(path, 0755);
 #endif
 
 bool inhibit_loadfade = false;
@@ -47,7 +51,11 @@ bool freshstart;
 #ifndef __HAIKU__
     SetLogFilename("debug.txt");
 #else
-    SetLogFilename("/boot/home/config/settings/NXEngine/debug.txt");
+    char logfile[PATH_MAX];
+    strcpy(logfile, haikuPath);
+    strcat(logfile, "debug.txt");
+    SetLogFilename(logfile);
+    free(haikuPath);
 #endif
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
@@ -645,3 +653,12 @@ void SDL_Delay(int ms)
 {
 	usleep(ms * 1000);
 }
+
+#ifdef __HAIKU__
+char *getHaikuSettingsPath() {
+	char path[PATH_MAX];
+	find_directory(B_USER_SETTINGS_DIRECTORY, -1, false, path, sizeof(path));
+	strcat(path, "/NXEngine/");
+	return strdup(path);
+}
+#endif

@@ -486,7 +486,12 @@ const char *GetReplayName(int slotno, char *buffer)
 #ifndef __HAIKU__
 	sprintf(buffer, "replay/rep%d.dat", slotno);
 #else
-	sprintf(buffer, "/boot/home/config/settings/NXEngine/replay/rep%d.dat", slotno);
+	char path[PATH_MAX];
+	char *haikuPath = getHaikuSettingsPath();
+	strcpy(path, haikuPath);
+	strcat(path, "replay/rep%d.dat");
+	sprintf(buffer, path, slotno);
+	free(haikuPath);
 #endif
 	return buffer;
 }

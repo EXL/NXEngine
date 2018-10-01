@@ -7,12 +7,9 @@
 #include "settings.h"
 #include "replay.h"
 #include "settings.fdh"
+#include "nx.h"
 
-#ifndef __HAIKU__
 const char *setfilename = "settings.dat";
-#else
-const char *setfilename = "/boot/home/config/settings/NXEngine/settings.dat";
-#endif
 const uint16_t SETTINGS_VERSION = 0x1602;		// serves as both a version and magic
 
 Settings normal_settings;
@@ -82,8 +79,17 @@ static bool tryload(Settings *setfile)
 FILE *fp;
 
 	stat("Loading settings...");
-	
+
+#ifdef __HAIKU__
+	char path[PATH_MAX];
+	char *haikuPath = getHaikuSettingsPath();
+	strcpy(path, haikuPath);
+	strcat(path, setfilename);
+	free(haikuPath);
+	fp = fileopen(path, "rb");
+#else
 	fp = fileopen(setfilename, "rb");
+#endif
 	if (!fp)
 	{
 		stat("Couldn't open file %s.", setfilename);
@@ -111,7 +117,16 @@ FILE *fp;
 		setfile = &normal_settings;
 	
 	stat("Writing settings...");
+#ifdef __HAIKU__
+	char path[PATH_MAX];
+	char *haikuPath = getHaikuSettingsPath();
+	strcpy(path, haikuPath);
+	strcat(path, setfilename);
+	free(haikuPath);
+	fp = fileopen(path, "wb");
+#else
 	fp = fileopen(setfilename, "wb");
+#endif
 	if (!fp)
 	{
 		stat("Couldn't open file %s.", setfilename);
