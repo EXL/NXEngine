@@ -227,10 +227,17 @@ void c------------------------------() {}
 // returns the filename for a save file given it's number
 const char *GetProfileName(int num)
 {
+#ifndef __HAIKU__
 	if (num == 0)
 		return "profile.dat";
 	else
 		return stprintf("profile%d.dat", num+1);
+#else
+	if (num == 0)
+		return "/boot/home/config/settings/NXEngine/profile.dat";
+	else
+		return stprintf("/boot/home/config/settings/NXEngine/profile%d.dat", num+1);
+#endif
 }
 
 // returns whether the given save file slot exists

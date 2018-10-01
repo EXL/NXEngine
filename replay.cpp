@@ -483,7 +483,11 @@ void Replay::GetSlotInfo(int slotno, ReplaySlotInfo *slot)
 const char *GetReplayName(int slotno, char *buffer)
 {
 	if (!buffer) buffer = GetStaticStr();
+#ifndef __HAIKU__
 	sprintf(buffer, "replay/rep%d.dat", slotno);
+#else
+	sprintf(buffer, "/boot/home/config/settings/NXEngine/replay/rep%d.dat", slotno);
+#endif
 	return buffer;
 }
 

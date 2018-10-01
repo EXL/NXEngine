@@ -7,6 +7,7 @@
 
 #ifdef __HAIKU__
 #include <libgen.h>
+#include <sys/stat.h>
 #endif
 
 #include <stdarg.h>
@@ -35,13 +36,20 @@ int main(int argc, char *argv[])
 #ifdef __HAIKU__
     // To make it able to start from Tracker
     chdir(dirname(argv[0]));
+    mkdir("/boot/home/config/settings/NXEngine/", 0755);
+    mkdir("/boot/home/config/settings/NXEngine/replay", 0755);
 #endif
 
 bool inhibit_loadfade = false;
 bool error = false;
 bool freshstart;
 
+#ifndef __HAIKU__
     SetLogFilename("debug.txt");
+#else
+    SetLogFilename("/boot/home/config/settings/NXEngine/debug.txt");
+#endif
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
     {
         staterr("ack, sdl_init failed: %s.", SDL_GetError());
