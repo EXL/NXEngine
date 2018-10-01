@@ -58,6 +58,8 @@ win32-g++ | linux-g++ | linux-g++-64 { # Host
     DEFINES += _320X240 _MOTOMAGX _SDL_MIXER
 } linux-arm-gnu-g++ | iwmmxt_le-g++ { # MotoEZX
     DEFINES += _320X240 _MOTOEZX _SDL_MIXER
+} linux-arm-gnueabi-g++ {
+    DEFINES += _BSD_SOURCE
 }
 
 # Debug
@@ -107,6 +109,8 @@ win32-g++ { # Host MinGW Windows
 } linux-arm-gnu-g++ { # MotoEZX
     INCLUDEPATH += /opt/toolchains/motoezx/include/
     INCLUDEPATH += /opt/toolchains/motoezx/include/SDL
+} haiku {
+    INCLUDEPATH += $$system(finddir B_SYSTEM_HEADERS_DIRECTORY)/SDL
 }
 
 # Librares
@@ -121,6 +125,8 @@ win32-g++ { # Host MinGW Windows
     LIBS += $$system(sdl-config  --libs) -lSDL_mixer -lSDL_ttf -lstdc++ -lm -lfreetype
 } linux-arm-gnu-g++ { # MotoEZX
     LIBS += $$system($${EZX_SDL_CONFIG}  --libs) -lSDL_mixer -lSDL_ttf -lstdc++ -lm -lfreetype
+} haiku {
+    LIBS += $$system(sdl-config  --libs) -lSDL_mixer -lSDL_ttf -lfreetype
 }
 
 # Additional MotoEZX files

@@ -5,6 +5,10 @@
 #include <SDL/SDL_mixer.h>
 #endif
 
+#ifdef __HAIKU__
+#include <libgen.h>
+#endif
+
 #include <stdarg.h>
 #include <unistd.h>
 #include "graphics/safemode.h"
@@ -27,6 +31,12 @@ int flipacceltime = 0;
 
 int main(int argc, char *argv[])
 {
+
+#ifdef __HAIKU__
+    // To make it able to start from Tracker
+    chdir(dirname(argv[0]));
+#endif
+
 bool inhibit_loadfade = false;
 bool error = false;
 bool freshstart;
