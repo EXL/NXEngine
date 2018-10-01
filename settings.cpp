@@ -8,7 +8,11 @@
 #include "replay.h"
 #include "settings.fdh"
 
+#ifndef __HAIKU__
 const char *setfilename = "settings.dat";
+#else
+const char *setfilename = "/boot/home/config/settings/NXEngine/settings.dat";
+#endif
 const uint16_t SETTINGS_VERSION = 0x1602;		// serves as both a version and magic
 
 Settings normal_settings;
@@ -41,7 +45,11 @@ bool settings_load(Settings *setfile)
 		setfile->emulate_bugs = false;
 		setfile->no_quake_in_hell = false;
 		setfile->inhibit_fullscreen = false;
+#ifndef __HAIKU__
 		setfile->files_extracted = false;
+#else
+		setfile->files_extracted = true;
+#endif
 		
 		// I found that 8bpp->32bpp blits are actually noticably faster
 		// than 32bpp->32bpp blits on several systems I tested. Not sure why
