@@ -1,7 +1,7 @@
 #ifdef __HAIKU__
 #include <libgen.h>
 #include <sys/stat.h>
-#include <PathFinder.h>
+#include <FindDirectory.h>
 #endif
 
 #include "nx.h"
