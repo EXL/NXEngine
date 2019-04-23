@@ -3,7 +3,7 @@ NXEngine
 
 NXEngine is open-source rewrite engine of the [Cave Story](https://en.wikipedia.org/wiki/Cave_Story) game. Author - [Caitlin (rogueeve) Shaw](http://nxengine.sourceforge.net/).
 
-![Ritmix RZX-50](screens/Cave_Story_Ritmix_1.png)
+![Gameplay](https://i.imgur.com/SmfyYuC.jpg)
 
 This repository contains source code of my NXEngine fork for various weak devices. I have added some engine improvements:
 
@@ -31,37 +31,19 @@ Platform defines:
 | Define | Description |
 | --- | --- |
 | `-D_480X272` | Use widescreen 480x272 resolution. |
-| `-D_320X240` | Use normal 320x240 resolution. |
-| `-D_DINGUX` | Dingux platform and keyboard layout (Ritmix RZX-50, Dingoo A320, Dingoo A380, etc). |
-| `-D_MOTOMAGX` | MotoMAGX platform and keyboard layout (Motorola ZN5, Z6, E8, EM30, VE66, etc). |
-| `-D_MOTOEZX` | MotoEZX platform and keyboard layout (Motorola E2, E6, A1200, A1600). |
 | `-D_SDL_MIXER` | Don't use realtime music generation, `*.xm` tracks and sounds will be played via SDL_mixer. |
-| `-D_DEBUG` | Enable detailed debug output to the console. |
 | `-D_L10N_CP1251` | Enable Russian l10n (you need a `*.ttf` font and Russian version of data-files). |
 
 Please read [addition building information (in Russian)](http://exlmoto.ru/nxengine/#3) in the EXL's Developer Blog.
 
 ## Screens
 
-Ritmix RZX-50:
+Controls:
 
-![Ritmix RZX-50](screens/Cave_Story_Ritmix_2.png)
-
-Windows 8.1:
-
-![Windows 8.1](screens/Cave_Story_Windows.png)
-
-Haiku OS:
-
-![Haiku OS](screens/Cave_Story_HaikuOS.png)
-
-## Photos
-
-![Motorola ROKR E6](platform/EZX/NXEngine-EZX-ROKR_E6.jpg)
+![](https://i.imgur.com/mJbPkoB.jpg)
 
 ## Videos
-
-Demonstration [video on YouTube](https://youtu.be/aZPgX9Ismq4) which showing launch Cave Story game with this engine on the Ritmix RZX-50 device.
+[![PocketCHIP does Cavestory](https://i.imgur.com/INGpWBt.png)](https://www.youtube.com/watch?v=plpH7SVZF0Q)
 
 ## More information
 
