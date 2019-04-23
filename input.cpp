@@ -64,10 +64,10 @@ bool input_init(void)
         mappings[SDLK_RETURN] = INVENTORYKEY;
         mappings[SDLK_b] = MAPSYSTEMKEY;
 #else
-        mappings[SDLK_z] = JUMPKEY;
-        mappings[SDLK_x] = FIREKEY;
-        mappings[SDLK_a] = PREVWPNKEY;
-        mappings[SDLK_s] = NEXTWPNKEY;
+        mappings[SDLK_k] = JUMPKEY;
+        mappings[SDLK_l] = FIREKEY;
+        mappings[SDLK_o] = PREVWPNKEY;
+        mappings[SDLK_p] = NEXTWPNKEY;
         mappings[SDLK_q] = INVENTORYKEY;
         mappings[SDLK_w] = MAPSYSTEMKEY;
 #endif
@@ -78,15 +78,15 @@ bool input_init(void)
         mappings[SDLK_ESCAPE] = ESCKEY;
 #endif
 
-        mappings[SDLK_F1] = F1KEY;
-        mappings[SDLK_F2] = F2KEY;
-        mappings[SDLK_F3] = F3KEY;
-        mappings[SDLK_F4] = F4KEY;
-        mappings[SDLK_F5] = F5KEY;
-        mappings[SDLK_F6] = F6KEY;
-        mappings[SDLK_F7] = F7KEY;
-        mappings[SDLK_F8] = F8KEY;
-        mappings[SDLK_F9] = F9KEY;
+        mappings[SDLK_1] = F1KEY;
+        mappings[SDLK_2] = F2KEY;
+        mappings[SDLK_3] = F3KEY;
+        mappings[SDLK_4] = F4KEY;
+        mappings[SDLK_5] = F5KEY;
+        mappings[SDLK_6] = F6KEY;
+        mappings[SDLK_7] = F7KEY;
+        mappings[SDLK_8] = F8KEY;
+        mappings[SDLK_9] = F9KEY;
         mappings[SDLK_F10] = F10KEY;
         mappings[SDLK_F11] = F11KEY;
         mappings[SDLK_F12] = F12KEY;
@@ -150,7 +150,7 @@ static const char *input_names[] =
 	"jump", "fire", "pervious wpn", "next wpn",
 	"inventory", "map",
 	"escape",
-    "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11", "f12",
+    "1", "2", "3", "4", "5", "6", "7", "8", "9", "f10", "f11", "f12",
     "options key", "freeze frame", "frame advance", "debug fly"
 };
 
@@ -322,7 +322,6 @@ bool justpushed(int k)
 {
 	return (inputs[k] && !lastinputs[k]);
 }
-
 
 
 
