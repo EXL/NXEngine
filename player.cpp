@@ -723,7 +723,7 @@ int i, key;
 	if (player->lookaway)
 	{
 		// keys which deactivate lookaway when you are facing away from player
-		static const char actionkeys[] = \
+		static const signed char actionkeys[] = \
 			{ LEFTKEY, RIGHTKEY, UPKEY, JUMPKEY, FIREKEY, -1 };
 		
 		// stop looking away if any keys are pushed
