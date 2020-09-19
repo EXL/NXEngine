@@ -749,6 +749,7 @@ int pxt_Play(int chan, int slot, char loop)
     if(Mix_PlayChannel(chan, mixChunk, loop)==-1) {
         stat("Mix_PlayChannel: %s\n",Mix_GetError());
     }
+    return chan;
 #else
     return pxt_PlayWithCallback(chan, slot, loop, NULL);
 #endif
