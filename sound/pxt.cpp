@@ -743,8 +743,9 @@ int pxt_Play(int chan, int slot, char loop)
         pxt_chunk_free();
     }
 
-    /* I don't know correct this way or no, but this work */
-    mixChunk = Mix_QuickLoad_RAW((Uint8 *)sound_fx[slot].buffer, sound_fx[slot].len);
+    /* I don't know correct this way or no but it works! */
+    /* See https://github.com/EXL/NXEngine/blob/ddaf82dacc54aa7e45bf078c03ad19e6318e528e/sound/sslib.cpp#L157 for proper length in bytes. */
+    mixChunk = Mix_QuickLoad_RAW((Uint8 *)sound_fx[slot].buffer, sound_fx[slot].len * 2 * 2);
 
     if(Mix_PlayChannel(chan, mixChunk, loop)==-1) {
         stat("Mix_PlayChannel: %s\n",Mix_GetError());
