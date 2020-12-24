@@ -18,7 +18,7 @@
 #include "sslib.fdh"
 #include "sound.fdh"
 
-SSChannel channel[SS_NUM_CHANNELS];
+static SSChannel channel[SS_NUM_CHANNELS];
 
 uint8_t *mixbuffer = NULL;
 int mix_pos;
