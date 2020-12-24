@@ -118,7 +118,7 @@ win32-g++ { # Host MinGW Windows
     QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
     LIBS += -lmingw32 -lSDL_ttf -lfreetype -lpng -lz -lSDLmain -lSDL -lgdi32 -lwinmm
 } linux-g++ | linux-g++-64 { # Host GCC Linux
-    LIBS += -lSDLmain -lSDL -lSDL_ttf
+    LIBS += -lSDL -lSDL_ttf
 } linux-mips-g++ { # Dingux
     LIBS += -lSDLmain -lSDL -lSDL_ttf -lSDL_mixer
 } linux-arm-gnueabi-g++ { # MotoMAGX
