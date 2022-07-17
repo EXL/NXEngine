@@ -16,15 +16,27 @@ void stat(const char *fmt, ...);
 uint16_t fgeti(FILE *fp)
 {
 uint16_t value;
-	fread(&value, 2, 1, fp);
-	return value;
+	int ret = fread(&value, 2, 1, fp);
+    if (ret != 1) {
+        staterr("fgeti: error reading uint16_t from file");
+        fclose(fp);
+        exit(1);
+    } else {
+        return value;
+    }
 }
 
 uint32_t fgetl(FILE *fp)
 {
 uint32_t value;
-	fread(&value, 4, 1, fp);
-	return value;
+	int ret = fread(&value, 4, 1, fp);
+    if (ret != 1) {
+        staterr("fgetl: error reading uint32_t from file");
+        fclose(fp);
+        exit(0);
+    } else {
+        return value;
+    }
 }
 
 void fputi(uint16_t word, FILE *fp)
@@ -40,19 +52,29 @@ void fputl(uint32_t word, FILE *fp)
 uint16_t fgeti(FILE *fp)
 {
 uint16_t a, b;
-	a = fgetc(fp);
-	b = fgetc(fp);
+	if ((a = fgetc(fp)) == EOF) goto error;
+	if ((b = fgetc(fp)) == EOF) goto error;
 	return (b << 8) | a;
+
+error:
+    staterr("fgeti: error reading uint16_t from file");
+    fclose(fp);
+    exit(1);
 }
 
 uint32_t fgetl(FILE *fp)
 {
 uint32_t a, b, c, d;
-	a = fgetc(fp);
-	b = fgetc(fp);
-	c = fgetc(fp);
-	d = fgetc(fp);
+	if ((a = fgetc(fp)) == EOF) goto error;
+	if ((b = fgetc(fp)) == EOF) goto error;
+	if ((c = fgetc(fp)) == EOF) goto error;
+	if ((d = fgetc(fp)) == EOF) goto error;
 	return (d<<24)|(c<<16)|(b<<8)|(a);
+
+error:
+    staterr("fgeti: error reading uint32_t from file");
+    fclose(fp);
+    exit(1);
 }
 
 void fputi(uint16_t word, FILE *fp)

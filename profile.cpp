@@ -57,6 +57,10 @@ FILE *fp;
 	{
 		int type = fgetl(fp);
 		if (!type) break;
+        if (type >= MAX_WPN_SLOTS) {
+            staterr("profile_load: invalid weapon type %d", type);
+            break;
+        }
 		
 		int level = fgetl(fp);
 		int xp = fgetl(fp);
