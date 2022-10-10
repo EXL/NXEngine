@@ -943,13 +943,14 @@ stPXSound snd;
 	
 	int allocd_size = 0;
 	snd.final_buffer = NULL;
+	int eof = 0;
 	
 	stat("LoadFXCache: restoring pxts from cache");
 	for(;;)
 	{
-		snd.final_size = fgetl(fp);
+		snd.final_size = fgetl(fp, &eof);
+		if (eof) break;
 		slot = fgetc(fp);
-		if (slot == -1) break;
 		
 		if (snd.final_size > allocd_size)
 		{

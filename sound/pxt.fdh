@@ -70,6 +70,7 @@ int random(int min, int max);
 void fputl(unsigned int word, FILE *fp);
 void fputi(unsigned short word, FILE *fp);
 unsigned int fgetl(FILE *fp);
+unsigned int fgetl(FILE *fp, int *eof);
 unsigned short fgeti(FILE *fp);
 int fgeticsv(FILE *fp);
 double fgetfcsv(FILE *fp);
