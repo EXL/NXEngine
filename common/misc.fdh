@@ -18,7 +18,9 @@ void staterr(const char *fmt, ...);
 
 //------------------[referenced from common/misc.cpp]----------------//
 uint16_t fgeti(FILE *fp);
+uint16_t fgeti(FILE *fp, int *eof);
 uint32_t fgetl(FILE *fp);
+uint32_t fgetl(FILE *fp, int *eof);
 void fputi(uint16_t word, FILE *fp);
 void fputl(uint32_t word, FILE *fp);
 uint16_t fgeti(FILE *fp);
